@@ -442,7 +442,7 @@ extern YY_CHAR *yytext;
 
 #ifndef YY_MALLOC_DECL
 #define YY_MALLOC_DECL
-#include <malloc.h>
+#include <stdlib.h>
 #endif
  
 #undef YYVALGLOBAL
@@ -5811,7 +5811,7 @@ static char *stdpc_id_string="$Id: stdpc.skel,v 1.12 1994/12/05 13:54:37 sander 
 
 
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #ifdef ANSI_C
 #include <stdarg.h>
 #else

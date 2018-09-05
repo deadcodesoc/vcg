@@ -1,0 +1,32 @@
+Instructions to build on macOS:
+
+$ sh config
+
+Please enter the name of the VCG tool [xvcg]
+Please enter the directory where the executables
+should be placed [/usr/local/bin/]
+Please enter the directory where the manual pages
+should be placed [/usr/local/man/manl/]
+Please enter the extension of the manual pages [l]
+Please enter the name (access path) and options
+of a command that creates the dependences of a makefile [/opt/X11/bin/makedepend]
+Please enter the name (access path + options) 
+of the installation program for directories (optional) [/usr/bin/install -d -m 755]
+Please enter the name (access path + options) 
+of the installation program for executable binaries (optional) [/usr/bin/install -s -m 755 dummy /usr/local/bin/dummy]
+Please enter the name (access path + options) 
+of the installation program for manual pages (optional) [/usr/bin/install -m 644 dummy /usr/local/man/manl/dummy]
+Please insert the alias of the default X11 font
+you wish to use [-*-courier-*-*-*--14-*-*-*-*-*-*-*]
+Which solution do we take for the InputFocus problem ... [no]
+Which C compile flags do we use ... [-c -Os -pipe]
+Please enter the flags used to link object files [-o]
+Which additional INCLUDE path do we use ... [-I/opt/X11/include]
+Which libraries do we need ... [-lXext -lX11 -lm]
+Please enter the additional library paths flags [-L/opt/X11/lib]
+Please enter the alignment required by the compiler [8]
+Please enter the number of bytes per block for the memory
+manager [1048576]:
+Please enter: Are these substitutes correct ? [yes]
+
+$ make

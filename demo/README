@@ -1,0 +1,44 @@
+SCCS-info %W% %E% 
+$Id: README,v 1.3 1995/02/08 11:21:41 sander Exp $
+
+Files in this directory:
+
+	README          - this file
+	Makefile        - Makefile of this directory
+	demo.csh        - shell script: a demonstration tour around VCG
+	demo.csh.tpl    - template for this shell script. This template
+			  is used to generate demo.csh.
+
+     used by demo.csh:
+
+	vcgcount.c      - count number of nodes and and edges in a graph.
+			  It reads from stdin. 
+	vcgcount        - the corresponding binary
+	animation1.c    - example of an animation
+	animation1      - the corresponding binary
+	animation2.c    - a second example of an animation
+	animation2      - the corresponding binary
+	animation3.c    - a third example of an animation
+	animation3      - the corresponding binary
+	vcgdemomaker.c  - utility to produce demo specifications for VCG
+	vcgdemomaker    - the corresponding binary
+
+     The VCG tool does not contain a direct printer driver except 
+     PostScript (because there are many different types of printers in the 
+     world). Instead, the export into the PBM-format is possible. For the 
+     PBM-format, there exist a lot of printer drivers in the world.
+
+	pbmrot90.c   - utility to rotate a PBM-P4-output 
+	pbmrot90     - the corresponding binary
+	pbmshift.c   - utility to create margins at PBM-P4-outputs
+	pbmshift     - the corresponding binary
+	pbm2hp.c     - utility to print a PBM-P4-output on a HP LaserJet.
+		       This is an example of a PBM printer driver.
+	pbm2hp       - the corresponding binary
+
+
+When we do "make install", not all these tools are useful to be installed.
+Some are only demo sources.  We install the following tools:
+
+	vcgdemomaker, pbmrot90, pbmshift, pbm2hp
+

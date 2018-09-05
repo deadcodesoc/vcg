@@ -1,0 +1,341 @@
+/* SCCS-info %W% %E% */
+/* $Id: forms.vcg,v 1.4 1995/02/08 11:09:19 sander Exp $ */
+
+
+graph: { 
+title: "Formtest1"
+x: 30
+y: 30
+height: 720
+width: 700
+display_edge_labels: yes
+
+node: { title: "A1" 
+	loc: { x: 10 y: 10 } 
+	label: 
+"This is a text over many lines
+second line u(underlined)n ...
+third line ..."
+}
+
+node: { title: "A2" 
+	loc: { x: 300 y: 10 } 
+	shrink: 3
+	stretch: 2
+	label: 
+"This is a text over many lines
+second line u(underlined)n ...
+third line ..."
+}
+
+node: { title: "A3" 
+	loc: { x: 500 y: 10 } 
+	shrink: 2
+	label: 
+"This is a text over many lines
+second line u(underlined)n ...
+third line ..."
+}
+
+node: { title: "B1"
+	loc: { x: 10 y: 80 } 
+	width: 180
+	height: 50
+	label: "centered text"
+}
+
+node: { title: "B2"
+	loc: { x: 300 y: 80 } 
+	width: 150
+	height: 40
+	label: "centered text"
+}
+
+node: { title: "B3"
+	loc: { x: 500 y: 80 } 
+	label: "centered text"
+}
+
+node: { title: "C1"
+	loc: { x: 10 y: 140 } 
+	width: 280
+	height: 50
+	textmode: left_justify
+	label: "left justified text"
+}
+	
+node: { title: "C3"
+	loc: { x: 300 y: 140 } 
+	width: 280
+	height: 50
+	textmode: right_justify
+	label: "right justified text"
+}
+
+node: { title: "D1"
+	loc: { x: 10 y: 200 } 
+	borderwidth: 10
+	label: "very thick border"
+}
+	
+node: { title: "D2"
+	loc: { x: 175 y: 200 } 
+	borderwidth: 5 
+	label: "thick border"
+}
+
+node: { title: "D3"
+	loc: { x: 290 y: 200 } 
+	borderwidth: 3 
+	label: "medium border"
+}
+	
+node: { title: "D4"
+	loc: { x: 410 y: 200 } 
+	label: "normal border"
+}
+	
+node: { title: "D5"
+	loc: { x: 530 y: 200 } 
+	borderwidth: 1 
+	label: "thin border"
+}
+	
+node: { title: "D6"
+	loc: { x: 630 y: 200 } 
+	borderwidth: 0 
+	label: "no border"
+}
+
+node: { title: "E1"
+	loc: { x: 10 y: 245 }
+	label: "source"
+}	
+node: { title: "E2"
+	loc: { x: 630 y: 245 }
+	label: "target"
+}	
+edge: { sourcename: "E1" targetname: "E2" 
+	linestyle: continuous 
+	label: "continuous"
+}
+	
+node: { title: "F1"
+	loc: { x: 10 y: 275 }
+	label: "source"
+}	
+node: { title: "F2"
+	loc: { x: 630 y: 275 }
+	label: "target"
+}	
+edge: { sourcename: "F1" targetname: "F2" 
+	linestyle: dashed 
+	label: "dashed"
+}
+	
+node: { title: "G1"
+	loc: { x: 10 y: 305 }
+	label: "source"
+}	
+node: { title: "G2"
+	loc: { x: 630 y: 305 }
+	label: "target"
+}	
+edge: { sourcename: "G1" targetname: "G2" 
+	linestyle: dotted 
+	label: "dotted"
+}
+
+node: { title: "H1"
+	loc: { x: 10 y: 335 }
+	label: "source"
+}	
+node: { title: "H2"
+	loc: { x: 630 y: 335 }
+	label: "target"
+}	
+edge: { sourcename: "H1" targetname: "H2" 
+	linestyle: continuous 
+	label: "medium thick, continuous"
+	thickness: 4
+}
+	
+node: { title: "I1"
+	loc: { x: 10 y: 365 }
+	label: "source"
+}	
+node: { title: "I2"
+	loc: { x: 630 y: 365 }
+	label: "target"
+}	
+edge: { sourcename: "I1" targetname: "I2" 
+	linestyle: dashed 
+	label: "medium thick, dashed"
+	thickness: 4
+}
+	
+node: { title: "J1"
+	loc: { x: 10 y: 395 }
+	label: "source"
+}	
+node: { title: "J2"
+	loc: { x: 630 y: 395 }
+	label: "target"
+}	
+edge: { sourcename: "J1" targetname: "J2" 
+	linestyle: dotted 
+	label: "medium thick, dotted"
+	thickness: 4
+}
+
+node: { title: "K1"
+	loc: { x: 10 y: 425 }
+	label: "source"
+}	
+node: { title: "K2"
+	loc: { x: 630 y: 425 }
+	label: "target"
+}	
+edge: { sourcename: "K1" targetname: "K2" 
+	linestyle: continuous 
+	label: "very thick, continuous"
+	thickness: 7
+}
+	
+node: { title: "L1"
+	loc: { x: 10 y: 455 }
+	label: "source"
+}	
+node: { title: "L2"
+	loc: { x: 630 y: 455 }
+	label: "target"
+}	
+edge: { sourcename: "L1" targetname: "L2" 
+	linestyle: dashed 
+	label: "very thick, dashed"
+	thickness: 7
+}
+	
+node: { title: "M1"
+	loc: { x: 10 y: 485 }
+	label: "source"
+}	
+node: { title: "M2"
+	loc: { x: 630 y: 485 }
+	label: "target"
+}	
+edge: { sourcename: "M1" targetname: "M2" 
+	linestyle: dotted 
+	label: "very thick, dotted"
+	thickness: 7
+}
+	
+node: { title: "N1"
+	loc: { x: 10 y: 515 }
+	label: "source"
+}	
+node: { title: "N2"
+	loc: { x: 110 y: 515 }
+	label: "target"
+}	
+edge: { sourcename: "N1" targetname: "N2" 
+	arrowsize: 7
+	thickness: 3
+}
+
+node: { title: "O1"
+	loc: { x: 180 y: 515 }
+	label: "source"
+}	
+node: { title: "O2"
+	loc: { x: 280 y: 515 }
+	label: "target"
+}	
+edge: { sourcename: "O1" targetname: "O2" 
+	thickness: 3
+}
+	
+node: { title: "P1"
+	loc: { x: 340 y: 515 }
+	label: "source"
+}	
+node: { title: "P2"
+	loc: { x: 440 y: 515 }
+	label: "target"
+}	
+edge: { sourcename: "P1" targetname: "P2" 
+	arrowsize: 13 
+	thickness: 3
+}
+
+node: { title: "Q1"
+	loc: { x: 500 y: 515 }
+	label: "source"
+}	
+node: { title: "Q2"
+	loc: { x: 600 y: 515 }
+	label: "target"
+}	
+edge: { sourcename: "Q1" targetname: "Q2" 
+	arrowsize: 19 
+	thickness: 3
+}
+
+node: { title: "R1"
+	loc: { x: 10 y: 545 }
+	label: "source"
+}	
+node: { title: "R2"
+	loc: { x: 110 y: 545 }
+	label: "target"
+}	
+edge: { sourcename: "R1" targetname: "R2" 
+	arrowstyle: line 
+	arrowsize: 7
+	thickness: 3
+}
+
+node: { title: "S1"
+	loc: { x: 180 y: 545 }
+	label: "source"
+}	
+node: { title: "S2"
+	loc: { x: 280 y: 545 }
+	label: "target"
+}	
+edge: { sourcename: "S1" targetname: "S2" 
+	thickness: 3
+	arrowstyle: line 
+}
+	
+node: { title: "T1"
+	loc: { x: 340 y: 545 }
+	label: "source"
+}	
+node: { title: "T2"
+	loc: { x: 440 y: 545 }
+	label: "target"
+}	
+edge: { sourcename: "T1" targetname: "T2" 
+	arrowsize: 13 
+	thickness: 3
+	arrowstyle: line 
+}
+
+node: { title: "U1"
+	loc: { x: 500 y: 545 }
+	label: "source"
+}	
+node: { title: "U2"
+	loc: { x: 600 y: 545 }
+	label: "target"
+}	
+edge: { sourcename: "U1" targetname: "U2" 
+	arrowsize: 19 
+	thickness: 3
+	arrowstyle: line 
+}
+	
+	
+}
+

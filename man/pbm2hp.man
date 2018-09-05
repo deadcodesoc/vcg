@@ -1,0 +1,38 @@
+.Id SCCS-info %W% %E% 
+.Id $Id: pbm2hp.man,v 1.3 1995/01/05 19:52:26 sander Exp $
+.TH PBM2HP 1l 1995/01/05 "Release 1.3" 
+.SH NAME
+pbm2hp \- printer driver of PBM-P4-file for HP Laserjet printers
+.SH SYNOPSIS
+.B pbm2hp
+infile  
+.SH DESCRIPTION
+.I Pbm2hp 
+reads a PBM file in P4 format and produces a HP Laserjet output
+for 300 dpi.  The output is send to stdout.
+This tool can be used to print out the image produced as
+export output of the 
+.I VCG tool 
+from a graph.
+.SH WARNING
+This utility does not work with the PBM-P1-format !!! 
+It is not a general conversion utility but only a small demonstration
+how to deal with the output of the
+.I VCG tool. 
+There are excellent standard utilities for PBM-Files by Jef Poskanzer
+.I (pbmtolj)
+but
+.I pbm2hp
+should be much faster on large files.
+.SH SEE ALSO
+vcg(l) pbmtolj(l) pbmrot90(l) pbmshift(l) 
+.SH BUGS
+Currently, no bugs are known.
+.SH ACKNOWLEDGEMENT
+Jef Poskanzer is the initiator and main implementor of
+the PBM package that contains various image processing
+routines and printer drivers.
+Michael Haberler wrote the driver pbmtolj.
+.SH AUTHOR
+Georg Sander, University of Saarland.
+

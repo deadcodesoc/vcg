@@ -1,0 +1,55 @@
+/* SCCS-info %W% %E% */
+/* $Id: hsort.vcg,v 1.3 1995/02/08 11:09:19 sander Exp $ */
+
+
+graph: { title: "Graph"
+
+  width: 700
+  height: 700
+  x: 400 
+  y: 30 
+
+  color: aquamarine
+
+  edge: { sourcename: "B" targetname: "S" }
+  edge: { sourcename: "E" targetname: "N" }
+  edge: { sourcename: "A" targetname: "B" }
+  edge: { sourcename: "A" targetname: "D" }
+  edge: { sourcename: "B" targetname: "F" }
+  edge: { sourcename: "B" targetname: "G" }
+  edge: { sourcename: "D" targetname: "L" }
+  edge: { sourcename: "B" targetname: "H" }
+  edge: { sourcename: "C" targetname: "I" }
+  edge: { sourcename: "C" targetname: "J" }
+  edge: { sourcename: "D" targetname: "K" }
+  edge: { sourcename: "A" targetname: "E" }
+  edge: { sourcename: "E" targetname: "M" }
+  edge: { sourcename: "F" targetname: "O" }
+  edge: { sourcename: "F" targetname: "P" }
+  edge: { sourcename: "G" targetname: "Q" }
+  edge: { sourcename: "G" targetname: "R" }
+  edge: { sourcename: "G" targetname: "S" }
+  edge: { sourcename: "A" targetname: "C" }
+  
+  node: { title: "J" horizontal_order:  7 }
+  node: { title: "G" horizontal_order:  2 }
+  node: { title: "A" horizontal_order:  1 }
+  node: { title: "F" horizontal_order:  1 }
+  node: { title: "I" horizontal_order:  6 }
+  node: { title: "L" horizontal_order:  9 }
+  node: { title: "M" horizontal_order: 10 }
+  node: { title: "C" horizontal_order:  3 }
+  node: { title: "N" horizontal_order: 11 }
+  node: { title: "E" horizontal_order:  5 }
+  node: { title: "O" horizontal_order:  1 }
+  node: { title: "B" horizontal_order:  2 }
+  node: { title: "P" horizontal_order:  2 }
+  node: { title: "H" horizontal_order:  3 }
+  node: { title: "Q" horizontal_order:  3 }
+  node: { title: "K" horizontal_order:  8 }
+  node: { title: "R" horizontal_order:  4 }
+  node: { title: "D" horizontal_order:  4 }
+  node: { title: "S" horizontal_order:  5 }
+
+}
+

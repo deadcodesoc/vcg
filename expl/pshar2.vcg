@@ -1,0 +1,53 @@
+/* SCCS-info %W% %E% */
+/* $Id: pshar2.vcg,v 1.2 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { title: "TGRAPH"
+
+        height: 350
+        width: 350
+        x: 380
+        y: 30
+        color: lightcyan
+	port_sharing: no 
+	arrowmode: fixed 
+ 
+        node: { title: "A" }
+        node: { title: "B" }
+        node: { title: "C" }
+        node: { title: "D" }
+        node: { title: "E" }
+        node: { title: "F" }
+        node: { title: "G" }
+        node: { title: "H" }
+        node: { title: "Center" }
+
+        edge: { arrowstyle: solid sourcename: "A" targetname: "Center" }
+        edge: { arrowstyle: solid sourcename: "B" targetname: "Center" }
+        edge: { arrowstyle: solid sourcename: "C" targetname: "Center" }
+        edge: { arrowstyle: solid sourcename: "D" targetname: "Center" }
+        backedge: { arrowstyle: solid sourcename: "E" targetname: "Center" }
+        backedge: { arrowstyle: solid sourcename: "F" targetname: "Center" }
+        backedge: { arrowstyle: solid sourcename: "G" targetname: "Center" }
+        backedge: { arrowstyle: solid sourcename: "H" targetname: "Center" }
+
+        node: { title: "A2" label: "A" }
+        node: { title: "B2" label: "B" }
+        node: { title: "C2" label: "C" }
+        node: { title: "D2" label: "D" }
+        node: { title: "E2" label: "E" }
+        node: { title: "F2" label: "F" }
+        node: { title: "G2" label: "G" }
+        node: { title: "H2" label: "H" }
+        node: { title: "Center2" label: "Center" }
+
+        edge: { arrowstyle: line sourcename: "A2" targetname: "Center2" }
+        edge: { arrowstyle: line sourcename: "B2" targetname: "Center2" }
+        edge: { arrowstyle: line sourcename: "C2" targetname: "Center2" }
+        edge: { arrowstyle: line sourcename: "D2" targetname: "Center2" }
+        backedge: { arrowstyle: line sourcename: "E2" targetname: "Center2" }
+        backedge: { arrowstyle: line sourcename: "F2" targetname: "Center2" }
+        backedge: { arrowstyle: line sourcename: "G2" targetname: "Center2" }
+        backedge: { arrowstyle: line sourcename: "H2" targetname: "Center2" }
+
+}
+

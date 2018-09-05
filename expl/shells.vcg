@@ -1,0 +1,119 @@
+/* SCCS-info %W% %E% */
+/* $Id: shells.vcg,v 1.5 1995/02/09 11:41:53 sander Exp $ */
+
+graph: { 
+title: "shells"
+
+// from: Gansner, Koutsofios, North, Vo: A Technique for Drawing Graphs
+// IEEE Trans. Soft. Eng. Vol. 19, No. 3, March 1993, pp 214 ff.
+
+x: 30
+y: 30
+width: 700
+height: 700
+shrink: 20 
+stretch: 13
+splines: yes
+
+layoutalgorithm: minbackward
+layout_nearfactor: 0
+layout_downfactor: 100
+layout_upfactor: 100
+
+// First the time scale
+
+node.height: 26
+node.width:  60
+node.borderwidth: 0
+node.color:  white 
+node.textcolor:  red 
+edge.color:      red 
+
+node: { title: "1972"   level: 1 horizontal_order: 1 }
+node: { title: "1976"   level: 2 horizontal_order: 1 }
+node: { title: "1978"   level: 3 horizontal_order: 1 }
+node: { title: "1980"   level: 4 }
+node: { title: "1982"   level: 5 horizontal_order: 1 }
+node: { title: "1984"   level: 6 }
+node: { title: "1986"   level: 7 }
+node: { title: "1988"   level: 8 horizontal_order: 1 }
+node: { title: "1990"   level: 9 }
+node: { title: "future" level: 10 horizontal_order: 1 }
+
+edge: { sourcename: "1972" targetname: "1976"   linestyle: dashed }
+edge: { sourcename: "1976" targetname: "1978"   linestyle: dashed }
+edge: { sourcename: "1978" targetname: "1980"   linestyle: dashed }
+edge: { sourcename: "1980" targetname: "1982"   linestyle: dashed }
+edge: { sourcename: "1982" targetname: "1984"   linestyle: dashed }
+edge: { sourcename: "1984" targetname: "1986"   linestyle: dashed }
+edge: { sourcename: "1986" targetname: "1988"   linestyle: dashed }
+edge: { sourcename: "1988" targetname: "1990"   linestyle: dashed }
+edge: { sourcename: "1990" targetname: "future" linestyle: dashed }
+
+// We need some invisible edge to make the graph fully connected.
+// Otherwise, the horizontal_order attribute would not work.
+
+edge: { sourcename: "ksh-i" targetname: "Perl" 
+	    linestyle: invisible  priority: 0 }
+edge: { sourcename: "tcsh" targetname: "tcl" 
+	    linestyle: invisible  priority: 0 } 
+nearedge: { sourcename: "1988" targetname: "rc" 
+	    linestyle: invisible  priority: 0 } 
+
+// Now the shells themselves
+// Note: the default value -1 means: no default
+
+node.height: -1 
+node.width:  -1 
+node.borderwidth: 2
+node.color:        lightcyan
+node.textcolor:    black 
+node.bordercolor:  darkyellow 
+edge.color:        blue
+
+node: { title: "Thompson"   level: 1 horizontal_order: 2 }
+node: { title: "Mashey"     level: 2 horizontal_order: 3 }
+node: { title: "Bourne"     level: 2 horizontal_order: 2 }
+node: { title: "Formshell"  level: 3 horizontal_order: 3 }
+node: { title: "csh"        level: 3 shape: triangle horizontal_order: 6 }
+node: { title: "esh"        level: 4 }
+node: { title: "vsh"        level: 4 }
+node: { title: "ksh"        level: 5 shape: ellipse horizontal_order: 2 }
+node: { title: "System-V"   level: 5 horizontal_order: 3 }
+node: { title: "v9sh"       level: 6 }
+node: { title: "tcsh"       level: 6 shape: triangle }
+node: { title: "ksh-i"      level: 7 shape: ellipse }
+node: { title: "KornShell"  level: 8 shape: ellipse  horizontal_order: 4 }
+node: { title: "Perl"       level: 8 horizontal_order: 3 }
+node: { title: "rc"         /*level: 8*/ horizontal_order: 2 }
+node: { title: "tcl"        level: 9 shape: rhomb }
+node: { title: "Bash"       level: 9 }
+node: { title: "POSIX"      level: 10 horizontal_order: 3 }
+node: { title: "ksh-POSIX"  level: 10 shape: ellipse horizontal_order: 2 }
+
+edge: { sourcename: "Thompson"    targetname: "Mashey"    }
+edge: { sourcename: "Thompson"    targetname: "Bourne"    }
+edge: { sourcename: "Thompson"    targetname: "csh"       }
+edge: { sourcename: "Bourne"      targetname: "ksh"       }
+edge: { sourcename: "Bourne"      targetname: "esh"       horizontal_order: 2}
+edge: { sourcename: "Bourne"      targetname: "vsh"       horizontal_order: 4}
+edge: { sourcename: "Bourne"      targetname: "System-V"  horizontal_order: 5}
+edge: { sourcename: "Bourne"      targetname: "v9sh"      }
+edge: { sourcename: "Bourne"      targetname: "Formshell" }
+edge: { sourcename: "Bourne"      targetname: "Bash"      }
+edge: { sourcename: "csh"         targetname: "tcsh"      }
+edge: { sourcename: "csh"         targetname: "ksh"       }
+edge: { sourcename: "Formshell"   targetname: "ksh"       }
+edge: { sourcename: "esh"         targetname: "ksh"       }
+edge: { sourcename: "vsh"         targetname: "ksh"       }
+edge: { sourcename: "ksh"         targetname: "ksh-i"     }
+edge: { sourcename: "System-V"    targetname: "POSIX"     }
+edge: { sourcename: "v9sh"        targetname: "rc"        }
+edge: { sourcename: "ksh-i"       targetname: "KornShell" }
+edge: { sourcename: "ksh-i"       targetname: "Bash"      horizontal_order: 5}
+edge: { sourcename: "KornShell"   targetname: "Bash"      }
+edge: { sourcename: "KornShell"   targetname: "POSIX"     }
+edge: { sourcename: "KornShell"   targetname: "ksh-POSIX" }
+
+}
+

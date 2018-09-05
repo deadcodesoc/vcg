@@ -1,0 +1,131 @@
+/* SCCS-info %W% %E% */
+/* $Id: morecol.vcg,v 1.2 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { 
+width: 140 title: "Colortest2"
+x: 30
+y: 30
+height: 700
+width: 700
+
+/* colorentry 0: white */
+/* colorentry 1: blue  */
+/* colorentry 2: red   */
+colorentry 3  : 245 245 220             /* beige      = green      */
+colorentry 4  : 245 245 245             /* WhiteSmoke = yellow     */
+colorentry 5  :  70 130 180             /* steel blue = magenta    */
+colorentry 6  : 139  69  19             /* chocolate  = cyan       */  
+colorentry 7  : 255 211 155             /* burlywood  = darkgrey   */
+colorentry 8  : 238 118   0             /* DarkOrange = darkblue   */
+colorentry 9  : 255  20 147             /* DeepPink   = darkred    */
+colorentry 10 : 139  54  38             /* tomato     = darkgreen  */
+colorentry 11 : 205 181 205             /* thistle    = darkyellow */
+colorentry 12 : 102 205   0             /* chartreuse = darkmagenta*/
+colorentry 13 : 253 245 230             /* OldLace    = darkcyan   */
+colorentry 14 : 240 255 255             /* azure      = darkgold   */
+colorentry 15 : 112 128 144             /* slate grey = lightgrey  */
+colorentry 16 :  25  25 112             /* midnight   = lightblue  */
+colorentry 17 :  30 144 255             /* dodger blue= lightred   */
+colorentry 18 : 102 205 170             /* med aqua   = lightgreen */
+colorentry 19 : 152 251 152             /* pale green = lightyellow*/
+colorentry 20 : 107 142  35             /* olive      = lightmagent*/
+colorentry 21 : 188 143 143             /* rosy brown = lightcyan  */
+colorentry 22 : 255 127  80             /* coral      = lilac      */
+colorentry 23 : 176  48  96             /* maroon     = turquoise  */
+colorentry 24 : 221 160 221             /* plum       = aquamarine */
+colorentry 25 : 255 245 238             /* seashell   = khaki      */
+colorentry 26 : 139 125 107             /* bisque4    = purple     */
+colorentry 27 : 238 232 205             /* cornsilk   = yellowgreen*/
+colorentry 28 :   0   0 238             /* medblue    = pink       */
+colorentry 29 : 238   0   0             /* medred     = orange     */
+colorentry 30 :   0 238   0             /* medgreen   = orchid     */
+colorentry 31 : 10  10  10              /* grey 4     = black      */
+colorentry 32 : 205 198 115             /* khaki      = new 32     */
+colorentry 33 : 210 218 255             /* AliceBlue  = new 33     */
+colorentry 34 : 205  92  92             /* indian red = new 34     */
+/* colorentry 35: black */
+
+color: 11 
+
+
+textcolor: 35
+node: { loc: { x:  10 y:   5 } borderwidth: 0  
+        title: "A-0 " color: 0  
+        label: "By direct access to the color map, we can use any arbitrary color.\nWe can use maximal 256 colors at the same time. The first 32 default colors can\nbe specified by name, the other colors are specified by their color map position." color: 11 }
+
+node: { loc: { x:  10 y:  60 } width: 140 title: "A 0 " color: 0  label: "white      " }
+node: { loc: { x: 160 y:  60 } width: 140 title: "A 1 " color: 1  label: "blue       " textcolor: white }
+node: { loc: { x: 310 y:  60 } width: 140 title: "A 2 " color: 2  label: "red        " }
+node: { loc: { x: 460 y:  60 } width: 140 title: "A 3 " color: 3  label: "beige      " }
+node: { loc: { x: 610 y:  60 } width: 140 title: "A 4 " color: 4  label: "WhiteSmoke " }
+node: { loc: { x:  10 y:  90 } width: 140 title: "A 5 " color: 5  label: "steel blue " }
+node: { loc: { x: 160 y:  90 } width: 140 title: "A 6 " color: 6  label: "chocolate  " textcolor: white }
+node: { loc: { x: 310 y:  90 } width: 140 title: "A 7 " color: 7  label: "burlywood  " }
+node: { loc: { x: 460 y:  90 } width: 140 title: "A 8 " color: 8  label: "DarkOrange " }
+node: { loc: { x: 610 y:  90 } width: 140 title: "A 9 " color: 9  label: "DeepPink   " }
+node: { loc: { x:  10 y: 120 } width: 140 title: "A 10 " color: 10 label: "tomato     " textcolor: white }
+node: { loc: { x: 160 y: 120 } width: 140 title: "A 11 " color: 11 label: "thistle    " }
+node: { loc: { x: 310 y: 120 } width: 140 title: "A 12 " color: 12 label: "chartreuse " }
+node: { loc: { x: 460 y: 120 } width: 140 title: "A 13 " color: 13 label: "OldLace    " }
+node: { loc: { x: 610 y: 120 } width: 140 title: "A 14 " color: 14 label: "azure      " }
+node: { loc: { x:  10 y: 150 } width: 140 title: "A 15 " color: 15 label: "slate grey " }
+node: { loc: { x: 160 y: 150 } width: 140 title: "A 16 " color: 16 label: "midnight   " textcolor: white }
+node: { loc: { x: 310 y: 150 } width: 140 title: "A 17 " color: 17 label: "dodger blue" }
+node: { loc: { x: 460 y: 150 } width: 140 title: "A 18 " color: 18 label: "med aqua   " }
+node: { loc: { x: 610 y: 150 } width: 140 title: "A 19 " color: 19 label: "pale green " }
+node: { loc: { x:  10 y: 180 } width: 140 title: "A 20 " color: 20 label: "olive      " }
+node: { loc: { x: 160 y: 180 } width: 140 title: "A 21 " color: 21 label: "rosy brown " }
+node: { loc: { x: 310 y: 180 } width: 140 title: "A 22 " color: 22 label: "coral      " }
+node: { loc: { x: 460 y: 180 } width: 140 title: "A 23 " color: 23 label: "maroon     " textcolor: white }
+node: { loc: { x: 610 y: 180 } width: 140 title: "A 24 " color: 24 label: "plum       " }
+node: { loc: { x:  10 y: 210 } width: 140 title: "A 25 " color: 25 label: "seashell   " }
+node: { loc: { x: 160 y: 210 } width: 140 title: "A 26 " color: 26 label: "bisque4    " }
+node: { loc: { x: 310 y: 210 } width: 140 title: "A 27 " color: 27 label: "cornsilk   " }
+node: { loc: { x: 460 y: 210 } width: 140 title: "A 28 " color: 28 label: "medblue    " textcolor: white }
+node: { loc: { x: 610 y: 210 } width: 140 title: "A 29 " color: 29 label: "medred     " }
+node: { loc: { x:  10 y: 240 } width: 140 title: "A 30 " color: 30 label: "medgreen   " }
+node: { loc: { x: 160 y: 240 } width: 140 title: "A 31 " color: 31 label: "grey 4     " textcolor: white }
+node: { loc: { x: 310 y: 240 } width: 140 title: "A 32 " color: 32 label: "khaki      " }
+node: { loc: { x: 460 y: 240 } width: 140 title: "A 33 " color: 33 label: "AliceBlue  " }
+node: { loc: { x: 610 y: 240 } width: 140 title: "A 34 " color: 34 label: "indian red " }
+node: { loc: { x:  10 y: 270 } width: 140 title: "A 35 " color: 35 label: "black      " textcolor: white }
+
+
+node: { loc: { x:  10 y: 310 } borderwidth: 0  
+        title: "A-1 " color: 0  
+        label: "We can also overwrite the default color map.\nIn this case not the color is used which is specified by name, but the color\nwhich happen to be at that color map position.\nFor instance if we now specify \fucolor: green\fn then the color \fb\f03beige\f35\fn is used,\nfor \fucolor: magenta\fn the color \fb\f05steel blue\f35\fn is used, for \fucyan\fn the color \fb\f06chocolate\f35\fn, ..." color: 11 }
+
+node: { loc: { x:  10 y: 400 } width: 140 title: "B0  " label: "old white      " color: white      }
+node: { loc: { x: 160 y: 400 } width: 140 title: "B1  " label: "old blue       " color: blue       textcolor: white }
+node: { loc: { x: 310 y: 400 } width: 140 title: "B2  " label: "old red        " color: red        }
+node: { loc: { x: 460 y: 400 } width: 140 title: "B3  " label: "old green      " color: green      }
+node: { loc: { x: 610 y: 400 } width: 140 title: "B4  " label: "old yellow     " color: yellow     }
+node: { loc: { x:  10 y: 430 } width: 140 title: "B5  " label: "old magenta    " color: magenta    }
+node: { loc: { x: 160 y: 430 } width: 140 title: "B6  " label: "old cyan       " color: cyan       textcolor: white }  
+node: { loc: { x: 310 y: 430 } width: 140 title: "B7  " label: "old darkgrey   " color: darkgrey   }
+node: { loc: { x: 460 y: 430 } width: 140 title: "B8  " label: "old darkblue   " color: darkblue   }
+node: { loc: { x: 610 y: 430 } width: 140 title: "B9  " label: "old darkred    " color: darkred    }
+node: { loc: { x:  10 y: 460 } width: 140 title: "B10 " label: "old darkgreen  " color: darkgreen  textcolor: white }
+node: { loc: { x: 160 y: 460 } width: 140 title: "B11 " label: "old darkyellow " color: darkyellow }
+node: { loc: { x: 310 y: 460 } width: 140 title: "B12 " label: "old darkmagenta" color: darkmagenta}
+node: { loc: { x: 460 y: 460 } width: 140 title: "B13 " label: "old darkcyan   " color: darkcyan   }
+node: { loc: { x: 610 y: 460 } width: 140 title: "B14 " label: "old gold      " color: gold   }
+node: { loc: { x:  10 y: 490 } width: 140 title: "B15 " label: "old lightgrey  " color: lightgrey  }
+node: { loc: { x: 160 y: 490 } width: 140 title: "B16 " label: "old lightblue  " color: lightblue  textcolor: white }
+node: { loc: { x: 310 y: 490 } width: 140 title: "B17 " label: "old lightred   " color: lightred   }
+node: { loc: { x: 460 y: 490 } width: 140 title: "B18 " label: "old lightgreen " color: lightgreen }
+node: { loc: { x: 610 y: 490 } width: 140 title: "B19 " label: "old lightyellow" color: lightyellow}
+node: { loc: { x:  10 y: 520 } width: 140 title: "B20 " label: "old lightmagent" color: lightmagenta}
+node: { loc: { x: 160 y: 520 } width: 140 title: "B21 " label: "old lightcyan  " color: lightcyan  }
+node: { loc: { x: 310 y: 520 } width: 140 title: "B22 " label: "old lilac      " color: lilac      }
+node: { loc: { x: 460 y: 520 } width: 140 title: "B23 " label: "old turquoise  " color: turquoise  textcolor: white }
+node: { loc: { x: 610 y: 520 } width: 140 title: "B24 " label: "old aquamarine " color: aquamarine }
+node: { loc: { x:  10 y: 550 } width: 140 title: "B25 " label: "old khaki      " color: khaki      }
+node: { loc: { x: 160 y: 550 } width: 140 title: "B26 " label: "old purple     " color: purple     }
+node: { loc: { x: 310 y: 550 } width: 140 title: "B27 " label: "old yellowgreen" color: yellowgreen}
+node: { loc: { x: 460 y: 550 } width: 140 title: "B28 " label: "old pink       " color: pink       textcolor: white }
+node: { loc: { x: 610 y: 550 } width: 140 title: "B29 " label: "old orange     " color: orange     }
+node: { loc: { x:  10 y: 580 } width: 140 title: "B30 " label: "old orchid     " color: orchid     }
+node: { loc: { x: 160 y: 580 } width: 140 title: "B31 " label: "old black      " color: black      textcolor: white }
+
+}

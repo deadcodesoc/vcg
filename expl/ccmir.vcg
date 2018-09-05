@@ -1,0 +1,688 @@
+/* SCCS-info %W% %E% */
+/* $Id: ccmir.vcg,v 1.3 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { title: "f_mirout2vcg"
+
+height: 700
+width: 700
+x: 30
+y: 30
+stretch: 35 
+shrink: 100
+invisible: 1
+invisible: 2
+invisible: 3
+invisible: 4
+invisible: 5
+
+color: pink
+
+node: { title: "(@0):"
+label:
+"(@0):
+mirUNIT {
+Types = (@1)
+Sections = (@9)
+Globals = (@11)
+Procedures = (@12)
+Placed = (@35)
+Registers = (@36)
+}"
+}
+
+node: { title: "(@1):"
+label:
+"(@1):
+LIST_mirTYPE["
+}
+
+node: { title: "(list37):"
+label:
+"(list37):
+LIST_mirTYPE_ELEM:(@2)"
+}
+
+node: { title: "(list38):"
+label:
+"(list38):
+LIST_mirTYPE_ELEM:(@3)"
+}
+
+node: { title: "(list39):"
+label:
+"(list39):
+LIST_mirTYPE_ELEM:(@5)"
+}
+
+node: { title: "(list40):"
+label:
+"(list40):
+LIST_mirTYPE_ELEM:(@6)"
+}
+
+node: { title: "(list41):"
+label:
+"(list41):
+LIST_mirTYPE_ELEM:(@7)"
+}
+
+node: { title: "(list42):"
+label:
+"(list42):
+LIST_mirTYPE_ELEM:(@8)"
+}
+
+node: { title: "(list43):"
+label:
+"(list43):
+]LIST_mirTYPE"
+}
+
+node: { title: "(@2):"
+label:
+"(@2):
+mirInteger {
+Signed = TRUE
+TagSize = 0
+TagValue = 0
+Lwb = -2147483648
+Upb = 2147483647
+Alignment = 32
+AlignmentKnown = TRUE
+Size = 32
+SizeKnown = TRUE
+}"
+}
+
+node: { title: "(@3):"
+label:
+"(@3):
+mirProcType {
+ResultType = (@2)
+Params = (@4)
+MoreArgs = FALSE
+Alignment = 0
+AlignmentKnown = FALSE
+Size = 0
+SizeKnown = FALSE
+}"
+}
+
+node: { title: "(@4):"
+label:
+"(@4):
+LIST_mirParameter["
+}
+
+node: { title: "(list44):"
+label:
+"(list44):
+]LIST_mirParameter"
+}
+
+node: { title: "(@5):"
+label:
+"(@5):
+mirBasicBlockType {
+Alignment = 0
+AlignmentKnown = FALSE
+Size = 0
+SizeKnown = FALSE
+}"
+}
+
+node: { title: "(@6):"
+label:
+"(@6):
+mirPointer {
+RefType = (@2)
+Storable = TRUE
+TagSize = 0
+TagValue = 0
+Alignment = 32
+AlignmentKnown = TRUE
+Size = 32
+SizeKnown = TRUE
+}"
+}
+
+node: { title: "(@7):"
+label:
+"(@7):
+mirNoType {
+Alignment = 0
+AlignmentKnown = FALSE
+Size = 0
+SizeKnown = FALSE
+}"
+}
+
+node: { title: "(@8):"
+label:
+"(@8):
+mirPointer {
+RefType = (@5)
+Storable = FALSE
+TagSize = 0
+TagValue = 0
+Alignment = 0
+AlignmentKnown = FALSE
+Size = 0
+SizeKnown = FALSE
+}"
+}
+
+node: { title: "(@9):"
+label:
+"(@9):
+LIST_mirSection["
+}
+
+node: { title: "(list45):"
+label:
+"(list45):
+LIST_mirSection_ELEM:(@10)"
+}
+
+node: { title: "(list46):"
+label:
+"(list46):
+]LIST_mirSection"
+}
+
+node: { title: "(@10):"
+label:
+"(@10):
+mirSection {
+Sname = \".text\"
+}"
+}
+
+node: { title: "(@11):"
+label:
+"(@11):
+LIST_mirDataGlobal["
+}
+
+node: { title: "(list47):"
+label:
+"(list47):
+]LIST_mirDataGlobal"
+}
+
+node: { title: "(@12):"
+label:
+"(@12):
+LIST_mirProcGlobal["
+}
+
+node: { title: "(list48):"
+label:
+"(list48):
+LIST_mirProcGlobal_ELEM:(@13)"
+}
+
+node: { title: "(list49):"
+label:
+"(list49):
+]LIST_mirProcGlobal"
+}
+
+node: { title: "(@13):"
+label:
+"(@13):
+mirProcGlobal {
+Type = (@3)
+IsWriteOnce = TRUE
+IsVolatile = FALSE
+IsTempo = FALSE
+AddressKnown = FALSE
+UseEstimate = 0
+RegisterCandidacy = 0
+Name = \"main\"
+Linkage = ExportLinkage
+Section = (@10)
+Body = (@14)
+}"
+}
+
+node: { title: "(@14):"
+label:
+"(@14):
+mirProcBody {
+Locals = (@15)
+Parent = (@13)
+Level = 0
+LinearBlocks = (@18)
+}"
+}
+
+node: { title: "(@15):"
+label:
+"(@15):
+LIST_mirLocal["
+}
+
+node: { title: "(list50):"
+label:
+"(list50):
+LIST_mirLocal_ELEM:(@16)"
+}
+
+node: { title: "(list51):"
+label:
+"(list51):
+LIST_mirLocal_ELEM:(@17)"
+}
+
+node: { title: "(list52):"
+label:
+"(list52):
+]LIST_mirLocal"
+}
+
+node: { title: "(@16):"
+label:
+"(@16):
+mirLocal {
+Type = (@2)
+IsWriteOnce = FALSE
+IsVolatile = FALSE
+IsTempo = FALSE
+AddressKnown = TRUE
+UseEstimate = 0
+RegisterCandidacy = 1
+Procedure = (@13)
+Offset = -64
+}"
+}
+
+node: { title: "(@17):"
+label:
+"(@17):
+mirLocal {
+Type = (@2)
+IsWriteOnce = FALSE
+IsVolatile = FALSE
+IsTempo = TRUE
+AddressKnown = TRUE
+UseEstimate = 0
+RegisterCandidacy = 500
+Procedure = (@13)
+Offset = -96
+}"
+}
+
+node: { title: "(@18):"
+label:
+"(@18):
+LIST_mirBasicBlock["
+}
+
+node: { title: "(list53):"
+label:
+"(list53):
+LIST_mirBasicBlock_ELEM:(@19)"
+}
+
+node: { title: "(list54):"
+label:
+"(list54):
+LIST_mirBasicBlock_ELEM:(@32)"
+}
+
+node: { title: "(list55):"
+label:
+"(list55):
+]LIST_mirBasicBlock"
+}
+
+node: { title: "(@19):"
+label:
+"(@19):
+mirBasicBlock {
+Type = (@5)
+IsWriteOnce = TRUE
+IsVolatile = FALSE
+IsTempo = TRUE
+AddressKnown = FALSE
+UseEstimate = 0
+RegisterCandidacy = 0
+Name = \"<basic block>\"
+Linkage = StaticLinkage
+Section = (@10)
+Stmts = (@20)
+}"
+}
+
+node: { title: "(@20):"
+label:
+"(@20):
+LIST_mirSTMT["
+}
+
+node: { title: "(list56):"
+label:
+"(list56):
+LIST_mirSTMT_ELEM:(@21)"
+}
+
+node: { title: "(list57):"
+label:
+"(list57):
+LIST_mirSTMT_ELEM:(@22)"
+}
+
+node: { title: "(list58):"
+label:
+"(list58):
+LIST_mirSTMT_ELEM:(@26)"
+}
+
+node: { title: "(list59):"
+label:
+"(list59):
+LIST_mirSTMT_ELEM:(@29)"
+}
+
+node: { title: "(list60):"
+label:
+"(list60):
+LIST_mirSTMT_ELEM:(@30)"
+}
+
+node: { title: "(list61):"
+label:
+"(list61):
+]LIST_mirSTMT"
+}
+
+node: { title: "(@21):"
+label:
+"(@21):
+mirBeginProcedure {
+}"
+}
+
+node: { title: "(@22):"
+label:
+"(@22):
+mirAssign {
+Lhs = (@23)
+Rhs = (@25)
+}"
+}
+
+node: { title: "(@23):"
+label:
+"(@23):
+mirObjectAddr {
+Obj = (@17)
+Type = (@6)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Variant
+UseCount = 0
+}"
+}
+
+node: { title: "(@24):"
+label:
+"(@24):
+mirNoExpr {
+Type = (@7)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Invariant
+UseCount = 0
+}"
+}
+
+node: { title: "(@25):"
+label:
+"(@25):
+mirIntConst {
+Value = 10
+Type = (@2)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Constant
+UseCount = 0
+}"
+}
+
+node: { title: "(@26):"
+label:
+"(@26):
+mirAssign {
+Lhs = (@27)
+Rhs = (@28)
+}"
+}
+
+node: { title: "(@27):"
+label:
+"(@27):
+mirObjectAddr {
+Obj = (@16)
+Type = (@6)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Variant
+UseCount = 0
+}"
+}
+
+node: { title: "(@28):"
+label:
+"(@28):
+mirContent {
+Addr = (@23)
+Type = (@2)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Variant
+UseCount = 0
+}"
+}
+
+node: { title: "(@29):"
+label:
+"(@29):
+mirEvaluate {
+Expr = (@28)
+}"
+}
+
+node: { title: "(@30):"
+label:
+"(@30):
+mirGoto {
+Target = (@31)
+}"
+}
+
+node: { title: "(@31):"
+label:
+"(@31):
+mirObjectAddr {
+Obj = (@32)
+Type = (@8)
+Group = FALSE
+Checked = FALSE
+OnError = (@24)
+Variance = Constant
+UseCount = 0
+}"
+}
+
+node: { title: "(@32):"
+label:
+"(@32):
+mirBasicBlock {
+Name = \"<basic block>\"
+Linkage = StaticLinkage
+Section = (@10)
+Stmts = (@33)
+Type = (@5)
+IsWriteOnce = TRUE
+IsVolatile = FALSE
+IsTempo = TRUE
+AddressKnown = FALSE
+UseEstimate = 0
+RegisterCandidacy = 0
+}"
+}
+
+node: { title: "(@33):"
+label:
+"(@33):
+LIST_mirSTMT["
+}
+
+node: { title: "(list62):"
+label:
+"(list62):
+LIST_mirSTMT_ELEM:(@34)"
+}
+
+node: { title: "(list63):"
+label:
+"(list63):
+]LIST_mirSTMT"
+}
+
+node: { title: "(@34):"
+label:
+"(@34):
+mirEndProcedure {
+}"
+}
+
+node: { title: "(@35):"
+label:
+"(@35):
+LIST_mirPlaced["
+}
+
+node: { title: "(list64):"
+label:
+"(list64):
+]LIST_mirPlaced"
+}
+
+node: { title: "(@36):"
+label:
+"(@36):
+LIST_mirRegister["
+}
+
+node: { title: "(list65):"
+label:
+"(list65):
+]LIST_mirRegister"
+}
+
+
+
+edge:{ color: blue sourcename: "(@0):" targetname: "(@1):" class: 9 anchor: 3 }
+edge:{ color: blue sourcename: "(@0):" targetname: "(@9):" class: 9 anchor: 4 }
+edge:{ color: blue sourcename: "(@0):" targetname: "(@11):" class: 9 anchor: 5 }
+edge:{ color: blue sourcename: "(@0):" targetname: "(@12):" class: 9 anchor: 6 }
+edge:{ color: blue sourcename: "(@0):" targetname: "(@35):" class: 9 anchor: 7 }
+edge:{ color: blue sourcename: "(@0):" targetname: "(@36):" class: 9 anchor: 8 }
+edge:{ color: blue sourcename: "(@1):" targetname: "(list37):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list37):" targetname: "(@2):" class: 5 anchor: 2 }
+edge:{ color: blue sourcename: "(list37):" targetname: "(list38):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list38):" targetname: "(@3):" class: 5 anchor: 2 }
+edge:{ color: blue sourcename: "(list38):" targetname: "(list39):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list39):" targetname: "(@5):" class: 5 anchor: 2 }
+edge:{ color: blue sourcename: "(list39):" targetname: "(list40):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list40):" targetname: "(@6):" class: 5 anchor: 2 }
+edge:{ color: blue sourcename: "(list40):" targetname: "(list41):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list41):" targetname: "(@7):" class: 1 anchor: 2 }
+edge:{ color: blue sourcename: "(list41):" targetname: "(list42):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list42):" targetname: "(@8):" class: 5 anchor: 2 }
+edge:{ color: blue sourcename: "(list42):" targetname: "(list43):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@3):" targetname: "(@2):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@3):" targetname: "(@4):" class: 9 anchor: 4 }
+edge:{ color: blue sourcename: "(@4):" targetname: "(list44):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@6):" targetname: "(@2):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@8):" targetname: "(@5):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@9):" targetname: "(list45):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list45):" targetname: "(@10):" class: 2 anchor: 2 }
+edge:{ color: blue sourcename: "(list45):" targetname: "(list46):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@11):" targetname: "(list47):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@12):" targetname: "(list48):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list48):" targetname: "(@13):" class: 9 anchor: 2 }
+edge:{ color: blue sourcename: "(list48):" targetname: "(list49):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@13):" targetname: "(@3):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@13):" targetname: "(@10):" class: 2 anchor: 12 }
+edge:{ color: blue sourcename: "(@13):" targetname: "(@14):" class: 9 anchor: 13 }
+edge:{ color: blue sourcename: "(@14):" targetname: "(@15):" class: 9 anchor: 3 }
+edge:{ color: blue sourcename: "(@14):" targetname: "(@13):" class: 3 anchor: 4 }
+edge:{ color: blue sourcename: "(@14):" targetname: "(@18):" class: 9 anchor: 6 }
+edge:{ color: blue sourcename: "(@15):" targetname: "(list50):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list50):" targetname: "(@16):" class: 4 anchor: 2 }
+edge:{ color: blue sourcename: "(list50):" targetname: "(list51):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list51):" targetname: "(@17):" class: 4 anchor: 2 }
+edge:{ color: blue sourcename: "(list51):" targetname: "(list52):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@16):" targetname: "(@2):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@16):" targetname: "(@13):" class: 9 anchor: 10 }
+edge:{ color: blue sourcename: "(@17):" targetname: "(@2):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@17):" targetname: "(@13):" class: 9 anchor: 10 }
+edge:{ color: blue sourcename: "(@18):" targetname: "(list53):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list53):" targetname: "(@19):" class: 9 anchor: 2 }
+edge:{ color: blue sourcename: "(list53):" targetname: "(list54):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list54):" targetname: "(@32):" class: 9 anchor: 2 }
+edge:{ color: blue sourcename: "(list54):" targetname: "(list55):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@19):" targetname: "(@5):" class: 5 anchor: 3 }
+edge:{ color: blue sourcename: "(@19):" targetname: "(@10):" class: 2 anchor: 12 }
+edge:{ color: blue sourcename: "(@19):" targetname: "(@20):" class: 9 anchor: 13 }
+edge:{ color: blue sourcename: "(@20):" targetname: "(list56):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list56):" targetname: "(@21):" class: 7 anchor: 2 }
+edge:{ color: blue sourcename: "(list56):" targetname: "(list57):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list57):" targetname: "(@22):" class: 7 anchor: 2 }
+edge:{ color: blue sourcename: "(list57):" targetname: "(list58):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list58):" targetname: "(@26):" class: 7 anchor: 2 }
+edge:{ color: blue sourcename: "(list58):" targetname: "(list59):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list59):" targetname: "(@29):" class: 9 anchor: 2 }
+edge:{ color: blue sourcename: "(list59):" targetname: "(list60):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list60):" targetname: "(@30):" class: 7 anchor: 2 }
+edge:{ color: blue sourcename: "(list60):" targetname: "(list61):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@22):" targetname: "(@23):" class: 6 anchor: 3 }
+edge:{ color: blue sourcename: "(@22):" targetname: "(@25):" class: 6 anchor: 4 }
+edge:{ color: blue sourcename: "(@23):" targetname: "(@17):" class: 4 anchor: 3 }
+edge:{ color: blue sourcename: "(@23):" targetname: "(@6):" class: 5 anchor: 4 }
+edge:{ color: blue sourcename: "(@23):" targetname: "(@24):" class: 1 anchor: 7 }
+edge:{ color: blue sourcename: "(@24):" targetname: "(@7):" class: 1 anchor: 3 }
+edge:{ color: blue sourcename: "(@24):" targetname: "(@24):" class: 1 anchor: 6 }
+edge:{ color: blue sourcename: "(@25):" targetname: "(@2):" class: 5 anchor: 4 }
+edge:{ color: blue sourcename: "(@25):" targetname: "(@24):" class: 1 anchor: 7 }
+edge:{ color: blue sourcename: "(@26):" targetname: "(@27):" class: 6 anchor: 3 }
+edge:{ color: blue sourcename: "(@26):" targetname: "(@28):" class: 6 anchor: 4 }
+edge:{ color: blue sourcename: "(@27):" targetname: "(@16):" class: 4 anchor: 3 }
+edge:{ color: blue sourcename: "(@27):" targetname: "(@6):" class: 5 anchor: 4 }
+edge:{ color: blue sourcename: "(@27):" targetname: "(@24):" class: 1 anchor: 7 }
+edge:{ color: blue sourcename: "(@28):" targetname: "(@23):" class: 6 anchor: 3 }
+edge:{ color: blue sourcename: "(@28):" targetname: "(@2):" class: 5 anchor: 4 }
+edge:{ color: blue sourcename: "(@28):" targetname: "(@24):" class: 1 anchor: 7 }
+edge:{ color: blue sourcename: "(@29):" targetname: "(@28):" class: 6 anchor: 3 }
+edge:{ color: blue sourcename: "(@30):" targetname: "(@31):" class: 6 anchor: 3 }
+edge:{ color: blue sourcename: "(@31):" targetname: "(@32):" class: 9 anchor: 3 }
+edge:{ color: blue sourcename: "(@31):" targetname: "(@8):" class: 5 anchor: 4 }
+edge:{ color: blue sourcename: "(@31):" targetname: "(@24):" class: 1 anchor: 7 }
+edge:{ color: blue sourcename: "(@32):" targetname: "(@10):" class: 2 anchor: 5 }
+edge:{ color: blue sourcename: "(@32):" targetname: "(@33):" class: 9 anchor: 6 }
+edge:{ color: blue sourcename: "(@32):" targetname: "(@5):" class: 5 anchor: 7 }
+edge:{ color: blue sourcename: "(@33):" targetname: "(list62):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(list62):" targetname: "(@34):" class: 7 anchor: 2 }
+edge:{ color: blue sourcename: "(list62):" targetname: "(list63):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@35):" targetname: "(list64):" class: 8 priority: 40 }
+edge:{ color: blue sourcename: "(@36):" targetname: "(list65):" class: 8 priority: 40 }
+}

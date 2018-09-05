@@ -1,0 +1,28 @@
+#!/bin/csh
+# SCCS-info %W% %E%
+# $Id: ultrixpreconf,v 1.1 1994/08/02 15:36:12 sander Exp $
+
+cp preconf/grammar.h .
+cp preconf/grammar.y .
+cp preconf/grammar.l .
+
+chmod 666  grammar.h 
+chmod 666  grammar.y 
+chmod 666  grammar.l 
+
+touch grammar.h 
+touch grammar.y 
+touch grammar.l 
+
+cp preconf/y.tab.c .
+cp preconf/y.tab.h .
+cp preconf/lex.yy.c .
+
+chmod 666  y.tab.c 
+chmod 666  y.tab.h 
+chmod 666  lex.yy.c 
+
+touch y.tab.c 
+touch y.tab.h 
+touch lex.yy.c 
+

@@ -1,0 +1,215 @@
+/* SCCS-info %W% %E% */
+/* $Id: flchrt.vcg,v 1.3 1995/02/09 19:49:49 sander Exp $ */
+
+graph: { 
+title: "Control Flow Graph for Zeroin"
+layoutalgorithm: minbackward
+manhatten_edges: yes
+x: 30
+y: 30
+height: 700
+width: 700
+stretch: 11
+shrink: 100
+xbase: 50
+ybase: 100
+yspace: 90
+xspace: 25
+xlspace: 25 
+pmax: 2 
+layout_nearfactor: 0 
+
+color: black
+node.color: lightyellow
+node.bordercolor: lightred
+node.textcolor: red
+edge.color: cyan
+node: { title: "01" label: "ZEROIN" shape: ellipse }
+node: { title: "02" label: "EPS = 1.0" }
+node: { title: "03" label: "10:  EPS = EPS/2.0" }
+node: { title: "04" label: "TOL1 = 1.0 + EPS" }
+node: { title: "05" label: "      IF       \n(TOL1 .GT. 1.0)" shape: rhomb color: lightgreen }
+node: { title: "06" label: "    IF     \n(IP .EQ. 1)" shape: rhomb color: lightgreen }
+node: { title: "07" label: "WRITE (6, 11)" }
+node: { title: "08" label: "A = AX\nB = BX\nFA = F(A)\nFB = F(B)" }
+node: { title: "09" label: "20:  C = A" }
+node: { title: "10" label: "FC = FA\nD = B - A\nE = D" }
+node: { title: "11" label: "30" }
+node: { title: "12" label: "    IF     \n(IP .EQ. 1)" shape: rhomb color: lightgreen }
+node: { title: "13" label: "WRITE (6, 31) B, C" }
+node: { title: "14" label: "          IF          \n(ABS(FC) .GE. ABS(FB))" shape: rhomb color: lightgreen }
+node: { title: "15" label: "A = B\nB = C\nC = A\nFA = FB\nFB = FC\nFA = FA" }
+node: { title: "16" label: "40:  TOL1 = 2.0*EPS*ABS(B) + 0.5*TOL" }
+node: { title: "17" label: "XM = .5*(C-B)" }
+node: { title: "18" label: "        IF         \n(ABS(XM) .LE. TOL1)" shape: rhomb color: lightgreen }
+node: { title: "19" label: "90" }
+node: { title: "20" label: "ZEROIN = B" }
+node: { title: "21" label: "EXIT" shape: ellipse }
+node: { title: "22" label: "     IF      \n(FB .EQ. 0.0)" shape: rhomb color: lightgreen }
+node: { title: "23" label: "        IF        \n(ABS(E) .LT. TOL1)" shape: rhomb color: lightgreen }
+node: { title: "24" label: "          IF          \n(ABS(FA) .LE. ABS(FB))" shape: rhomb color: lightgreen }
+node: { title: "25" label: "    IF    \n(A .NE. C)" }
+node: { title: "26" label: "50:  Q = FB/FA" }
+node: { title: "27" label: "R = FB/FC\nS = FB/FA\nP = S*(2.0*XM*Q*(Q-R) - (B - A) * (R-1.0))\nQ = (Q-1.0)*(R-1.0)*(S-1.0)" }
+node: { title: "28" label: "S = FB/FA\nP = 2.0*XM*S\nQ = 1.0 - S" }
+node: { title: "29" label: "60" }
+node: { title: "30" label: "     IF     \n(P .GE. 0.0)" shape: rhomb color: lightgreen }
+node: { title: "31" label: "Q = -Q" }
+node: { title: "32" label: "P = ABS(P)" }
+node: { title: "33" label: "                   IF                  \n((2.0*P) .GE. (3.0*XM*Q - ABS(TOL1*Q)))" shape: rhomb color: lightgreen }
+node: { title: "34" label: "          IF         \n(P .GE. ABS(0.5*E*Q))" shape: rhomb color: lightgreen }
+node: { title: "35" label: "70:  D = XM" }
+node: { title: "37" label: "E = D" }
+node: { title: "38" label: "80:  A = B" }
+node: { title: "39" label: "FA = FB" }
+node: { title: "40" label: "        IF        \n(ABS(B) .GE. TOL1)" shape: rhomb color: lightgreen }
+node: { title: "41" label: "B = B + D" }
+node: { title: "42" label: "        IF        \n(ABS(D) .LE. TOL1)" shape: rhomb color: lightgreen }
+node: { title: "43" label: "B = B + SIGN(TOL1,XM)" }
+node: { title: "44" label: "FB = F(B)" horizontal_order: 2 }
+node: { title: "45" label: "             IF             \n((FB*(FC/ABS(FC))) .GT. 0.0)" shape: rhomb color: lightgreen }
+
+edge: { sourcename: "01" targetname:"02" }
+edge: { sourcename: "02" targetname:"03" }
+edge: { sourcename: "03" targetname:"04" }
+edge: { sourcename: "04" targetname:"05" }
+node: { title: "05T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "05F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "05" targetname:"05T" arrowsize: 1 }
+nearedge: { sourcename: "05" targetname:"05F" arrowsize: 1 }
+edge: { sourcename: "05F" targetname:"06" }
+edge: { sourcename: "05T" targetname:"03" }
+
+node: { title: "06T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "06F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "06" targetname:"06T" arrowsize: 1 }
+nearedge: { sourcename: "06" targetname:"06F" arrowsize: 1 }
+edge: { sourcename: "06T" targetname:"07" }
+edge: { sourcename: "06F" targetname:"08" }
+
+edge: { sourcename: "07" targetname:"08" }
+edge: { sourcename: "08" targetname:"09" }
+edge: { sourcename: "09" targetname:"10" }
+edge: { sourcename: "10" targetname:"11" }
+edge: { sourcename: "11" targetname:"12" }
+
+node: { title: "12T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "12F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "12" targetname:"12T" arrowsize: 1 }
+nearedge: { sourcename: "12" targetname:"12F" arrowsize: 1 }
+edge: { sourcename: "12T" targetname:"13" }
+edge: { sourcename: "12F" targetname:"14" }
+
+edge: { sourcename: "13" targetname:"14" }
+node: { title: "14T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "14F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "14" targetname:"14T" arrowsize: 1 }
+nearedge: { sourcename: "14" targetname:"14F" arrowsize: 1 }
+edge: { sourcename: "14F" targetname:"15" }
+edge: { sourcename: "14T" targetname:"16" }
+
+edge: { sourcename: "15" targetname:"16" }
+edge: { sourcename: "16" targetname:"17" }
+edge: { sourcename: "17" targetname:"18" }
+node: { title: "18T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "18F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "18" targetname:"18T" arrowsize: 1 }
+nearedge: { sourcename: "18" targetname:"18F" arrowsize: 1 }
+edge: { sourcename: "18T" targetname:"19" }
+edge: { sourcename: "18F" targetname:"22" }
+
+edge: { sourcename: "19" targetname:"20" }
+edge: { sourcename: "20" targetname:"21" }
+node: { title: "22T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "22F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "22" targetname:"22T" arrowsize: 1 }
+nearedge: { sourcename: "22" targetname:"22F" arrowsize: 1 }
+edge: { sourcename: "22F" targetname:"23" }
+edge: { sourcename: "22T" targetname:"19" }
+
+node: { title: "23T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "23F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "23" targetname:"23T" arrowsize: 1 }
+nearedge: { sourcename: "23" targetname:"23F" arrowsize: 1 }
+edge: { sourcename: "23F" targetname:"24" }
+edge: { sourcename: "23T" targetname:"35" }
+
+node: { title: "24T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "24F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "24" targetname:"24T" arrowsize: 1 }
+nearedge: { sourcename: "24" targetname:"24F" arrowsize: 1 }
+edge: { sourcename: "24F" targetname:"25" }
+edge: { sourcename: "24T" targetname:"35" }
+
+node: { title: "25T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "25F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "25" targetname:"25T" arrowsize: 1 }
+nearedge: { sourcename: "25" targetname:"25F" arrowsize: 1 }
+edge: { sourcename: "25T" targetname:"26" }
+edge: { sourcename: "25F" targetname:"28" }
+
+edge: { sourcename: "26" targetname:"27" }
+
+edge: { sourcename: "27" targetname:"29" }
+
+edge: { sourcename: "28" targetname:"29" }
+edge: { sourcename: "29" targetname:"30" }
+node: { title: "30T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "30F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "30" targetname:"30T" arrowsize: 1 }
+nearedge: { sourcename: "30" targetname:"30F" arrowsize: 1 }
+edge: { sourcename: "30T" targetname:"31" }
+edge: { sourcename: "30F" targetname:"32" }
+
+edge: { sourcename: "31" targetname:"32" }
+edge: { sourcename: "32" targetname:"33" }
+node: { title: "33T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "33F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "33" targetname:"33T" arrowsize: 1 }
+nearedge: { sourcename: "33" targetname:"33F" arrowsize: 1 }
+edge: { sourcename: "33F" targetname:"34" }
+edge: { sourcename: "33T" targetname:"35" }
+
+node: { title: "34T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "34F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "34" targetname:"34T" arrowsize: 1 }
+nearedge: { sourcename: "34" targetname:"34F" arrowsize: 1 }
+edge: { sourcename: "34T" targetname:"35" }
+edge: { sourcename: "34F" targetname:"38" }
+
+edge: { sourcename: "35" targetname:"37" }
+
+edge: { sourcename: "37" targetname:"38" }
+edge: { sourcename: "38" targetname:"39" }
+edge: { sourcename: "39" targetname:"40" }
+node: { title: "40T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "40F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "40" targetname:"40T" arrowsize: 1 }
+nearedge: { sourcename: "40" targetname:"40F" arrowsize: 1 }
+edge: { sourcename: "40T" targetname:"41" }
+edge: { sourcename: "40F" targetname:"42" }
+
+edge: { sourcename: "41" targetname:"42" }
+node: { title: "42T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "42F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "42" targetname:"42T" arrowsize: 1 }
+nearedge: { sourcename: "42" targetname:"42F" arrowsize: 1 }
+edge: { sourcename: "42T" targetname:"43" }
+edge: { sourcename: "42F" targetname:"44" }
+
+edge: { sourcename: "43" targetname:"44" }
+edge: { sourcename: "44" targetname:"45" }
+
+node: { title: "45T" label: "T" borderwidth: 0  textcolor: cyan color: black}
+node: { title: "45F" label: "F" borderwidth: 0  textcolor: cyan color: black}
+nearedge: { sourcename: "45" targetname:"45F" arrowsize: 1 }
+nearedge: { sourcename: "45" targetname:"45T" arrowsize: 1 }
+node: { title: "45TT" label: "" horizontal_order: 1 level: 38 borderwidth: 0  textcolor: cyan color: blackwidth:0 height:0 }
+node: { title: "45FF" label: "" horizontal_order: 3 level: 38 borderwidth: 0  textcolor: cyan color: blackwidth:0 height:0 }
+edge: { sourcename: "45F" targetname:"45FF" arrowsize: 1 }
+edge: { sourcename: "45T" targetname:"45TT" arrowsize: 1 }
+edge: { sourcename: "45FF" targetname:"11" }
+edge: { sourcename: "45TT" targetname:"09" }
+
+}
+

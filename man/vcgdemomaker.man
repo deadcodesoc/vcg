@@ -1,0 +1,105 @@
+.Id SCCS-info %W% %E% 
+.Id $Id: vcgdemomaker.man,v 1.3 1995/01/05 19:52:26 sander Exp $
+.TH VCGDEMOMAKER 1l 1995/01/05 "Release 1.3" 
+.SH NAME
+vcgdemomaker \- produces demo specifications for 
+.I vcg 
+.SH SYNOPSIS
+.B vcgdemomaker 
+outfile mode size
+.SH DESCRIPTION
+.I Vcgdemomaker 
+creates a 
+.I vcg 
+specification and writes it to 
+.I outfile.
+The 
+.I mode
+determines the kind of specification and
+.I size
+the size of the specified graph.
+The specification can be read and visualized by the
+.I VCG tool.
+.SH MODI 
+.TP 1.0i
+.B -unarytree
+generates an unary tree, i.e. a linear sequence of nodes.
+.I size
+is the number of nodes - 1, i.e. the depth of the tree. 
+.TP
+.B -binarytree 
+generates a binary tree of depth
+.I size.
+Each node has two successors.
+.TP
+.B -ternarytree 
+generates a ternary tree of depth
+.I size.
+Each node has 3 successors.
+.TP
+.B -leveltree 
+generates a leveled tree of depth
+.I size.
+Each node has 2 normal successors, and further a list of
+nodes as successors at the same level to the left and right.
+These lists contain at most 2 nodes, which itself are 
+leveled trees.
+These trees are used to check the 
+.I nearedge
+feature.
+.TP
+.B -twolevelcross
+generates a cross graph.
+This is a bipartitioned graph of connected parts of 4 nodes
+forming a cross.
+.I Size
+is the number of nodes and should be even.
+This graph is generated in an ugly format to check
+the algorithm of reducing of crossing in the
+.I VCG tool.
+.TP
+.B -allconnect
+generates a graph where all pairs of node form an edge.
+.I Size
+is the number of nodes.
+Note that if we have n nodes, we have about n*n/2 edges
+which is a lot.
+Thus it is recommended not to use this with more than 40 nodes.
+.TP
+.B -netgraph 
+generates a regular 4-ary network of triangular shape with about
+.I size
+nodes. This mesh graph can be used to check the capacity of the tool,
+the view mechanism and  
+the algorithm of reducing of crossing in the
+.I VCG tool.
+.TP
+.B -randomgraph
+generates a randomized 4-ary network.
+Starting from the regular 4-ary network of triangular shape with about
+.I size
+nodes, this network is produced by creating random holes.
+Thus, this graph has less than
+.I size
+nodes.
+.TP
+.B -net2graph 
+generates a regular 4-ary network of rhomboid shape with about
+.I size
+nodes.  
+.TP
+.B -random2graph
+generates a randomized 4-ary network.
+Starting from the regular 4-ary network of rhomboid shape with about
+.I size
+nodes, this network is produced by creating random holes.
+Thus, this graph has less than
+.I size
+nodes.
+.SH SEE ALSO
+vcg(l)
+.SH BUGS
+Currently, no bugs are known.
+.SH AUTHOR
+Georg Sander, University of Saarland.
+

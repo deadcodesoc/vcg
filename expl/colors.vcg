@@ -1,0 +1,109 @@
+/* SCCS-info %W% %E% */
+/* $Id: colors.vcg,v 1.4 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { 
+title: "Colortest1"
+x: 30
+y: 30
+height: 700
+width: 700
+
+color: pink
+
+node: { loc: { x: 10  y: 10  } width: 140 title: "A1black" label: "black" color: black textcolor: white }
+node: { loc: { x: 160  y: 10  } width: 140 title: "A1blue" label: "blue" color: blue }
+node: { loc: { x: 310  y: 10  } width: 140 title: "A1red" label: "red" color: red }
+node: { loc: { x: 460  y: 10  } width: 140 title: "A1green" label: "green" color: green }
+node: { loc: { x: 610  y: 10  } width: 140 title: "A1yellow" label: "yellow" color: yellow }
+node: { loc: { x: 10  y: 40  } width: 140 title: "A1magenta" label: "magenta" color: magenta }
+node: { loc: { x: 160  y: 40  } width: 140 title: "A1cyan" label: "cyan" color: cyan }
+node: { loc: { x: 310  y: 40  } width: 140 title: "A1white" label: "white" color: white }
+node: { loc: { x: 460  y: 40  } width: 140 title: "A1darkgrey" label: "darkgrey" color: darkgrey textcolor: white }
+node: { loc: { x: 610  y: 40  } width: 140 title: "A1darkblue" label: "darkblue" color: darkblue textcolor: white }
+node: { loc: { x: 10  y: 70  } width: 140 title: "A1darkred" label: "darkred" color: darkred textcolor: white }
+node: { loc: { x: 160  y: 70  } width: 140 title: "A1darkgreen" label: "darkgreen" color: darkgreen textcolor: white }
+node: { loc: { x: 310  y: 70  } width: 140 title: "A1darkyellow" label: "darkyellow" color: darkyellow textcolor: white }
+node: { loc: { x: 460  y: 70  } width: 140 title: "A1darkmagenta" label: "darkmagenta" color: darkmagenta textcolor: white }
+node: { loc: { x: 610  y: 70  } width: 140 title: "A1darkcyan" label: "darkcyan" color: darkcyan textcolor: white }
+node: { loc: { x: 10  y: 100  } width: 140 title: "A1gold" label: "gold" color: gold }
+node: { loc: { x: 160  y: 100  } width: 140 title: "A1lightgrey" label: "lightgrey" color: lightgrey }
+node: { loc: { x: 310  y: 100  } width: 140 title: "A1lightblue" label: "lightblue" color: lightblue }
+node: { loc: { x: 460  y: 100  } width: 140 title: "A1lightred" label: "lightred" color: lightred }
+node: { loc: { x: 610  y: 100  } width: 140 title: "A1lightgreen" label: "lightgreen" color: lightgreen }
+node: { loc: { x: 10  y: 130  } width: 140 title: "A1lightyellow" label: "lightyellow" color: lightyellow }
+node: { loc: { x: 160  y: 130  } width: 140 title: "A1lightmagenta" label: "lightmagenta" color: lightmagenta }
+node: { loc: { x: 310  y: 130  } width: 140 title: "A1lightcyan" label: "lightcyan" color: lightcyan }
+node: { loc: { x: 460  y: 130  } width: 140 title: "A1lilac" label: "lilac" color: lilac }
+node: { loc: { x: 610  y: 130  } width: 140 title: "A1turquoise" label: "turquoise" color: turquoise }
+node: { loc: { x: 10  y: 160  } width: 140 title: "A1aquamarine" label: "aquamarine" color: aquamarine }
+node: { loc: { x: 160  y: 160  } width: 140 title: "A1khaki" label: "khaki" color: khaki }
+node: { loc: { x: 310  y: 160  } width: 140 title: "A1purple" label: "purple" color: purple }
+node: { loc: { x: 460  y: 160  } width: 140 title: "A1yellowgreen" label: "yellowgreen" color: yellowgreen }
+node: { loc: { x: 610  y: 160  } width: 140 title: "A1pink" label: "pink" color: pink }
+node: { loc: { x: 10  y: 190  } width: 140 title: "A1orange" label: "orange" color: orange }
+node: { loc: { x: 160  y: 190  } width: 140 title: "A1orchid" label: "orchid" color: orchid }
+
+
+
+node: { loc: { x: 10  y: 220  } width: 140 title: "A2black" label: "black" textcolor: black }
+node: { loc: { x: 160  y: 220  } width: 140 title: "A2blue" label: "blue" textcolor: blue }
+node: { loc: { x: 310  y: 220  } width: 140 title: "A2red" label: "red" textcolor: red }
+node: { loc: { x: 460  y: 220  } width: 140 title: "A2green" label: "green" textcolor: green color: black }
+node: { loc: { x: 610  y: 220  } width: 140 title: "A2yellow" label: "yellow" textcolor: yellow color: black }
+node: { loc: { x: 10  y: 250  } width: 140 title: "A2magenta" label: "magenta" textcolor: magenta }
+node: { loc: { x: 160  y: 250  } width: 140 title: "A2cyan" label: "cyan" textcolor: cyan color: black }
+node: { loc: { x: 310  y: 250  } width: 140 title: "A2white" label: "white" textcolor: white color: black }
+node: { loc: { x: 460  y: 250  } width: 140 title: "A2darkgrey" label: "darkgrey" textcolor: darkgrey }
+node: { loc: { x: 610  y: 250  } width: 140 title: "A2darkblue" label: "darkblue" textcolor: darkblue }
+node: { loc: { x: 10  y: 280  } width: 140 title: "A2darkred" label: "darkred" textcolor: darkred }
+node: { loc: { x: 160  y: 280  } width: 140 title: "A2darkgreen" label: "darkgreen" textcolor: darkgreen }
+node: { loc: { x: 310  y: 280  } width: 140 title: "A2darkyellow" label: "darkyellow" textcolor: darkyellow }
+node: { loc: { x: 460  y: 280  } width: 140 title: "A2darkmagenta" label: "darkmagenta" textcolor: darkmagenta }
+node: { loc: { x: 610  y: 280  } width: 140 title: "A2darkcyan" label: "darkcyan" textcolor: darkcyan }
+node: { loc: { x: 10  y: 310  } width: 140 title: "A2gold" label: "gold" textcolor: gold }
+node: { loc: { x: 160  y: 310  } width: 140 title: "A2lightgrey" label: "lightgrey" textcolor: lightgrey color: black}
+node: { loc: { x: 310  y: 310  } width: 140 title: "A2lightblue" label: "lightblue" textcolor: lightblue color: black}
+node: { loc: { x: 460  y: 310  } width: 140 title: "A2lightred" label: "lightred" textcolor: lightred color: black}
+node: { loc: { x: 610  y: 310  } width: 140 title: "A2lightgreen" label: "lightgreen" textcolor: lightgreen color: black}
+node: { loc: { x: 10  y: 340  } width: 140 title: "A2lightyellow" label: "lightyellow" textcolor: lightyellow color: black}
+node: { loc: { x: 160  y: 340  } width: 140 title: "A2lightmagenta" label: "lightmagenta" textcolor: lightmagenta color: black}
+node: { loc: { x: 310  y: 340  } width: 140 title: "A2lightcyan" label: "lightcyan" textcolor: lightcyan color: black}
+node: { loc: { x: 460  y: 340  } width: 140 title: "A2lilac" label: "lilac" textcolor: lilac }
+node: { loc: { x: 610  y: 340  } width: 140 title: "A2turquoise" label: "turquoise" textcolor: turquoise color: black}
+node: { loc: { x: 10  y: 370  } width: 140 title: "A2aquamarine" label: "aquamarine" textcolor: aquamarine color: black}
+node: { loc: { x: 160  y: 370  } width: 140 title: "A2khaki" label: "khaki" textcolor: khaki color: black}
+node: { loc: { x: 310  y: 370  } width: 140 title: "A2purple" label: "purple" textcolor: purple }
+node: { loc: { x: 460  y: 370  } width: 140 title: "A2yellowgreen" label: "yellowgreen" textcolor: yellowgreen }
+node: { loc: { x: 610  y: 370  } width: 140 title: "A2pink" label: "pink" textcolor: pink color: black}
+node: { loc: { x: 10  y: 400  } width: 140 title: "A2orange" label: "orange" textcolor: orange }
+node: { loc: { x: 160  y: 400  } width: 140 title: "A2orchid" label: "orchid" textcolor: orchid }
+
+
+node: { loc: { x: 10 y: 430 }
+	title: "MM"
+	textcolor: darkgrey 
+	color: lightyellow
+	bordercolor: blue
+	label:
+"Many ucolorsn in the same node
+02red01 blue10 darkgreen
+30uunderlinedn nonunderlined
+\fbbold \fuunderlined\fn and normal
+\fBmore bold \fu\f02u\f01n\f02d\f01e\f02r\f01l\f02i\f01n\f02e\f01d\f30\fn normal"
+}
+
+node: { loc: { x: 370 y: 430 }
+	title: "MM2"
+	textcolor: lilac 
+	color: lightyellow
+	bordercolor: green 
+	label:
+"Many ucolorsn in the same node
+02red01 blue10 darkgreen
+30uunderlinedn nonunderlined
+\fbbold \fuunderlined\fn and normal
+\fBmore bold \fu\f02u\f01n\f02d\f01e\f02r\f01l\f02i\f01n\f02e\f01d\f30\fn normal"
+}
+
+}
+

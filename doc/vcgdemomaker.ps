@@ -1,0 +1,746 @@
+%!PS-Adobe-1.0
+%%Creator: greg:sander (Georg &,U-36-210,3054,)
+%%Title: stdin
+%%CreationDate: Fri Feb  3 12:03:17 1995
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Symbol Times-Roman DIThacks
+%%Pages: (atend)
+%%EndComments
+% Start of pscat.pro -- prolog for troff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: pscat.pro,v 2.2 87/11/17 16:40:32 byron Rel $
+save /pscatsave exch def
+/$pscat 50 dict def
+$pscat begin
+/fm [1 0 0 1 0 0] def
+/xo -100 def /yo 140 def
+/M /moveto load def
+/R /show load def
+/S {exch currentpoint exch pop moveto show}def
+/T {exch currentpoint pop exch moveto show}def
+/U {3 1 roll moveto show}def
+/siz 0 def
+/font 0 def
+/Z {/siz exch def SF}def
+/F {/font exch def SF}def
+/SF{font 0 ne
+    {catfonts font 1 sub get fm 0 siz put fm 3 siz neg put 
+     fm makefont setfont}if}def
+/BP{save/catsv exch def 0 792 translate 72 432 div dup neg scale 
+  xo yo translate 0 0 moveto}def
+/BPL{save/catsv exch def 72 8.25 mul 792 translate -90 rotate
+  72 432 div dup neg scale xo yo translate 0 0 moveto}def
+/EP{catsv restore showpage}def
+
+/SetStTime{statusdict /manualfeedtimeout 120 put} def
+/SetStatus{statusdict /manualfeed true put
+   statusdict /product get (LaserWriter) eq 
+   {version (23.0) eq  % Don't redefine EP if printer is not "Classic LW"
+     {/EP {catsv restore
+	 {statusdict /printerstatus get exec 16#22000000 and 0 eq{exit}if}loop
+	 showpage}def}if }if}def
+% definitions for PPROC callback functions
+% each PPROC is called with the following number on the stack:
+% pointsize charcode railmag pswidth pschar x y wid
+/$pprocs 50 dict def
+/fractm [.65 0 0 .6 0 0] def
+% fractions
+/PS1{gsave $pprocs begin
+    /wid exch def pop pop pop pop pop /ch exch def /size exch def
+    /pair $pprocs ch get def /cf currentfont def
+    cf fractm makefont setfont
+    0 .3 size mul 6 mul 2 copy neg rmoveto pair 0 get show rmoveto
+    currentfont cf setfont (\244) show setfont
+    pair 1 get show grestore wid .06 div 0 rmoveto end}def
+$pprocs begin
+8#34 [(1)(4)] def
+8#36 [(1)(2)] def
+8#46 [(3)(4)] def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+/catfonts [
+	/Times-Roman findfont
+	/Times-Italic findfont
+	/Times-Bold findfont
+	/Symbol findfont
+	/Times-Roman findfont
+	/DIThacks findfont
+	] def
+%%EndProlog
+%%Page: ? 1
+BP
+1 F
+66 Z
+432 228(VCGDEMOMAK)U
+922(ER)S
+1017(\()S
+1050(1l)S
+1112(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2538(VCGDEMOMAK)S
+3028(ER)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+54 Z
+432 522(NAME)U
+1 F
+66 Z
+648 600(vcgdemomaker)U
+1075(\261)S
+1130(produces)S
+1390(demo)S
+1558(speci\256cations)S
+1938(for)S
+2 F
+2037(vcg)S
+3 F
+54 Z
+432 705(SYNOPSIS)U
+66 Z
+648 783(vcgdemomaker)U
+1 F
+1102(out\256le)S
+1292(mode)S
+1460(size)S
+3 F
+54 Z
+432 888(DESCRIPTION)U
+2 F
+66 Z
+648 966(Vcgdemomaker)U
+1 F
+1090(creates)S
+1304(a)S
+2 F
+1365(vcg)S
+1 F
+1488(speci\256cation)S
+1852(and)S
+1979(writes)S
+2172(it)S
+2240(to)S
+2 F
+2322(out\256le.)S
+1 F
+2534(The)S
+2 F
+2667(mode)S
+1 F
+2841(determines)S
+3160(the)S
+648 1122(v)U
+648 1044(kind)U
+788(of)S
+866(speci\256cation)S
+1221(and)S
+2 F
+1339(size)S
+1 F
+1461(the)S
+1564(size)S
+1689(of)S
+1766(the)S
+1868(speci\256ed)S
+2124(graph.)S
+2335(The)S
+2459(speci\256cation)S
+2813(can)S
+2926(be)S
+3010(read)S
+3145(and)S
+681 1122(isualized)U
+936(by)S
+1024(the)S
+2 F
+1126(VCG)S
+1280(tool.)S
+3 F
+54 Z
+432 1227(MODI)U
+66 Z
+648 1305(-unarytree)U
+1 F
+1080(generates)S
+1354(an)S
+1442(unary)S
+1618(tree,)S
+1759(i.e.)S
+1866(a)S
+1921(linear)S
+2096(sequence)S
+2363(of)S
+2443(nodes.)S
+2 F
+2661(size)S
+1 F
+2785(is)S
+2854(the)S
+2959(number)S
+3185(of)S
+3 F
+648 1488(-)U
+1 F
+1080 1383(nodes)U
+1256(-)S
+1300(1,)S
+1372(i.e.)S
+1475(the)S
+1577(depth)S
+1745(of)S
+1822(the)S
+1924(tree.)S
+3 F
+670 1488(binarytree)U
+1 F
+1080(generates)S
+1350(a)S
+1401(binary)S
+1591(tree)S
+1711(of)S
+1788(depth)S
+2 F
+1956(size.)S
+1 F
+2094(Each)S
+2247(node)S
+2397(has)S
+2507(two)S
+2628(successors.)S
+3 F
+648 1698(-)U
+648 1593(-ternarytree)U
+1 F
+1080(generates)S
+1350(a)S
+1401(ternary)S
+1609(tree)S
+1729(of)S
+1806(depth)S
+2 F
+1974(size.)S
+1 F
+2112(Each)S
+2265(node)S
+2415(has)S
+2525(3)S
+2580(successors.)S
+3 F
+670 1698(leveltree)U
+1 F
+1080(generates)S
+1353(a)S
+1407(leveled)S
+1621(tree)S
+1744(of)S
+1824(depth)S
+2 F
+1995(size.)S
+1 F
+2136(Each)S
+2292(node)S
+2445(has)S
+2558(2)S
+2615(normal)S
+2825(successors,)S
+3145(and)S
+3223 1776(.)U
+1080 1854(T)U
+1080 1776(further)U
+1292(a)S
+1354(list)S
+1467(of)S
+1555(nodes)S
+1742(as)S
+1830(successors)S
+2141(at)S
+2220(the)S
+2332(same)S
+2499(level)S
+2658(to)S
+2741(the)S
+2853(left)S
+2972(and)S
+3099(right)S
+1120 1854(hese)U
+1262(lists)S
+1393(contain)S
+1611(at)S
+1683(most)S
+1836(2)S
+1894(nodes,)S
+2090(which)S
+2276(itself)S
+2431(are)S
+2535(leveled)S
+2748(trees.)S
+2935(These)S
+3116(trees)S
+3 F
+648 2037(-)U
+1 F
+1080 1932(are)U
+1182(used)S
+1325(to)S
+1398(check)S
+1573(the)S
+2 F
+1675(nearedge)S
+1 F
+1942(feature.)S
+3 F
+670 2037(twolevelcross)U
+1 F
+1080(generates)S
+1355(a)S
+1411(cross)S
+1574(graph.)S
+1790(This)S
+1934(is)S
+2005(a)S
+2061(bipartitione)S
+2363(d)S
+2423(graph)S
+2599(of)S
+2680(connected)S
+2972(parts)S
+3126(of)S
+3207(4)S
+3214 2115(s)U
+1080 2193(g)U
+1080 2115(nodes)U
+1259(forming)S
+1495(a)S
+1548(cross.)S
+2 F
+1747(Size)S
+1 F
+1877(is)S
+1945(the)S
+2049(number)S
+2274(of)S
+2353(nodes)S
+2531(and)S
+2650(should)S
+2850(be)S
+2936(even.)S
+3123(Thi)S
+1113 2193(raph)U
+1263(is)S
+1340(generated)S
+1628(in)S
+1712(an)S
+1807(ugly)S
+1957(format)S
+2165(to)S
+2249(check)S
+2435(the)S
+2548(algorithm)S
+2836(of)S
+2923(reducing)S
+3185(of)S
+3 F
+648 2376(-)U
+1 F
+1080 2271(crossing)U
+1322(in)S
+1395(the)S
+2 F
+1497(VCG)S
+1651(tool.)S
+3 F
+670 2376(allconnect)U
+1 F
+1080(generates)S
+1352(a)S
+1405(graph)S
+1579(where)S
+1764(all)S
+1853(pairs)S
+2005(of)S
+2084(node)S
+2236(form)S
+2388(an)S
+2474(edge.)S
+2 F
+2661(Size)S
+1 F
+2791(is)S
+2858(the)S
+2961(number)S
+3185(of)S
+1080 2532(l)U
+1080 2454(nodes.)U
+1301(Note)S
+1457(that)S
+1583(if)S
+1651(we)S
+1756(have)S
+1908(n)S
+1969(nodes,)S
+2168(we)S
+2273(have)S
+2425(about)S
+2598(n)S
+4 F
+(*)R
+1 F
+(n/2)R
+2775(edges)S
+2952(which)S
+3140(is)S
+3211(a)S
+1098 2532(ot.)U
+1210(Thus)S
+1364(it)S
+1422(is)S
+1488(recommended)S
+1882(not)S
+1988(to)S
+2061(use)S
+2171(this)S
+2288(with)S
+2427(more)S
+2584(than)S
+2719(40)S
+2807(nodes.)S
+3223 2637(.)U
+3 F
+648(-netgraph)S
+1 F
+1080(generates)S
+1360(a)S
+1421(regular)S
+1639(4-ary)S
+1810(network)S
+2058(of)S
+2145(triangular)S
+2432(shape)S
+2614(with)S
+2762(about)S
+2 F
+2939(size)S
+1 F
+3069(nodes)S
+1080 2715(This)U
+1234(mesh)S
+1410(graph)S
+1597(can)S
+1725(be)S
+1824(used)S
+1982(to)S
+2070(check)S
+2260(the)S
+2377(capacity)S
+2632(of)S
+2724(the)S
+2841(tool,)S
+2996(the)S
+3112(view)S
+3 F
+648 2898(-randomgraph)U
+1 F
+1080 2793(mechanism)U
+1401(and)S
+1518(the)S
+1620(algorithm)S
+1897(of)S
+1974(reducing)S
+2226(of)S
+2303(crossing)S
+2545(in)S
+2618(the)S
+2 F
+2720(VCG)S
+2874(tool.)S
+1 F
+1080 2976(generates)U
+1351(a)S
+1403(randomized)S
+1735(4-ary)S
+1896(network.)S
+2173(Starting)S
+2403(from)S
+2553(the)S
+2655(regular)S
+2863(4-ary)S
+3024(network)S
+3207 3054(g)U
+1080 3132(r)U
+1080 3054(of)U
+1160(triangular)S
+1440(shape)S
+1614(with)S
+1755(about)S
+2 F
+1925(size)S
+1 F
+2048(nodes,)S
+2243(this)S
+2362(network)S
+2602(is)S
+2670(produced)S
+2939(by)S
+3029(creatin)S
+1102 3132(andom)U
+1303(holes.)S
+1503(Thus,)S
+1674(this)S
+1791(graph)S
+1963(has)S
+2073(less)S
+2194(than)S
+2 F
+2329(size)S
+1 F
+2450(nodes.)S
+3117 3237(.)U
+3 F
+648 3342(-)U
+648 3237(-net2graph)U
+1 F
+1080(generates)S
+1350(a)S
+1401(regular)S
+1609(4-ary)S
+1770(network)S
+2008(of)S
+2085(rhomboid)S
+2363(shape)S
+2535(with)S
+2674(about)S
+2 F
+2842(size)S
+1 F
+2963(nodes)S
+3 F
+670 3342(random2graph)U
+1 F
+1080 3420(generates)U
+1351(a)S
+1403(randomized)S
+1735(4-ary)S
+1896(network.)S
+2173(Starting)S
+2403(from)S
+2553(the)S
+2655(regular)S
+2863(4-ary)S
+3024(network)S
+3207 3498(g)U
+1080 3576(r)U
+1080 3498(of)U
+1160(rhomboid)S
+1440(shape)S
+1614(with)S
+1755(about)S
+2 F
+1925(size)S
+1 F
+2048(nodes,)S
+2243(this)S
+2362(network)S
+2602(is)S
+2670(produced)S
+2939(by)S
+3029(creatin)S
+1102 3576(andom)U
+1303(holes.)S
+1503(Thus,)S
+1674(this)S
+1791(graph)S
+1963(has)S
+2073(less)S
+2194(than)S
+2 F
+2329(size)S
+1 F
+2450(nodes.)S
+3 F
+54 Z
+432 3681(SEE)U
+561(ALSO)S
+1 F
+66 Z
+648 3759(vcg\(l\))U
+432 4116(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(1)S
+EP
+%%Page: ? 2
+BP
+1 F
+66 Z
+3218 228(\))U
+3 F
+54 Z
+432 522(B)U
+1 F
+66 Z
+432 228(VCGDEMOMAK)U
+922(ER)S
+1017(\()S
+1050(1l)S
+1112(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2538(VCGDEMOMAK)S
+3028(ER)S
+3123(\()S
+3156(1l)S
+3 F
+54 Z
+468 522(UGS)U
+1 F
+66 Z
+648 600(Currently,)U
+939(no)S
+1027(bugs)S
+1174(are)S
+1276(known.)S
+3 F
+54 Z
+432 705(AUTHOR)U
+1 F
+66 Z
+648 783(Georg)U
+835(Sander,)S
+1057(University)S
+1357(of)S
+1434(Saarland.)S
+432 4116(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(2)S
+EP
+%%Trailer
+pscatsave end restore
+%%Pages: 2

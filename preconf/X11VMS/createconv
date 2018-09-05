@@ -1,0 +1,3 @@
+diff ../../demo/demo.csh.tpl demo.csh >> aaa 
+diff ../../src/globals.h.tpl globals.h >> aaa 
+diff ../../tMakefile.tpl     tMakefile >> aaa 

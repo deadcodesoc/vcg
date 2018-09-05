@@ -1,0 +1,257 @@
+SCCS-Info: %W% %E% 
+$Id$
+
+graph		::= "graph:" '{' graph_entry_list '}'		
+		  ;
+graph_entry_list::= graph_entry_list graph_entry			
+		  | graph_entry					
+		  ;
+graph_entry	::= graph_attribute
+		  | node_defaults
+		  | edge_defaults
+		  | foldnode_defaults
+		  | foldedge_defaults
+		  | graph
+		  | node
+		  | edge
+		  | nearedge
+		  | bentnearedge
+		  | backedge
+		  ;
+graph_attribute	::= "title" ':' string	
+		  | "label" ':' string	
+		  | "info1" ':' string	
+		  | "info2" ':' string	
+		  | "info3" ':' string	
+		  | "color" ':' enum_color 
+		  | "textcolor" ':'enum_color 
+                  | "bordercolor" ':'enum_color 
+                  | "width" ':' integer 
+                  | "height" ':' integer
+                  | "borderwidth" ':' integer
+		  | 'x' ':' integer
+		  | 'y' ':' integer
+		  | "loc:" '{' 'x' ':' integer 'y' ':' integer '}'
+		  | "folding" ':' integer
+		  | "scaling" ':' float	
+		  | "shrink" ':' integer
+		  | "stretch" ':' integer
+		  | "textmode" ':' enum_textmode		
+		  | "shape" ':' enum_shape
+                  | "level" ':' integer 
+                  | "vertical_order" ':' integer 
+                  | "horizontal_order" ':' integer 
+                  | "status" ':' enum_status			
+                  | "xmax" ':' integer	
+                  | "ymax" ':' integer	
+                  | "xbase" ':' integer	
+                  | "ybase" ':' integer	
+                  | "xspace" ':' integer
+                  | "xlspace" ':' integer
+                  | "yspace" ':' integer
+                  | "xraster" ':' integer
+                  | "xlraster" ':' integer
+                  | "yraster" ':' integer
+		  | "invisible" ':' integer
+		  | "hidden" ':' integer
+		  | "classname" integer ':' string	
+		  | "infoname" integer ':' string	
+                  | "colorentry" integer ':' integer integer integer 
+                  | "layoutalgorithm" ':' enum_layoutalgorithm	
+                  | "layout_downfactor" ':' integer 
+                  | "layout_upfactor" ':' integer 
+                  | "layout_nearfactor" ':' integer 
+                  | "splinefactor" ':' integer
+                  | "late_edge_labels" ':' enum_yes_no
+                  | "display_edge_labels" ':' enum_yes_no
+                  | "dirty_edge_labels" ':' enum_yes_no
+		  | "finetuning" ':' enum_yes_no 
+                  | "ignoresingles"  ':' enum_yes_no 
+		  | "straight_phase" ':'  enum_yes_no 
+		  | "priority_phase" ':'  enum_yes_no 
+		  | "manhattan_edges" ':'  enum_yes_no 
+		  | "smanhattan_edges" ':'  enum_yes_no 
+		  | "nearedges" ':' enum_yes_no
+                  | "orientation" ':' enum_orientation		
+                  | "node_alignment" ':' enum_node_align
+                  | "port_sharing" ':' enum_yes_no
+                  | "arrowmode" ':' enum_arrow_mode
+                  | "spreadlevel" ':' integer  
+                  | "treefactor" ':' float  
+                  | "crossingphase2" ':' enum_yes_no 
+                  | "crossingoptimization" ':' enum_yes_no 
+                  | "crossingweight" ':' enum_cross_weight 
+                  | "view" ':'  enum_view 
+                  | "edges" ':' enum_yes_no 
+                  | "nodes" ':' enum_yes_no 
+		  | "splines" ':' enum_yes_no 
+                  | "bmax" ':' integer 
+                  | "cmax" ':' integer 
+                  | "cmin" ':' integer 
+                  | "pmax" ':' integer 
+                  | "pmin" ':' integer 
+                  | "rmax" ':' integer 
+                  | "rmin" ':' integer 
+                  | "smax" ':' integer 
+		  ;
+enum_color	::= "aquamarine"      
+		  | "black"      
+		  | "blue"      
+		  | "cyan"      
+		  | "darkblue"      
+		  | "darkcyan"      
+		  | "darkgreen"      
+		  | "darkgrey"      
+		  | "darkmagenta"    
+		  | "darkred"      
+		  | "darkyellow"      
+		  | "gold"      
+		  | "green"      
+		  | "khaki"      
+		  | "lightblue"      
+		  | "lightcyan"      
+		  | "lightgreen"      
+		  | "lightgrey"      
+		  | "lightmagenta"    
+		  | "lightred"      
+		  | "lightyellow"    
+		  | "lilac"      
+		  | "magenta"      
+		  | "orange"      
+		  | "orchid"      
+		  | "pink"      
+		  | "purple"      
+		  | "red"      
+		  | "turquoise"      
+		  | "white"      
+		  | "yellow"      
+		  | "yellowgreen"   
+                  | integer
+		  ;
+enum_orientation::= "top_to_bottom"
+		  | "bottom_to_top"
+		  | "left_to_right"
+		  | "right_to_left"
+		  ;
+enum_layoutalgorithm::= 
+		  | "tree"
+		  | "maxdepth"
+		  | "mindepth"
+		  | "maxdepthslow"
+		  | "mindepthslow"
+		  | "maxdegree"
+		  | "mindegree"
+		  | "maxindegree"
+		  | "minindegree"
+		  | "maxoutdegree"
+		  | "minoutdegree"
+		  | "minbackward"
+		  | "dfs"
+		  ;
+enum_status 	::= "black"
+		  | "grey"
+		  | "white"
+		  ;
+enum_yes_no	::= "yes"
+		  | "no"
+		  ;
+enum_cross_weight ::= "bary" 
+		    | "median"
+		    | "barymedian"
+		    | "medianbary"
+		    ;
+enum_view	::= "cfish"
+		  | "fcfish"
+		  | "pfish"
+		  | "fpfish"
+		  ;
+enum_arrow_mode	::= "fixed"
+		  | "free"
+		  ;
+foldnode_defaults::= "foldnode." node_attribute 	
+		  ;
+foldedge_defaults::= "foldedge." edge_attribute 	
+		  ;
+node_defaults	::= "node." node_attribute 	
+		  ;
+edge_defaults   ::= "edge." edge_attribute  
+                  ;
+node		::= "node:" '{' node_attribute_list '}'	
+		  ;
+node_attribute_list::= node_attribute_list node_attribute		
+		     | node_attribute				
+		     ;
+edge            ::= "edge:" '{' edge_attribute_list '}'        
+                  ; 
+nearedge	::= "nearedge:" '{' edge_attribute_list '}'
+                  ; 
+bentnearedge	::= "bentnearedge:" '{' edge_attribute_list '}'
+                  ; 
+backedge	::= "backedge:" '{' edge_attribute_list '}'
+                  ; 
+edge_attribute_list::= edge_attribute_list edge_attribute     
+                     | edge_attribute                             
+                     ; 
+node_attribute	::= "title" ':' string	
+		  | "label" ':' string	
+		  | "info1" ':' string	
+		  | "info2" ':' string	
+		  | "info3" ':' string	
+                  | "color" ':' enum_color
+		  | "textcolor" ':'enum_color 
+                  | "bordercolor" ':'enum_color 
+		  | "width" ':' integer	
+		  | "height" ':' integer	
+                  | "borderwidth" ':' integer
+		  | "loc:" '{' 'x' ':' integer 'y' ':' integer '}'
+		  | "folding" ':' integer
+		  | "scaling" ':' float	
+		  | "shrink" ':' integer	
+		  | "stretch" ':' integer
+		  | "textmode" ':' enum_textmode		
+		  | "shape" ':' enum_shape
+                  | "level" ':' integer 
+                  | "vertical_order" ':' integer 
+                  | "horizontal_order" ':' integer 
+		  ;
+enum_textmode	::= "center"
+		  | "left_justify"
+		  | "right_justify"
+		  ;
+enum_shape	::= "box"
+		  | "rhomb"
+		  | "ellipse"
+		  | "triangle"
+		  ;
+enum_node_align	::= "bottom"
+		  | "top"
+		  | "center"
+		  ;
+edge_attribute  ::= "sourcename" ':' string
+		  | "targetname" ':' string 
+                  | "label" ':' string	
+		  | "textcolor" ':'enum_color 
+                  | "color" ':' enum_color
+		  | "thickness" ':' integer
+		  | "class" ':' integer	
+		  | "priority" ':' integer
+                  | "arrowcolor" ':' enum_color
+                  | "backarrowcolor" ':' enum_color
+		  | "arrowsize" ':' integer
+		  | "backarrowsize" ':' integer
+		  | "arrowstyle" ':' enum_arrowstyle		
+		  | "backarrowstyle" ':' enum_arrowstyle		
+		  | "linestyle" ':' enum_linestyle		
+		  | "anchor" ':' integer
+                  | "horizontal_order" ':' integer 
+		  ; 
+enum_linestyle	::= "continuous"
+		  | "solid"      
+		  | "dotted"
+		  | "dashed"
+		  | "invisible" 
+		  ;
+enum_arrowstyle	::= "none"
+		  | "line"      
+		  | "solid"      
+		  ;

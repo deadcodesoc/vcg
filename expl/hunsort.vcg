@@ -1,0 +1,55 @@
+/* SCCS-info %W% %E% */
+/* $Id: hunsort.vcg,v 1.3 1995/02/08 11:09:19 sander Exp $ */
+
+
+graph: { title: "Graph"
+
+  width: 700
+  height: 700
+  x: 30
+  y: 30
+
+  color: aquamarine
+
+  edge: { sourcename: "B" targetname: "S" }
+  edge: { sourcename: "E" targetname: "N" }
+  edge: { sourcename: "A" targetname: "B" }
+  edge: { sourcename: "A" targetname: "D" }
+  edge: { sourcename: "B" targetname: "F" }
+  edge: { sourcename: "B" targetname: "G" }
+  edge: { sourcename: "D" targetname: "L" }
+  edge: { sourcename: "B" targetname: "H" }
+  edge: { sourcename: "C" targetname: "I" }
+  edge: { sourcename: "C" targetname: "J" }
+  edge: { sourcename: "D" targetname: "K" }
+  edge: { sourcename: "A" targetname: "E" }
+  edge: { sourcename: "E" targetname: "M" }
+  edge: { sourcename: "F" targetname: "O" }
+  edge: { sourcename: "F" targetname: "P" }
+  edge: { sourcename: "G" targetname: "Q" }
+  edge: { sourcename: "G" targetname: "R" }
+  edge: { sourcename: "G" targetname: "S" }
+  edge: { sourcename: "A" targetname: "C" }
+  
+  node: { title: "J"  }
+  node: { title: "G"  }
+  node: { title: "A"  }
+  node: { title: "F"  }
+  node: { title: "I"  }
+  node: { title: "L"  }
+  node: { title: "M"  }
+  node: { title: "C"  }
+  node: { title: "N"  }
+  node: { title: "E"  }
+  node: { title: "O"  }
+  node: { title: "B"  }
+  node: { title: "P"  }
+  node: { title: "H"  }
+  node: { title: "Q"  }
+  node: { title: "K"  }
+  node: { title: "R"  }
+  node: { title: "D"  }
+  node: { title: "S"  }
+
+}
+

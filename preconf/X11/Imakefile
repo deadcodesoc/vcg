@@ -1,0 +1,14 @@
+# XCOMM $XConsortium: Imakefile,v $
+        DEPLIBS = $(DEPXLIB)
+LOCAL_LIBRARIES = $(XLIB)
+
+all:
+	@ echo "#"
+	@ echo LIBPATH = -L$(USRLIBDIR)
+	@ echo INCLUDES = $(ALLINCLUDES)
+	@ echo BINDIR  = $(BINDIR)/
+	@ echo MANDIR  = $(MANPATH)/manl/
+	@ echo "#!/bin/csh" > x11setup2
+	@ echo set BINDIR=$(BINDIR)/  >> x11setup2
+
+

@@ -1,0 +1,272 @@
+/* SCCS-info %W% %E% */
+/* $Id: forms2.vcg,v 1.3 1995/02/08 11:09:19 sander Exp $ */
+
+
+graph: { 
+title: "Formtest2"
+x: 30
+y: 30
+height: 720
+width: 700
+display_edge_labels: yes
+
+node: { title: "A1" 
+	loc: { x: 10 y: 10 } 
+	label: "This is a box with\ntwo lines of text" 
+	color: lightblue
+	bordercolor: red 
+	textcolor: lightyellow
+	shape: box
+}
+
+node: { title: "A2" 
+	loc: { x: 180 y: 10 } 
+	label: "This is\na rhomb with\nthree lines" 
+	color: lightblue
+	bordercolor: red
+	textcolor: lightyellow
+	shape: rhomb 
+}
+
+node: { title: "A3" 
+	loc: { x: 400 y: 10 } 
+	label: "This is\na triangle\nwith\nfour lines" 
+	color: lightblue
+	bordercolor: red
+	textcolor: lightyellow
+	shape: triangle 
+}
+
+node: { title: "A4" 
+	loc: { x: 10 y: 130 } 
+	label: "This is an ellipse with\ntwo lines" 
+	color: lightblue
+	bordercolor: red
+	textcolor: lightyellow
+	shape: ellipse 
+}
+
+node: { title: "A5" 
+	loc: { x: 280 y: 110 } 
+	label: "a circle" 
+	width: 90
+	height: 90
+	color: lightblue
+	bordercolor: red
+	textcolor: lightyellow
+	shape: ellipse 
+}
+
+node: { title: "A6" 
+	loc: { x: 400 y: 160 } 
+	label: "A circle is an ellipse\nwhere width=height" 
+	borderwidth: 0
+}
+
+
+node.color: pink
+edge.color: red
+edge.arrowcolor: black  
+edge.backarrowcolor: pink  
+edge.backarrowstyle: solid  
+edge.backarrowsize:  10  
+
+node: { title: "X1" loc: { x: 10 y: 210 }}
+node: { title: "X2" loc: { x: 40 y: 210 }}
+node: { title: "X3" loc: { x: 70 y: 210 }}
+node: { title: "X4" loc: { x: 100 y: 210 }}
+node: { title: "X5" loc: { x: 130 y: 210 }}
+
+node: { title: "x1" loc: { x: 10 y: 400 }}
+node: { title: "x2" loc: { x: 40 y: 400 }}
+node: { title: "x3" loc: { x: 70 y: 400 }}
+
+edge: { sourcename: "A7" targetname: "X1" }
+edge: { sourcename: "X2" targetname: "A7" }
+edge: { sourcename: "A7" targetname: "X3" }
+edge: { sourcename: "X4" targetname: "A7" }
+edge: { sourcename: "A7" targetname: "X5" }
+
+edge: { sourcename: "A7" targetname: "x1" linestyle: dashed }
+edge: { sourcename: "x2" targetname: "A7" linestyle: dotted }
+edge: { sourcename: "A7" targetname: "x3" }
+
+node: { title: "A7"
+	loc: { x: 10 y: 270 }
+	label: "line 1\nline 2\nline 3"
+	shape: rhomb
+      }
+
+node: { title: "B1" shape: ellipse loc: { x: 120 y: 400 }}
+node: { title: "B2" shape: ellipse loc: { x: 150 y: 400 }}
+node: { title: "B3" shape: ellipse loc: { x: 180 y: 400 }}
+
+edge: { sourcename: "A7" targetname: "B1" anchor: 3 }
+edge: { sourcename: "A7" targetname: "B2" anchor: 2 }
+edge: { sourcename: "A7" targetname: "B3" anchor: 1 }
+
+
+node.color: lightgreen 
+edge.color: green
+edge.arrowcolor: black  
+edge.backarrowcolor: lightgreen  
+edge.backarrowstyle: solid  
+edge.backarrowsize:  10  
+
+node: { title: "Y1" loc: { x: 200 y: 210 }}
+node: { title: "Y2" loc: { x: 230 y: 210 }}
+node: { title: "Y3" loc: { x: 260 y: 210 }}
+node: { title: "Y4" loc: { x: 290 y: 210 }}
+node: { title: "Y5" loc: { x: 320 y: 210 }}
+
+node: { title: "y1" loc: { x: 220 y: 400 }}
+node: { title: "y2" loc: { x: 250 y: 400 }}
+node: { title: "y3" loc: { x: 280 y: 400 }}
+
+edge: { sourcename: "A8" targetname: "Y1" }
+edge: { sourcename: "Y2" targetname: "A8" }
+edge: { sourcename: "A8" targetname: "Y3" }
+edge: { sourcename: "Y4" targetname: "A8" }
+edge: { sourcename: "A8" targetname: "Y5" }
+
+edge: { sourcename: "A8" targetname: "y1" linestyle: dashed }
+edge: { sourcename: "y2" targetname: "A8" linestyle: dotted }
+edge: { sourcename: "A8" targetname: "y3" }
+
+node: { title: "A8"
+	loc: { x: 200 y: 260 }
+	label: "line 1\nline 2\nline 3"
+	shape: triangle 
+      }
+
+node: { title: "C1" shape: rhomb loc: { x: 310 y: 400 }}
+node: { title: "C2" shape: rhomb loc: { x: 340 y: 400 }}
+node: { title: "C3" shape: rhomb loc: { x: 370 y: 400 }}
+
+edge: { sourcename: "A8" targetname: "C1" anchor: 3 }
+edge: { sourcename: "A8" targetname: "C2" anchor: 2 }
+edge: { sourcename: "A8" targetname: "C3" anchor: 1 }
+
+
+node.color: yellow 
+edge.color: darkyellow 
+edge.arrowcolor: black  
+edge.backarrowcolor: yellow  
+edge.backarrowstyle: solid  
+edge.backarrowsize:  10  
+
+
+node: { title: "Z1" loc: { x: 400 y: 210 }}
+node: { title: "Z2" loc: { x: 430 y: 210 }}
+node: { title: "Z3" loc: { x: 460 y: 210 }}
+node: { title: "Z4" loc: { x: 490 y: 210 }}
+
+node: { title: "z1" loc: { x: 420 y: 400 }}
+node: { title: "z2" loc: { x: 450 y: 400 }}
+node: { title: "z3" loc: { x: 480 y: 400 }}
+
+edge: { sourcename: "A9" targetname: "Z1" }
+edge: { sourcename: "Z2" targetname: "A9" }
+edge: { sourcename: "A9" targetname: "Z3" }
+edge: { sourcename: "Z4" targetname: "A9" }
+
+edge: { sourcename: "A9" targetname: "z1" linestyle: dashed }
+edge: { sourcename: "z2" targetname: "A9" linestyle: dotted }
+edge: { sourcename: "A9" targetname: "z3" }
+
+node: { title: "A9"
+	loc: { x: 400 y: 270 }
+	label: "line 1\nline 2\nline 3"
+	shape: ellipse 
+      }
+
+node: { title: "D1" shape: triangle loc: { x: 510 y: 400 }}
+node: { title: "D2" shape: triangle loc: { x: 540 y: 400 }}
+node: { title: "D3" shape: triangle loc: { x: 570 y: 400 }}
+
+edge: { sourcename: "A9" targetname: "D1" anchor: 3 }
+edge: { sourcename: "A9" targetname: "D2" anchor: 2 }
+edge: { sourcename: "A9" targetname: "D3" anchor: 1 }
+
+
+
+node: { title: "A10"
+	loc: { x: 10 y: 440 }
+	label: "left justified\ntext..........."
+	textmode: left_justify	
+	width: 200
+	stretch: 2
+	shrink:  3
+	borderwidth: 4
+	color: aquamarine
+	shape: ellipse 
+      }
+
+node: { title: "A11"
+	loc: { x: 10 y: 500 }
+	label: "centered\ntext..........."
+	textmode: center
+	width: 200
+	stretch: 2
+	shrink:  3
+	borderwidth: 4
+	color: aquamarine
+	shape: ellipse 
+      }
+node: { title: "A12"
+	loc: { x: 10 y: 560 }
+	label: "right justified\ntext..........."
+	textmode: right_justify	
+	width: 200
+	stretch: 2
+	shrink:  3
+	borderwidth: 4
+	color: aquamarine
+	shape: ellipse 
+      }
+
+edge.arrowcolor: blue
+edge.backarrowstyle: none  
+edge.backarrowsize:  0  
+
+edge: { sourcename: "A10" 
+	targetname: "A11" 
+	label: "an invisible edge"
+	color: blue // nonsense
+	linestyle: invisible }
+edge: { sourcename: "A11" 
+	targetname: "A12" 
+	label: "an invisible edge"
+	color: blue // nonsense
+	linestyle: invisible }
+
+node.color: white 
+
+node: { title: "A13"
+	loc: { x: 360 y: 460 }
+	width:  230
+	height: 130
+	label: "These ellipses are connected\nby invisible edge.\nBut you can't see them."
+	borderwidth: 0
+      }
+
+edge.arrowcolor: red 
+
+edge: { sourcename: "A13"
+	targetname: "A10"
+	color: red
+	thickness: 5
+      }
+edge: { sourcename: "A13"
+	targetname: "A11"
+	color: red
+	thickness: 5
+      }
+edge: { sourcename: "A13"
+	targetname: "A12"
+	color: red
+	thickness: 5
+      }
+	
+}
+

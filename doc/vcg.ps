@@ -1,0 +1,8499 @@
+%!PS-Adobe-1.0
+%%Creator: greg:sander (Georg &,U-36-210,3054,)
+%%Title: stdin
+%%CreationDate: Fri Feb  3 12:03:19 1995
+%%DocumentFonts: Times-Roman Times-Italic Times-Bold Symbol Times-Roman DIThacks
+%%Pages: (atend)
+%%EndComments
+% Start of pscat.pro -- prolog for troff translator
+% Copyright (c) 1985,1987 Adobe Systems Incorporated. All Rights Reserved. 
+% GOVERNMENT END USERS: See Notice file in TranScript library directory
+% -- probably /usr/lib/ps/Notice
+% RCS: $Header: pscat.pro,v 2.2 87/11/17 16:40:32 byron Rel $
+save /pscatsave exch def
+/$pscat 50 dict def
+$pscat begin
+/fm [1 0 0 1 0 0] def
+/xo -100 def /yo 140 def
+/M /moveto load def
+/R /show load def
+/S {exch currentpoint exch pop moveto show}def
+/T {exch currentpoint pop exch moveto show}def
+/U {3 1 roll moveto show}def
+/siz 0 def
+/font 0 def
+/Z {/siz exch def SF}def
+/F {/font exch def SF}def
+/SF{font 0 ne
+    {catfonts font 1 sub get fm 0 siz put fm 3 siz neg put 
+     fm makefont setfont}if}def
+/BP{save/catsv exch def 0 792 translate 72 432 div dup neg scale 
+  xo yo translate 0 0 moveto}def
+/BPL{save/catsv exch def 72 8.25 mul 792 translate -90 rotate
+  72 432 div dup neg scale xo yo translate 0 0 moveto}def
+/EP{catsv restore showpage}def
+
+/SetStTime{statusdict /manualfeedtimeout 120 put} def
+/SetStatus{statusdict /manualfeed true put
+   statusdict /product get (LaserWriter) eq 
+   {version (23.0) eq  % Don't redefine EP if printer is not "Classic LW"
+     {/EP {catsv restore
+	 {statusdict /printerstatus get exec 16#22000000 and 0 eq{exit}if}loop
+	 showpage}def}if }if}def
+% definitions for PPROC callback functions
+% each PPROC is called with the following number on the stack:
+% pointsize charcode railmag pswidth pschar x y wid
+/$pprocs 50 dict def
+/fractm [.65 0 0 .6 0 0] def
+% fractions
+/PS1{gsave $pprocs begin
+    /wid exch def pop pop pop pop pop /ch exch def /size exch def
+    /pair $pprocs ch get def /cf currentfont def
+    cf fractm makefont setfont
+    0 .3 size mul 6 mul 2 copy neg rmoveto pair 0 get show rmoveto
+    currentfont cf setfont (\244) show setfont
+    pair 1 get show grestore wid .06 div 0 rmoveto end}def
+$pprocs begin
+8#34 [(1)(4)] def
+8#36 [(1)(2)] def
+8#46 [(3)(4)] def
+end
+% DIThacks fonts for some special chars
+50 dict dup begin
+/FontType 3 def
+/FontName /DIThacks def
+/FontMatrix [.001 0.0 0.0 .001 0.0 0.0] def
+/FontBBox [-220 -280 900 900] def% a lie but ...
+/Encoding 256 array def
+0 1 255{Encoding exch /.notdef put}for
+Encoding
+ dup 8#040/space put %space
+ dup 8#110/rc put %right ceil
+ dup 8#111/lt put %left  top curl
+ dup 8#112/bv put %bold vert
+ dup 8#113/lk put %left  mid curl
+ dup 8#114/lb put %left  bot curl
+ dup 8#115/rt put %right top curl
+ dup 8#116/rk put %right mid curl
+ dup 8#117/rb put %right bot curl
+ dup 8#120/rf put %right floor
+ dup 8#121/lf put %left  floor
+ dup 8#122/lc put %left  ceil
+ dup 8#140/sq put %square
+ dup 8#141/bx put %box
+ dup 8#142/ci put %circle
+ dup 8#143/br put %box rule
+ dup 8#144/rn put %root extender
+ dup 8#145/vr put %vertical rule
+ dup 8#146/ob put %outline bullet
+ dup 8#147/bu put %bullet
+ dup 8#150/ru put %rule
+ dup 8#151/ul put %underline
+ pop
+/DITfd 100 dict def
+/BuildChar{0 begin
+ /cc exch def /fd exch def
+ /charname fd /Encoding get cc get def
+ /charwid fd /Metrics get charname get def
+ /charproc fd /CharProcs get charname get def
+ charwid 0 fd /FontBBox get aload pop setcachedevice
+ 40 setlinewidth
+ newpath 0 0 moveto gsave charproc grestore
+ end}def
+/BuildChar load 0 DITfd put
+%/UniqueID 5 def
+/CharProcs 50 dict def
+CharProcs begin
+/space{}def
+/.notdef{}def
+/ru{500 0 rls}def
+/rn{0 750 moveto 500 0 rls}def
+/vr{20 800 moveto 0 -770 rls}def
+/bv{20 800 moveto 0 -1000 rls}def
+/br{20 770 moveto 0 -1040 rls}def
+/ul{0 -250 moveto 500 0 rls}def
+/ob{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath stroke}def
+/bu{200 250 rmoveto currentpoint newpath 200 0 360 arc closepath fill}def
+/sq{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath stroke}def
+/bx{80 0 rmoveto currentpoint dround newpath moveto
+    640 0 rlineto 0 640 rlineto -640 0 rlineto closepath fill}def
+/ci{355 333 rmoveto currentpoint newpath 333 0 360 arc
+    50 setlinewidth stroke}def
+
+/lt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 add exch s4 a4p stroke}def
+/lb{20 800 moveto 0 -550 rlineto currx -200 2cx s4 add exch s4 a4p stroke}def
+/rt{20 -200 moveto 0 550 rlineto currx 800 2cx s4 sub exch s4 a4p stroke}def
+/rb{20 800 moveto 0 -500 rlineto currx -200 2cx s4 sub exch s4 a4p stroke}def
+/lk{20 800 moveto 20 300 -280 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/rk{20 800 moveto 20 300 320 300 s4 arcto pop pop 1000 sub
+    currentpoint stroke moveto
+    20 300 4 2 roll s4 a4p 20 -200 lineto stroke}def
+/lf{20 800 moveto 0 -1000 rlineto s4 0 rls}def
+/rf{20 800 moveto 0 -1000 rlineto s4 neg 0 rls}def
+/lc{20 -200 moveto 0 1000 rlineto s4 0 rls}def
+/rc{20 -200 moveto 0 1000 rlineto s4 neg 0 rls}def
+end
+
+/Metrics 50 dict def Metrics begin
+/.notdef 0 def
+/space 500 def
+/ru 500 def
+/br 0 def
+/lt 250 def
+/lb 250 def
+/rt 250 def
+/rb 250 def
+/lk 250 def
+/rk 250 def
+/rc 250 def
+/lc 250 def
+/rf 250 def
+/lf 250 def
+/bv 250 def
+/ob 350 def
+/bu 350 def
+/ci 750 def
+/bx 750 def
+/sq 750 def
+/rn 500 def
+/ul 500 def
+/vr 0 def
+end
+
+DITfd begin
+/s2 500 def /s4 250 def /s3 333 def
+/a4p{arcto pop pop pop pop}def
+/2cx{2 copy exch}def
+/rls{rlineto stroke}def
+/currx{currentpoint pop}def
+/dround{transform round exch round exch itransform} def
+end
+end
+/DIThacks exch definefont pop
+/catfonts [
+	/Times-Roman findfont
+	/Times-Italic findfont
+	/Times-Bold findfont
+	/Symbol findfont
+	/Times-Roman findfont
+	/DIThacks findfont
+	] def
+%%EndProlog
+%%Page: ? 1
+BP
+1 F
+66 Z
+432 228(VCG)U
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+54 Z
+432 522(NAME)U
+1 F
+66 Z
+648 600(VCG)U
+810(tool)S
+934(\261)S
+989(visualizati)S
+1258(on)S
+1346(of)S
+1423(compiler)S
+1678(graphs)S
+3 F
+54 Z
+432 783(SYNOPSIS)U
+66 Z
+648 861(vcg)U
+1 F
+765([options])S
+1025([\256lename])S
+1306 939(])U
+3 F
+54 Z
+432 1122(S)U
+66 Z
+648 939(xvcg)U
+1 F
+798([options])S
+1058([\256lename)S
+3 F
+54 Z
+462 1122(YNOPSIS)U
+723(FOR)S
+864(SEQUENCES)S
+1218(OF)S
+1320(GRAPH)S
+1542(SPECIFICATIONS)S
+1 F
+66 Z
+2096 1200(.)U
+3 F
+648 1278(x)U
+648 1200(vcg)U
+1 F
+765(\261multi)S
+958([options])S
+1218([\256lename])S
+1510([options])S
+1770([\256lename])S
+2062(..)S
+3 F
+681 1278(vcg)U
+1 F
+798(\261multi)S
+991([options])S
+1251([\256lename])S
+1543([options])S
+1803([\256lename])S
+2095(...)S
+3 F
+54 Z
+432 1461(DESCRIPTION)U
+1 F
+66 Z
+648 1539(The)U
+2 F
+773(VCG)S
+927(tool)S
+1 F
+1051(reads)S
+1212(a)S
+1263(VCG)S
+1425(speci\256cation)S
+1779(and)S
+1896(visualizes)S
+2177(the)S
+2279(graph.)S
+2490(If)S
+2556(not)S
+2662(all)S
+2749(positions)S
+3009(of)S
+3086(nodes)S
+3218 1617(-)U
+648 1695(i)U
+648 1617(are)U
+754(\256xed,)S
+928(the)S
+1033(tool)S
+1160(lays)S
+1291(the)S
+1396(graph)S
+1571(out)S
+1680(using)S
+1848(several)S
+2059(heuristics)S
+2336(as)S
+2416(reducing)S
+2671(the)S
+2776(number)S
+3002(of)S
+3082(cross)S
+666 1695(ngs,)U
+799(minimizi)S
+1035(ng)S
+1125(the)S
+1229(size)S
+1355(of)S
+1434(edges,)S
+1625(centering)S
+1893(of)S
+1971(nodes.)S
+2187(The)S
+2312(speci\256cation)S
+2667(language)S
+2927(of)S
+3005(the)S
+2 F
+3108(VCG)S
+1 F
+3223 1773(.)U
+648 1851(T)U
+2 F
+648 1773(tool)U
+1 F
+773(is)S
+840(nearly)S
+1027(compatible)S
+1341(to)S
+1415(GRL,)S
+1587(the)S
+1690(language)S
+1950(of)S
+2028(the)S
+2 F
+2131(Edge)S
+2289(tool,)S
+1 F
+2430(but)S
+2536(contains)S
+2777(many)S
+2945(extensions)S
+688 1851(he)U
+2 F
+781(VCG)S
+944(tool)S
+1 F
+1077(allows)S
+1280(folding)S
+1501(of)S
+1587(dynamicall)S
+1878(y)S
+1942(or)S
+2028(staticall)S
+2231(y)S
+2295(speci\256ed)S
+2560(regions)S
+2785(of)S
+2871(the)S
+2981(graph.)S
+3200(It)S
+3 F
+54 Z
+432 2112(G)U
+1 F
+66 Z
+648 1929(uses)U
+784(colors)S
+967(and)S
+1084(runs)S
+1220(on)S
+2 F
+1308(X11.)S
+1 F
+1453(\(An)S
+1578(older)S
+1735(version)S
+1951(runs)S
+2087(on)S
+2 F
+2175(Sunview.\))S
+3 F
+54 Z
+474 2112(ENERAL)U
+726(OPTIONS)S
+66 Z
+648 2190(\261)U
+1 F
+1143(The)S
+1267(input)S
+1424(is)S
+2 F
+1490(stdin)S
+1 F
+1640(instead)S
+1848(of)S
+1925(a)S
+1976(\256le.)S
+2447 2295(.)U
+3 F
+648 2400(\261)U
+648 2295(\261h)U
+6 F
+740(e)S
+3 F
+762(\261?)S
+1 F
+1143(Print)S
+1293(a)S
+1344(help)S
+1479(message)S
+1724(about)S
+1892(the)S
+1994(usage)S
+2166(of)S
+2243(the)S
+2345(tool)S
+3 F
+681 2400(v)U
+6 F
+736(e)S
+3 F
+758(\261version)S
+1 F
+1143(Print)S
+1293(a)S
+1344(version)S
+1560(and)S
+1677(copyright)S
+1951(message.)S
+2963 2505(.)U
+3 F
+648 2610(\261)U
+648 2505(\261silent)U
+1 F
+1143(Be)S
+1238(silent)S
+1402(during)S
+1596(the)S
+1698(layout.)S
+1901(No)S
+2004(messages)S
+2275(or)S
+2352(warnings)S
+2616(are)S
+2718(produced)S
+3 F
+681 2610(nocolors)U
+6 F
+941(e)S
+3 F
+963(\261blackwhite)S
+1 F
+1143 2688(D)U
+(o)R
+1251(not)S
+1362(use)S
+1477(colors)S
+1665(on)S
+1758(a)S
+1814(color)S
+1976(screen.)S
+2210(On)S
+2318(a)S
+2374(monochrom)S
+2719(screen)S
+2914(the)S
+3020(graph)S
+3196(is)S
+3218 2766(r)U
+1143 2844(s)U
+1143 2766(drawn)U
+1344(in)S
+1431(black)S
+1609(&)S
+1696(white)S
+1878(even)S
+2038(if)S
+2114(it)S
+2186(is)S
+2266(speci\256ed)S
+2536(with)S
+2689(colors.)S
+2925(On)S
+3041(a)S
+3105(colo)S
+1169 2844(creen,)U
+1354(this)S
+1475(mode)S
+1647(is)S
+1717(simulated,)S
+2015(if)S
+2081(this)S
+2202(option)S
+2396(is)S
+2466(selected.)S
+2741(The)S
+2868(option)S
+3061(is)S
+3130(use-)S
+1143 2922(ful,)U
+1255(if)S
+1317(the)S
+2 F
+1419(VCG)S
+1573(tool)S
+1 F
+1697(con\257icts)S
+1942(with)S
+2081(other)S
+2238(programs)S
+2509(that)S
+2629(need)S
+2775(colors.)S
+4 F
+1357 3027(>)U
+3 F
+648(\261e)S
+4 F
+732(<)S
+734(<)S
+3 F
+(num)R
+4 F
+(>)R
+902(>)S
+6 F
+961(e)S
+3 F
+983(\261error)S
+4 F
+1187(<)S
+1189(<)S
+3 F
+(num)R
+4 F
+(>)R
+1 F
+1143 3105(Stop)U
+1286(after)S
+4 F
+1428(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+1638(errors)S
+1814(during)S
+2008(parsing)S
+2224(of)S
+2301(the)S
+2403(speci\256cation)S
+2757(\(default:)S
+3001(16\).)S
+3 F
+648 3210(\261a)U
+4 F
+736(<)S
+738(<)S
+3 F
+(num)R
+4 F
+(>)R
+906(>)S
+6 F
+965(e)S
+3 F
+987(\261animation)S
+4 F
+1328(<)S
+1330(<)S
+3 F
+(num)R
+4 F
+(>)R
+1498(>)S
+1 F
+1143 3288(Start)U
+1296(the)S
+1405(tool)S
+1535(as)S
+1618(animation)S
+1908(handler.)S
+2172(This)S
+2317(implies)S
+2538(that)S
+2664(the)S
+2772(tool)S
+2902(is)S
+2974(controlled)S
+3222 3366(l)U
+2 F
+1143 3444(U)U
+1 F
+1143 3366(by)U
+1248(signals)S
+2 F
+1470(\(USRSIG1,)S
+1805(USRSIG2\))S
+1 F
+2123(from)S
+2290(an)S
+2391(external)S
+2641(program.)S
+2942(The)S
+3083(signa)S
+2 F
+1191 3444(SRSIG1)U
+1 F
+1431(causes)S
+1634(the)S
+2 F
+1745(VCG)S
+1908(tool)S
+1 F
+2041(to)S
+2123(open)S
+2282(the)S
+2393(display)S
+2614(window)S
+2858(and)S
+2984(reload)S
+3178(its)S
+1143 3600(w)U
+1143 3522(input)U
+1310(\256le.)S
+1465(The)S
+1599(signal)S
+2 F
+1788(USRSIG2)S
+1 F
+2077(causes)S
+2281(the)S
+2 F
+2393(VCG)S
+2557(tool)S
+1 F
+2691(to)S
+2773(close)S
+2939(the)S
+3050(display)S
+1191 3600(indow.)U
+1426(The)S
+1559(tool)S
+1692(processes)S
+1976(the)S
+2087(input)S
+2252(and)S
+2377(indicates)S
+2640(the)S
+2750(completion)S
+3075(of)S
+3160(the)S
+1143 3756(i)U
+1143 3678(processing)U
+1450(to)S
+1526(the)S
+1631(controlling)S
+1944(program.)S
+2231(If)S
+4 F
+2299(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2511(is)S
+2579(greater)S
+2785(0,)S
+2859(this)S
+2978(indication)S
+1161 3756(s)U
+1218(done)S
+1377(by)S
+1474(sleeping)S
+4 F
+1724(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+1943(seconds)S
+2183(and)S
+2309(touching)S
+2570(the)S
+2681(input)S
+2847(\256le)S
+2962(afterwards)S
+432 4128(R)U
+1143 3834(such)U
+1287(that)S
+1408(its)S
+1493(time)S
+1632(stamp)S
+1812(is)S
+1879(refreshed.)S
+2186(If)S
+4 F
+2253(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2464(is)S
+2531(less)S
+2653(than)S
+2789(0,)S
+2861(this)S
+2978(indication)S
+476 4128(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(1)S
+EP
+%%Page: ? 2
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+1143 522(is)U
+1218(done)S
+1377(by)S
+1474(sleeping)S
+2 F
+1724(\261)S
+4 F
+1788(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2006(seconds)S
+2245(and)S
+2370(sending)S
+2605(signal)S
+2 F
+2792(USRSIG1)S
+1 F
+3079(to)S
+3160(the)S
+3 F
+648 705(\261)U
+1 F
+1143 600(caller)U
+1310(process)S
+1530(afterwards.)S
+3 F
+681 705(m)U
+6 F
+758(e)S
+3 F
+780(\261multi)S
+1 F
+1143(Read)S
+1321(multiple)S
+1581(\256les)S
+1733(one)S
+1870(after)S
+2032(another)S
+2271(to)S
+2364(display)S
+2596(a)S
+2667(sequence)S
+2950(of)S
+3047(graphs.)S
+1143 861(b)U
+1143 783(Instead)U
+1359(of)S
+1440(an)S
+1528(exit)S
+1652(of)S
+1733(the)S
+1839(tool,)S
+1984(the)S
+2090(next)S
+2229(\256le)S
+2338(is)S
+2407(read.)S
+2584(The)S
+2711(option)S
+3 F
+2904(\261multi)S
+1 F
+3112(must)S
+1176 861(e)U
+1227(speci\256ed)S
+1483(before)S
+1673(the)S
+1775(\256rst)S
+1900(input)S
+2057(\256le.)S
+2985 966(.)U
+3 F
+648 1071(\261)U
+648 966(\261bary)U
+1 F
+1143(Use)S
+1268(bary)S
+1407(centering)S
+1673(to)S
+1746(reduce)S
+1943(the)S
+2045(number)S
+2268(of)S
+2345(edge)S
+2491(crossings)S
+2759(\(default\))S
+3 F
+681 1071(median)U
+1 F
+1143(Use)S
+1282(median)S
+1511(centering)S
+1791(instead)S
+2013(of)S
+2104(bary)S
+2257(centering)S
+2537(to)S
+2624(reduce)S
+2834(the)S
+2949(number)S
+3185(of)S
+1143 1227(m)U
+1143 1149(crossings.)U
+1463(On)S
+1579(graphs)S
+1790(with)S
+1942(large)S
+2108(average)S
+2346(degree)S
+2555(of)S
+2644(edges,)S
+2845(bary)S
+2996(centering)S
+1194 1227(ight)U
+1318(be)S
+1402(faster.)S
+3 F
+648 1332(\261)U
+(barymedian)R
+1 F
+1143(Use)S
+1273(a)S
+1329(hybrid)S
+1528(method)S
+1751(to)S
+1828(reduce)S
+2029(the)S
+2135(number)S
+2362(of)S
+2443(edge)S
+2593(crossings.)S
+2904(Bary)S
+3058(center-)S
+1143 1488(b)U
+1143 1410(ing)U
+1257(is)S
+1331(used)S
+1482(for)S
+1589(all)S
+1684(nodes)S
+1868(with)S
+2015(different)S
+2271(bary)S
+2418(values.)S
+2655(For)S
+2776(nodes)S
+2959(with)S
+3105(same)S
+1176 1488(ary)U
+1288(values,)S
+1501(the)S
+1609(crossing)S
+1857(reduction)S
+2132(heuristics)S
+2411(normally)S
+2675(has)S
+2790(a)S
+2846(random)S
+3074(effect.)S
+1143 1644(v)U
+1143 1566(With)U
+1307(this)S
+1435(hybrid)S
+1640(method,)S
+1887(the)S
+2000(crossing)S
+2253(reduction)S
+2534(of)S
+2621(nodes)S
+2807(with)S
+2956(same)S
+3123(bary)S
+1176 1644(alues)U
+1333(is)S
+1399(done)S
+1549(by)S
+1637(median)S
+1852(centering.)S
+3207 1749(n)U
+3 F
+648(\261medianbary)S
+1 F
+1143(Use)S
+1285(a)S
+1353(hybrid)S
+1564(method)S
+1800(to)S
+1890(reduce)S
+2104(the)S
+2222(number)S
+2461(of)S
+2554(edge)S
+2716(crossings.)S
+3039(Media)S
+1143 1827(centering)U
+1411(is)S
+1479(used)S
+1624(for)S
+1725(all)S
+1814(nodes)S
+1992(with)S
+2133(different)S
+2383(median)S
+2600(values.)S
+2831(For)S
+2946(nodes)S
+3123(with)S
+1143 1983(e)U
+1143 1905(same)U
+1301(median)S
+1517(values,)S
+1725(the)S
+1828(crossing)S
+2071(reduction)S
+2342(heuristics)S
+2617(normally)S
+2877(has)S
+2988(a)S
+3039(random)S
+1172 1983(ffect.)U
+1358(With)S
+1516(this)S
+1637(hybrid)S
+1835(method,)S
+2075(the)S
+2181(crossing)S
+2427(reduction)S
+2701(of)S
+2782(nodes)S
+2962(with)S
+3105(same)S
+1143 2061(median)U
+1358(values)S
+1548(is)S
+1614(done)S
+1764(by)S
+1852(bary)S
+1991(centering.)S
+3 F
+1222 2166(e)U
+648(\261notune)S
+6 F
+898(e)S
+3 F
+920(\261no\256netun)S
+1 F
+1143 2244(Switch)U
+1362(the)S
+1478(\256ne)S
+1612(tuning)S
+1815(layout)S
+2014(phase)S
+2199(off.)S
+2350(Fine)S
+2502(tuning)S
+2705(is)S
+2784(a)S
+2848(postprocessing)S
+3214 2322(s)U
+1143 2400(o)U
+1143 2322(phase)U
+1319(after)S
+1465(partitioning)S
+1797(of)S
+1878(nodes)S
+2058(into)S
+2185(layers.)S
+2406(Fine)S
+2548(tuning)S
+2741(changes)S
+2978(the)S
+3083(layer)S
+1176 2400(f)U
+1227(nodes)S
+1410(to)S
+1490(minimize)S
+1766(the)S
+1875(length)S
+2068(of)S
+2152(edges.)S
+2370(If)S
+2443(this)S
+2567(phase)S
+2746(is)S
+2819(switched)S
+3082(off,)S
+3204(it)S
+1143 2478(yield)U
+1296(a)S
+1347(less)S
+1468(compact)S
+1712(distribution)S
+2037(of)S
+2114(nodes)S
+2290(in)S
+2363(the)S
+2465(levels.)S
+3 F
+1357 2583(l)U
+648(\261manhattan)S
+6 F
+1012(e)S
+3 F
+1034(\261orthogona)S
+1 F
+1143 2661(Switch)U
+1354(the)S
+1461(orthogonal)S
+1773(manhattan)S
+2073(layout)S
+2264(on.)S
+2374(This)S
+2518(forces)S
+2706(edges)S
+2883(of)S
+2965(gradient)S
+3207(0)S
+3218 2739(-)U
+1143 2817(t)U
+1143 2739(or)U
+1228(90)S
+1324(degree.)S
+1568(The)S
+1700(result)S
+1876(of)S
+1960(this)S
+2084(layout)S
+2277(might)S
+2459(be)S
+2550(more)S
+2714(aesthetica)S
+2972(l,)S
+3036(if)S
+3105(addi)S
+1161 2817(ionally)U
+1377(the)S
+1491(priority)S
+1722(layout)S
+1920(phase)S
+2104(with)S
+2255(straight)S
+2486(line)S
+2618(tuning)S
+2820(is)S
+2898(used.)S
+3091(Thus,)S
+1143 2973(i)U
+1143 2895(these)U
+1301(phases)S
+1500(are)S
+1602(switched)S
+1858(on,)S
+1963(too,)S
+2086(unless)S
+2273(priority)S
+2492(layout)S
+2678(and)S
+2795(straight)S
+3014(line)S
+3134(tun-)S
+1161 2973(ng)U
+1249(is)S
+1315(switched)S
+1571(explicitl)S
+1785(y)S
+1840(off.)S
+3 F
+648 3078(\261nomanhattan)U
+6 F
+1082(e)S
+3 F
+1104(\261noorthogonal)S
+1 F
+1143 3156(Switch)U
+1348(the)S
+1450(orthogonal)S
+1757(manhattan)S
+2052(layout)S
+2238(explicitl)S
+2452(y)S
+2507(off.)S
+3211 3261(e)U
+3 F
+648(\261smanhattan)S
+1 F
+1143(Use)S
+1280(the)S
+1394(orthogonal)S
+1713(manhattan)S
+2020(layout)S
+2218(without)S
+2452(separation)S
+2755(of)S
+2843(horizontal)S
+3142(lin)S
+1143 3339(segments.)U
+1429(Horizontal)S
+1733(line)S
+1854(segments)S
+2122(are)S
+2225(shared)S
+2420(between)S
+2662(different)S
+2911(edges.)S
+3123(This)S
+1143 3495(o)U
+1143 3417(looks)U
+1314(nice)S
+1450(for)S
+1554(trees)S
+1705(but)S
+1816(might)S
+1996(be)S
+2085(confusing)S
+2372(in)S
+2450(general,)S
+2687(because)S
+2922(the)S
+3029(location)S
+1176 3495(f)U
+1220(an)S
+1304(edge)S
+1450(might)S
+1625(be)S
+1709(ambiguously.)S
+3099 3600(.)U
+3 F
+648 3705(\261)U
+648 3600(\261nosmanhattan)U
+1 F
+1143(Switch)S
+1348(the)S
+1450(orthogonal)S
+1757(manhattan)S
+2052(layout)S
+2238(without)S
+2461(separation)S
+2753(explicitl)S
+2967(y)S
+3022(off)S
+3 F
+681 3705(prio)U
+1 F
+1143(Switch)S
+1353(the)S
+1460(priority)S
+1684(layout)S
+1875(on.)S
+2007(This)S
+2151(forces)S
+2339(straight)S
+2563(long)S
+2706(edges)S
+2882(with)S
+3025(gradient)S
+1143 3861(c)U
+1143 3783(90)U
+1237(degree)S
+1440(during)S
+1640(the)S
+1748(node)S
+1904(placement)S
+2201(phase.)S
+2417(The)S
+2546(straight)S
+2770(line)S
+2895(tuning)S
+3090(phase)S
+1172 3861(an)U
+1261(be)S
+1350(used)S
+1497(to)S
+1574(improve)S
+1819(the)S
+1925(priority)S
+2148(layout.)S
+2355(Thus,)S
+2530(this)S
+2651(phase)S
+2827(is)S
+2897(switched)S
+3157(on,)S
+432 4155(Release)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(2)S
+EP
+%%Page: ? 3
+BP
+1 F
+66 Z
+432 228(V)U
+(CG)R
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+648 627(\261)U
+1 F
+1143 522(too,)U
+1266(unless)S
+1453(straight)S
+1672(line)S
+1792(tuning)S
+1982(is)S
+2048(switched)S
+2304(explicitl)S
+2518(y)S
+2573(off.)S
+3 F
+681 627(noprio)U
+1 F
+1143(Switch)S
+1348(the)S
+1450(priority)S
+1669(layout)S
+1855(explicitl)S
+2069(y)S
+2124(off.)S
+3207 732(g)U
+3 F
+648(\261straight)S
+1 F
+1143(Switch)S
+1362(the)S
+1478(straight)S
+1711(line)S
+1845(tuning)S
+2049(phase)S
+2235(on.)S
+2354(This)S
+2507(phase)S
+2693(forces)S
+2890(straight)S
+3123(lon)S
+1143 810(edges)U
+1315(with)S
+1454(gradient)S
+1691(90)S
+1779(degree.)S
+1993(It)S
+2055(can)S
+2168(be)S
+2252(used)S
+2395(to)S
+2468(improve)S
+2709(the)S
+2811(priority)S
+3030(layout.)S
+3 F
+648 1020(\261)U
+648 915(\261nostraight)U
+1 F
+1143(Switch)S
+1348(the)S
+1450(straight)S
+1669(line)S
+1789(tuning)S
+1979(phase)S
+2151(explicitl)S
+2365(y)S
+2420(off.)S
+3 F
+681 1020(nonearedge)U
+1 F
+1143(Do)S
+1246(not)S
+1352(allow)S
+1520(near)S
+1655(edges)S
+1827(in)S
+1900(the)S
+2002(layout.)S
+3218 1125(f)U
+3 F
+648(\261l)S
+6 F
+721(e)S
+3 F
+743(\261latelabels)S
+1 F
+1143(Create)S
+1343(the)S
+1452(labels)S
+1634(after)S
+1783(the)S
+1892(partitioning)S
+2227(of)S
+2310(edges.)S
+2527(This)S
+2672(has)S
+2788(only)S
+2933(an)S
+3023(effect)S
+3200(i)S
+1143 1203(labels)U
+1322(are)S
+1428(shown)S
+1627(in)S
+1704(a)S
+1758(nondirty)S
+2006(way.)S
+2180(If)S
+2249(labels)S
+2427(are)S
+2532(created)S
+2746(after)S
+2891(the)S
+2996(partition-)S
+3218 1281(-)U
+1143 1359(i)U
+1143 1281(ing)U
+1256(of)S
+1340(edges,)S
+1536(the)S
+1645(layout)S
+1838(will)S
+1969(be)S
+2060(a)S
+2117(little)S
+2264(bit)S
+2361(wider)S
+2539(and)S
+2662(may)S
+2803(have)S
+2955(less)S
+3082(cross)S
+1161 1359(ngs.)U
+1318(But)S
+1439(note)S
+1578(that)S
+1702(sometimes)S
+2009(this)S
+2130(layout)S
+2320(may)S
+2459(also)S
+2591(be)S
+2679(worser)S
+2885(than)S
+3024(the)S
+3130(nor-)S
+1143 1437(mal)U
+1263(layout.)S
+3 F
+1406 1542(s)U
+648(\261hidesingles)S
+6 F
+1011(e)S
+3 F
+1033(\261ignoresingle)S
+1 F
+1143 1620(Ignore)U
+1349(single)S
+1540(nodes)S
+1728(\(nodes)S
+1938(without)S
+2173(visible)S
+2382(edges\))S
+2610(that)S
+2742(are)S
+2856(not)S
+2974(connected)S
+3222 1698(t)U
+1143 1776(w)U
+1143 1698(with)U
+1291(the)S
+1402(remaining)S
+1699(graph.)S
+1919(These)S
+2107(nodes)S
+2292(are)S
+2403(sometimes)S
+2715(not)S
+2830(of)S
+2916(interest,)S
+3156(bu)S
+1191 1776(ould)U
+1330(spread)S
+1524(the)S
+1626(layout)S
+1812(if)S
+1874(they)S
+2009(were)S
+2159(visible.)S
+3211 1881(e)U
+3 F
+648(\261s)S
+6 F
+729(e)S
+3 F
+751(\261summarize)S
+1 F
+1143(Switch)S
+1356(edge)S
+1510(summary)S
+1785(layout)S
+1979(on.)S
+2113(Multiple)S
+2368(edges)S
+2547(between)S
+2795(the)S
+2904(same)S
+3068(sourc)S
+1143 1959(and)U
+1270(target)S
+1451(node)S
+1611(are)S
+1723(summarized)S
+2075(if)S
+2146(they)S
+2290(have)S
+2445(the)S
+2556(same)S
+2722(visible)S
+2928(appearance.)S
+1143 2037(This)U
+1282(reduces)S
+1505(the)S
+1607(number)S
+1830(of)S
+1907(visible)S
+2104(edges.)S
+3 F
+54 Z
+1377 2220(D)U
+432(OPTIONS)S
+702(FOR)S
+843(THE)S
+984(LAYOUT)S
+1242(SPEE)S
+1 F
+66 Z
+648 2298(The)U
+774(speed)S
+948(of)S
+1027(the)S
+1130(layout)S
+1317(process)S
+1538(can)S
+1652(be)S
+1737(in\257uenced)S
+2034(by)S
+2123(selecting)S
+2379(time)S
+2518(limits)S
+2690(and)S
+2808(iteration)S
+3049(bounds)S
+648 2454(t)U
+648 2376(of)U
+733(the)S
+843(different)S
+1099(layout)S
+1293(phases.)S
+1538(Optional)S
+1798(layout)S
+1992(phases)S
+2198(can)S
+2319(completel)S
+2577(y)S
+2639(be)S
+2730(skipped.)S
+3003(But)S
+3127(note)S
+666 2454(hat)U
+774(we)S
+879(need)S
+1031(a)S
+1087(minimal)S
+1332(time)S
+1475(for)S
+1579(each)S
+1726(graph,)S
+1920(in)S
+1998(order)S
+2164(to)S
+2242(initiali)S
+2412(ze)S
+2497(the)S
+2604(internal)S
+2831(data)S
+2967(structures.)S
+3 F
+648 2637(\261)U
+1 F
+648 2532(Furthermore,)U
+1016(a)S
+1067(fast)S
+1184(layout)S
+1370(is)S
+1436(probably)S
+1692(also)S
+1820(an)S
+1904(ugly)S
+2043(layout.)S
+3 F
+681 2637(t)U
+4 F
+725(<)S
+727(<)S
+3 F
+(num)R
+4 F
+(>)R
+895(>)S
+6 F
+954(e)S
+3 F
+976(\261timelimit)S
+4 F
+1286(<)S
+1288(<)S
+3 F
+(num)R
+4 F
+(>)R
+1456(>)S
+1 F
+1143 2715(S)U
+(et)R
+1265(the)S
+1383(time)S
+1537(limit)S
+1698(to)S
+4 F
+1787(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2013(seconds)S
+2260(of)S
+2353(real)S
+2489(time.)S
+2682(If)S
+2764(the)S
+2882(time)S
+3036(limit)S
+3196(is)S
+1143 2871(v)U
+1143 2793(exceeded,)U
+1429(the)S
+1533(fastest)S
+1725(possible)S
+1965(layout)S
+2153(mode)S
+2323(is)S
+2391(switched)S
+2649(on.)S
+2778(This)S
+2919(may)S
+3056(yield)S
+3211(a)S
+1176 2871(ery)U
+1295(ugly)S
+1447(layout.)S
+1684(Of)S
+1788(course,)S
+2011(a)S
+2074(time)S
+2224(limit)S
+2381(does)S
+2536(not)S
+2654(mean)S
+2830(that)S
+2962(the)S
+3076(layout)S
+1143 3027(s)U
+1143 2949(really)U
+1327(needs)S
+1512(so)S
+1606(much)S
+1787(time:)S
+1956(The)S
+2093(layout)S
+2292(may)S
+2440(be)S
+2537(faster,)S
+2734(because)S
+2976(the)S
+3090(graph)S
+1169 3027(tructure)U
+1398(is)S
+1467(very)S
+1609(simple,)S
+1826(or)S
+1906(it)S
+1966(may)S
+2103(be)S
+2189(slower,)S
+2406(because)S
+2638(even)S
+2786(the)S
+2890(fastest)S
+3082(possi-)S
+3222 3105(t)U
+1143 3183(d)U
+1143 3105(ble)U
+1262(layout)S
+1465(already)S
+1697(exceeds)S
+1944(the)S
+2063(time)S
+2218(limit.)S
+2419(Further)S
+2652(note,)S
+2821(that)S
+2958(the)S
+3076(layou)S
+1176 3183(epends)U
+1391(on)S
+1489(the)S
+1601(real)S
+1731(time,)S
+1896(i.e.)S
+2009(on)S
+2106(the)S
+2217(load)S
+2361(of)S
+2447(the)S
+2558(computer.)S
+2854(Thus,)S
+3034(given)S
+3211(a)S
+3 F
+648 3366(\261)U
+1 F
+1143 3261(time)U
+1281(limit,)S
+1443(two)S
+1564(identical)S
+1811(trys)S
+1932(need)S
+2078(not)S
+2184(to)S
+2257(give)S
+2392(identical)S
+2639(results.)S
+3 F
+681 3366(f)U
+6 F
+725(e)S
+3 F
+747(\261fast)S
+1 F
+1143(Switch)S
+1352(the)S
+1458(fast)S
+1579(and)S
+1700(dirty)S
+1850(and)S
+1971(ugly)S
+2114(mode)S
+2286(on.)S
+2417(The)S
+2545(layout)S
+2734(phase)S
+2909(will)S
+3036(be)S
+3123(very)S
+3211 3444(e)U
+1143 3522(a)U
+1143 3444(fast,)U
+1280(but)S
+1389(the)S
+1494(layout)S
+1682(will)S
+1808(be)S
+1894(ugly.)S
+2074(This)S
+2215(is)S
+2283(helpful)S
+2493(on)S
+2583(very)S
+2724(large)S
+2879(graphs)S
+3079(wher)S
+1172 3522(esthetic)U
+1398(visibility)S
+1657(is)S
+1727(of)S
+1808(minor)S
+1991(importance.)S
+2350(The)S
+2477(option)S
+3 F
+2670(\261fast)S
+1 F
+2831(implies)S
+3 F
+3049(\261bmax)S
+648 3705(\261)U
+1143 3600(2)U
+1198(\261cmax)S
+1403(2)S
+1458(\261pmax)S
+1671(2)S
+681 3705(b)U
+4 F
+740(<)S
+742(<)S
+3 F
+(num)R
+4 F
+(>)R
+910(>)S
+6 F
+969(e)S
+3 F
+991(\261bmax)S
+4 F
+1204(<)S
+1206(<)S
+3 F
+(num)R
+4 F
+(>)R
+1374(>)S
+6 F
+1433(e)S
+3 F
+1455(\261bending)S
+4 F
+1738(<)S
+1740(<)S
+3 F
+(num)R
+4 F
+(>)R
+1908(>)S
+1 F
+1143 3783(S)U
+(et)R
+1257(the)S
+1366(maximal)S
+1624(number)S
+1854(of)S
+1938(iterations)S
+2211(used)S
+2361(for)S
+2467(the)S
+2576(reduction)S
+2853(of)S
+2937(edge)S
+3090(bend-)S
+432 4155(R)U
+1143 3861(ings)U
+1277(to)S
+4 F
+1352(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1540(.)S
+1 F
+1581(Edge)S
+1739(bendings)S
+2000(are)S
+2103(used)S
+2247(to)S
+2321(avoid)S
+2490(that)S
+2611(edges)S
+2784(are)S
+2887(drawn)S
+3075(across)S
+476 4155(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(3)S
+EP
+%%Page: ? 4
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+1143 522(nodes.)U
+1361(Reducing)S
+1638(the)S
+1743(number)S
+1969(of)S
+2048(iterations)S
+2316(results)S
+2512(in)S
+2587(a)S
+2640(faster)S
+2810(but)S
+2918(ugly)S
+3059(layout,)S
+3 F
+648 705(\261)U
+1 F
+1143 600(i.e.)U
+1246(to)S
+1319(much)S
+1487(bendings)S
+1747(occur.)S
+1932(The)S
+2056(default)S
+2260(value)S
+2424(is)S
+2490(100.)S
+3 F
+681 705(c)U
+4 F
+732(<)S
+734(<)S
+3 F
+(num)R
+4 F
+(>)R
+902(>)S
+6 F
+961(e)S
+3 F
+983(\261cmax)S
+4 F
+1188(<)S
+1190(<)S
+3 F
+(num)R
+4 F
+(>)R
+1358(>)S
+6 F
+1417(e)S
+3 F
+1439(\261crossing)S
+4 F
+1725(<)S
+1727(<)S
+3 F
+(num)R
+4 F
+(>)R
+1895(>)S
+1 F
+1143 783(S)U
+(et)R
+1256(the)S
+1365(maximal)S
+1623(number)S
+1853(of)S
+1937(iterations)S
+2209(used)S
+2358(for)S
+2463(the)S
+2571(reduction)S
+2847(of)S
+2930(edge)S
+3082(cross-)S
+1143 939(o)U
+1143 861(ings)U
+1279(to)S
+4 F
+1356(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1544(.)S
+1 F
+1587(The)S
+1715(edge)S
+1864(crossing)S
+2109(reduction)S
+2382(method)S
+2604(is)S
+2673(called)S
+2854(bary)S
+2996(centering)S
+1176 939(r)U
+1228(median)S
+1451(centering.)S
+1764(These)S
+1950(may)S
+2092(be)S
+2183(very)S
+2329(time)S
+2474(consuming)S
+2792(on)S
+2887(large)S
+3047(graphs.)S
+1143 1095(d)U
+1143 1017(Reducing)U
+1430(the)S
+1545(number)S
+1781(of)S
+1870(iterations)S
+2148(results)S
+2354(in)S
+2439(a)S
+2502(faster)S
+2682(but)S
+2800(ugly)S
+2951(layout.)S
+3166(As)S
+1176 1095(efault,)U
+1364(the)S
+1466(method)S
+1685(is)S
+1751(iterated)S
+1969(as)S
+2046(long)S
+2185(as)S
+2262(improvements)S
+2660(are)S
+2762(possible.)S
+3214 1200(s)U
+3 F
+648(\261cmin)S
+4 F
+842(<)S
+844(<)S
+3 F
+(num)R
+4 F
+(>)R
+1012(>)S
+1 F
+1143(Set)S
+1249(the)S
+1351(minimal)S
+1591(number)S
+1814(of)S
+1891(iterations)S
+2157(used)S
+2300(for)S
+2399(the)S
+2501(reduction)S
+2771(of)S
+2848(edge)S
+2994(crossing)S
+1143 1278(to)U
+4 F
+1217(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1405(.)S
+1 F
+1444(The)S
+1568(crossing)S
+1810(reduction)S
+2080(method)S
+2299(tries)S
+2434(to)S
+2507(detect)S
+2685(improvements)S
+3083(of)S
+3160(the)S
+3211 1356(e)U
+1143 1434(m)U
+1143 1356(layout.)U
+1360(If)S
+1440(an)S
+1538(iteration)S
+1792(of)S
+1883(that)S
+2017(method)S
+2249(does)S
+2405(not)S
+2524(yield)S
+2690(an)S
+2787(improvment,)S
+3160(th)S
+1194 1434(ethod)U
+1366(normally)S
+1629(stops.)S
+1830(But)S
+1951(this)S
+2072(situation)S
+2324(might)S
+2503(be)S
+2591(a)S
+2646(local)S
+2799(minimum)S
+3080(of)S
+3160(the)S
+3223 1512(,)U
+1143 1590(t)U
+1143 1512(quality)U
+1351(of)S
+1432(the)S
+1538(layout,)S
+1745(i.e.)S
+1852(further)S
+2057(iterations)S
+2327(might)S
+2506(\256nd)S
+2635(a)S
+2689(better)S
+2863(layout.)S
+3091(Thus)S
+1161 1590(he)U
+1245(minimal)S
+1485(number)S
+1708(of)S
+1785(iterations)S
+2051(can)S
+2164(be)S
+2248(speci\256ed.)S
+2543(The)S
+2667(default)S
+2871(value)S
+3035(is)S
+3101(0.)S
+3 F
+648 1695(\261p)U
+4 F
+740(<)S
+742(<)S
+3 F
+(num)R
+4 F
+(>)R
+910(>)S
+6 F
+969(e)S
+3 F
+991(\261pmax)S
+4 F
+1204(<)S
+1206(<)S
+3 F
+(num)R
+4 F
+(>)R
+1374(>)S
+6 F
+1433(e)S
+3 F
+1455(\261pendulum)S
+4 F
+1797(<)S
+1799(<)S
+3 F
+(num)R
+4 F
+(>)R
+1967(>)S
+1 F
+1143 1773(Set)U
+1254(the)S
+1361(maximal)S
+1617(number)S
+1845(of)S
+1927(iterations)S
+2198(used)S
+2346(for)S
+2450(the)S
+2556(balancing)S
+2859(by)S
+2951(the)S
+3057(pendu-)S
+1143 1929(o)U
+1143 1851(lum)U
+1274(method)S
+1500(to)S
+4 F
+1580(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1768(.)S
+1 F
+1814(The)S
+1944(pendulum)S
+2235(method)S
+2460(calculat)S
+2663(es)S
+2746(the)S
+2854(x)S
+2915(co-ordinates)S
+1176 1929(f)U
+1221(nodes)S
+1398(such)S
+1542(that)S
+1663(the)S
+1766(layout)S
+1953(is)S
+2020(medium)S
+2258(dense)S
+2431(and)S
+2549(balanced.)S
+2822(It)S
+2885(tries)S
+3021(to)S
+3094(avoid)S
+3211 2007(e)U
+1143 2085(t)U
+1143 2007(extreme)U
+1384(gradients)S
+1655(of)S
+1740(edges.)S
+1937(It)S
+2007(works)S
+2199(like)S
+2327(a)S
+2386(pendulum)S
+2678(where)S
+2868(the)S
+2977(nodes)S
+3160(ar)S
+1161 2085(he)U
+1246(balls,)S
+1409(the)S
+1511(edges)S
+1683(are)S
+1785(the)S
+1887(strings)S
+2085(and)S
+2202(uppermost)S
+2502(nodes)S
+2678(are)S
+2780(\256xed)S
+2934(on)S
+3022(the)S
+3124(ceil-)S
+3223 2163(.)U
+1143 2241(T)U
+1143 2163(ing.)U
+1276(Reducing)S
+1560(the)S
+1672(number)S
+1905(of)S
+1992(iterations)S
+2268(results)S
+2472(in)S
+2555(a)S
+2616(faster)S
+2794(but)S
+2910(ugly)S
+3059(layout)S
+1183 2241(he)U
+1267(default)S
+1471(value)S
+1635(is)S
+1701(100.)S
+3 F
+648 2346(\261)U
+(pmin)R
+4 F
+850(<)S
+852(<)S
+3 F
+(num)R
+4 F
+(>)R
+1020(>)S
+1 F
+1143(Set)S
+1255(the)S
+1363(minimal)S
+1609(number)S
+1838(of)S
+1921(iterations)S
+2193(used)S
+2342(for)S
+2446(the)S
+2553(balancing)S
+2857(by)S
+2950(the)S
+3057(pendu-)S
+1143 2502(i)U
+1143 2424(lum)U
+1282(method)S
+1516(to)S
+4 F
+1603(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1791(.)S
+1 F
+1844(If)S
+1924(an)S
+2022(iteration)S
+2276(of)S
+2367(that)S
+2501(method)S
+2734(does)S
+2891(not)S
+3011(yield)S
+3178(an)S
+1161 2502(mprovment,)U
+1507(the)S
+1613(method)S
+1836(normally)S
+2099(stops.)S
+2300(But)S
+2421(this)S
+2542(situation)S
+2794(might)S
+2972(be)S
+3059(a)S
+3113(local)S
+1143 2658(b)U
+1143 2580(minimum)U
+1433(of)S
+1523(the)S
+1638(quality)S
+1855(of)S
+1945(the)S
+2060(layout,)S
+2276(i.e.)S
+2392(further)S
+2606(iterations)S
+2885(might)S
+3073(\256nd)S
+3211(a)S
+1176 2658(etter)U
+1317(layout.)S
+1545(Thus,)S
+1719(the)S
+1824(minimal)S
+2067(number)S
+2293(of)S
+2372(iterations)S
+2640(can)S
+2755(be)S
+2841(speci\256ed.)S
+3138(The)S
+3 F
+648 2841(\261)U
+1 F
+1143 2736(default)U
+1347(value)S
+1511(is)S
+1577(0.)S
+3 F
+681 2841(r)U
+4 F
+732(<)S
+734(<)S
+3 F
+(num)R
+4 F
+(>)R
+902(>)S
+6 F
+961(e)S
+3 F
+983(\261rmax)S
+4 F
+1188(<)S
+1190(<)S
+3 F
+(num)R
+4 F
+(>)R
+1358(>)S
+6 F
+1417(e)S
+3 F
+1439(\261rubberband)S
+4 F
+1836(<)S
+1838(<)S
+3 F
+(num)R
+4 F
+(>)R
+2006(>)S
+1 F
+1143 2919(S)U
+(et)R
+1253(the)S
+1359(maximal)S
+1614(number)S
+1841(of)S
+1922(iterations)S
+2192(used)S
+2339(for)S
+2442(the)S
+2548(balancing)S
+2850(by)S
+2941(the)S
+3046(rubber-)S
+1143 3075(o)U
+1143 2997(band)U
+1294(method)S
+1513(to)S
+4 F
+1586(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1774(.)S
+1 F
+1813(The)S
+1937(rubberband)S
+2259(method)S
+2478(calculat)S
+2681(es)S
+2758(the)S
+2860(x)S
+2915(co-ordinates)S
+1176 3075(f)U
+1229(nodes)S
+1414(such)S
+1566(that)S
+1695(the)S
+1806(nodes)S
+1991(are)S
+2102(centered)S
+2355(relativel)S
+2569(y)S
+2633(to)S
+2715(their)S
+2866(incoming)S
+3145(and)S
+3214 3153(s)U
+1143 3231(l)U
+1143 3153(outgoing)U
+1403(edges.)S
+1618(It)S
+1684(works)S
+1872(like)S
+1996(a)S
+2051(network)S
+2293(where)S
+2480(the)S
+2586(edges)S
+2762(pull)S
+2890(on)S
+2981(the)S
+3086(node)S
+1161 3231(ike)U
+1271(rubberbands.)S
+1665(Reducing)S
+1946(the)S
+2055(number)S
+2285(of)S
+2369(iterations)S
+2642(results)S
+2843(in)S
+2923(a)S
+2981(faster)S
+3156(but)S
+3 F
+648 3414(\261)U
+1 F
+1143 3309(ugly)U
+1282(layout.)S
+1485(The)S
+1609(default)S
+1813(value)S
+1977(is)S
+2043(100.)S
+3 F
+681 3414(rmin)U
+4 F
+842(<)S
+844(<)S
+3 F
+(num)R
+4 F
+(>)R
+1012(>)S
+1 F
+1143(Set)S
+1254(the)S
+1361(minimal)S
+1606(number)S
+1834(of)S
+1916(iterations)S
+2187(used)S
+2335(for)S
+2439(the)S
+2545(balancing)S
+2848(by)S
+2940(the)S
+3046(rubber-)S
+1143 3570(i)U
+1143 3492(band)U
+1306(method)S
+1538(to)S
+4 F
+1623(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1811(.)S
+1 F
+1862(If)S
+1940(an)S
+2036(iteration)S
+2288(of)S
+2377(that)S
+2509(method)S
+2740(does)S
+2895(not)S
+3013(yield)S
+3178(an)S
+1161 3570(mprovment,)U
+1507(the)S
+1613(method)S
+1836(normally)S
+2099(stops.)S
+2300(But)S
+2421(this)S
+2542(situation)S
+2794(might)S
+2972(be)S
+3059(a)S
+3113(local)S
+1143 3726(b)U
+1143 3648(minimum)U
+1433(of)S
+1523(the)S
+1638(quality)S
+1855(of)S
+1945(the)S
+2060(layout,)S
+2276(i.e.)S
+2392(further)S
+2606(iterations)S
+2885(might)S
+3073(\256nd)S
+3211(a)S
+1176 3726(etter)U
+1317(layout.)S
+1545(Thus,)S
+1719(the)S
+1824(minimal)S
+2067(number)S
+2293(of)S
+2372(iterations)S
+2640(can)S
+2755(be)S
+2841(speci\256ed.)S
+3138(The)S
+432 4116(R)U
+1143 3804(default)U
+1347(value)S
+1511(is)S
+1577(0.)S
+476 4116(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(4)S
+EP
+%%Page: ? 5
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3 F
+648 522(\261smax)U
+4 F
+850(<)S
+852(<)S
+3 F
+(num)R
+4 F
+(>)R
+1020(>)S
+1 F
+1143(Set)S
+1252(the)S
+1357(maximal)S
+1611(number)S
+1836(of)S
+1915(iterations)S
+2183(used)S
+2328(for)S
+2429(the)S
+2533(straight)S
+2776(line)S
+2898(tuning)S
+3090(phase)S
+3222 600(t)U
+1143 678(c)U
+1143 600(to)U
+4 F
+1221(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+1409(.)S
+1 F
+1453(This)S
+1597(phase)S
+1774(forces)S
+1962(straight)S
+2186(long)S
+2330(edges)S
+2506(with)S
+2649(gradient)S
+2890(90)S
+2982(degree.)S
+3200(I)S
+1172 678(an)U
+1256(be)S
+1340(used)S
+1483(to)S
+1556(improve)S
+1797(the)S
+1899(priority)S
+2118(layout)S
+2304(or)S
+2381(the)S
+2483(manhattan)S
+2778(layout.)S
+3 F
+648 783(\261nocopt)U
+6 F
+894(e)S
+3 F
+916(\261nocopt2)S
+1 F
+1143 861(Skip)U
+1300(the)S
+1416(optimizat)S
+1663(ion)S
+1783(phase)S
+1969(2)S
+2038(during)S
+2246(the)S
+2361(crossing)S
+2616(reduction.)S
+2938(This)S
+3090(phase)S
+3218 939(f)U
+1143 1017(i)U
+1143 939(takes)U
+1307(very)S
+1453(long)S
+1598(time)S
+1742(on)S
+1836(very)S
+1981(large)S
+2140(graphs.)S
+2383(Before)S
+2590(reducing)S
+2848(the)S
+2956(number)S
+3185(o)S
+1161 1017(terations)U
+1416(of)S
+1500(the)S
+1609(crossing)S
+1858(reduction)S
+2135(phase)S
+2314(\(see)S
+2449(option)S
+3 F
+2645(\261cmax)S
+4 F
+2856(<)S
+2858(<)S
+3 F
+(num)R
+4 F
+(>)R
+3026(>)S
+1 F
+3091(\))S
+3141(you)S
+1143 1095(should)U
+1341(\256rst)S
+1466(try)S
+1561(to)S
+1634(skip)S
+1766(this)S
+1883(optimizat)S
+2130(ion)S
+2236(phase)S
+2408(2.)S
+3 F
+1271 1200(l)U
+648(\261nocoptl)S
+6 F
+912(e)S
+3 F
+934(\261nocoptloca)S
+1 F
+1143 1278(Switch)U
+1356(a)S
+1415(local)S
+1571(crossing)S
+1820(optimizat)S
+2067(ion)S
+2180(off.)S
+2325(This)S
+2471(phase)S
+2650(additionall)S
+2930(y)S
+2992(examines)S
+1143 1434(o)U
+1143 1356(pairs)U
+1294(of)S
+1372(edge)S
+1518(polygons)S
+1782(and)S
+1899(tries)S
+2034(to)S
+2107(unwind)S
+2327(them.)S
+2497(It)S
+2559(slows)S
+2732(down)S
+2901(if)S
+2963(the)S
+3065(degree)S
+1176 1434(f)U
+1220(the)S
+1322(nodes)S
+1498(is)S
+1564(large.)S
+3 F
+54 Z
+432 1617(OPTIONS)U
+702(FOR)S
+843(THE)S
+984(DISTRIBUTION)S
+1410(OF)S
+1512(NODES)S
+1 F
+66 Z
+648 1695(The)U
+776(quality)S
+984(of)S
+1065(the)S
+1171(layout)S
+1361(is)S
+1431(mainly)S
+1639(in\257uenced)S
+1939(by)S
+2031(the)S
+2137(distribution)S
+2466(of)S
+2547(the)S
+2653(nodes)S
+2833(into)S
+2960(the)S
+3065(hierar-)S
+648 1851(a)U
+648 1773(chy)U
+773(levels.)S
+995(Nodes)S
+1194(of)S
+1279(the)S
+1389(same)S
+1554(level)S
+1711(will)S
+1843(appear)S
+2048(in)S
+2129(the)S
+2239(same)S
+2404(row.)S
+2576(Since)S
+2752(it)S
+2818(depends)S
+3064(on)S
+3160(the)S
+677 1851(pplication)U
+961(which)S
+1144(hierarchy)S
+1414(is)S
+1480(the)S
+1582(best,)S
+1727(there)S
+1880(are)S
+1982(different)S
+2230(algorithms)S
+2533(for)S
+2632(this)S
+2749(phase.)S
+3214 1956(s)U
+3 F
+648(\261d)S
+740(normal)S
+1 F
+1143(Normal)S
+1394(distribution)S
+1747(of)S
+1830(nodes)S
+2034(into)S
+2164(the)S
+2272(levels)S
+2475(\(default\).)S
+2768(This)S
+2913(algorithm)S
+3196(i)S
+1143 2034(based)U
+1315(on)S
+1425(the)S
+1527(calculat)S
+1730(ion)S
+1836(of)S
+1913(the)S
+2015(strongly)S
+2253(connected)S
+2541(components.)S
+3222 2139(t)U
+3 F
+648(\261d)S
+740(dfs)S
+1 F
+1143(Depth)S
+1332(\256rst)S
+1463(search)S
+1680(distribution)S
+2010(of)S
+2092(nodes)S
+2295(into)S
+2424(the)S
+2531(levels.)S
+2750(This)S
+2894(is)S
+2965(the)S
+3072(fastes)S
+1143 2217(method.)U
+3 F
+648 2322(\261d)U
+740(0)S
+6 F
+795(e)S
+3 F
+817(\261d)S
+909(minbackward)S
+1 F
+1143 2400(Reduce)U
+1367(the)S
+1474(number)S
+1702(of)S
+1784(backward)S
+2067(edges)S
+2244(heuristicall)S
+2535(y.)S
+2612(If)S
+2683(the)S
+2790(graph)S
+2967(is)S
+3038(acyclic,)S
+1143 2478(no)U
+1231(backward)S
+1509(edges)S
+1681(will)S
+1805(occur,)S
+1990(i.e.)S
+2093(all)S
+2180(edges)S
+2352(point)S
+2509(into)S
+2633(the)S
+2735(same)S
+2892(direction.)S
+3 F
+1161 2583(h)U
+648(\261d)S
+740(+)S
+6 F
+801(e)S
+3 F
+823(\261d)S
+915(maxdept)S
+1 F
+1143 2661(Maximize)U
+1434(the)S
+1539(depth)S
+1710(of)S
+1790(the)S
+1895(layout)S
+2084(heuristicall)S
+2375(y.)S
+2472(It)S
+2537(should)S
+2738(be)S
+2825(used)S
+2970(if)S
+3034(the)S
+3138(lay-)S
+1143 2739(out)U
+1249(is)S
+1315(too)S
+1421(wide)S
+1571(in)S
+1644(x)S
+1699(direction.)S
+1993(This)S
+2132(algorithm)S
+2409(is)S
+2475(very)S
+2614(fast.)S
+3 F
+1144 2844(h)U
+648(\261d)S
+740(\261)S
+6 F
+795(e)S
+3 F
+817(\261d)S
+909(mindept)S
+1 F
+1143 2922(Minimize)U
+1424(the)S
+1530(depth)S
+1702(of)S
+1783(the)S
+1889(layout)S
+2079(heuristicall)S
+2370(y.)S
+2468(It)S
+2534(should)S
+2735(be)S
+2822(used)S
+2968(if)S
+3033(the)S
+3138(lay-)S
+1143 3000(out)U
+1249(is)S
+1315(too)S
+1421(wide)S
+1571(in)S
+1644(y)S
+1699(direction.)S
+1993(This)S
+2132(algorithm)S
+2409(is)S
+2475(very)S
+2614(fast.)S
+3 F
+1314 3105(w)U
+648(\261d)S
+740(++)S
+6 F
+840(e)S
+3 F
+862(\261d)S
+954(maxdepthslo)S
+1 F
+1143 3183(Maximize)U
+1433(the)S
+1537(depth)S
+1707(of)S
+1786(the)S
+1890(layout)S
+2077(heuristicall)S
+2368(y.)S
+2441(See)S
+2559(above.)S
+2778(This)S
+2918(algorithm)S
+3196(is)S
+1143 3261(very)U
+1282(slow,)S
+1446(but)S
+1552(may)S
+1687(give)S
+1822(better)S
+1993(results.)S
+3 F
+1291 3366(w)U
+648(\261d)S
+740(\261\261)S
+6 F
+828(e)S
+3 F
+850(\261d)S
+942(mindepthslo)S
+1 F
+1143 3444(Minimize)U
+1423(the)S
+1528(depth)S
+1699(of)S
+1779(the)S
+1884(layout)S
+2072(heuristicall)S
+2363(y.)S
+2437(See)S
+2556(above.)S
+2776(This)S
+2917(algorithm)S
+3196(is)S
+1143 3522(very)U
+1282(slow,)S
+1446(but)S
+1552(may)S
+1687(give)S
+1822(better)S
+1993(results.)S
+3 F
+1462 3627(e)U
+648(\261d)S
+740(minindeg)S
+6 F
+1026(e)S
+3 F
+1048(\261d)S
+1140(minindegre)S
+1 F
+1143 3705(Prepare)U
+1369(the)S
+1474(nodes)S
+1653(by)S
+1744(sorting)S
+1952(them)S
+2108(according)S
+2392(increasing)S
+2687(indegree)S
+2938(\(number)S
+3185(of)S
+1143 3861(m)U
+1143 3783(incoming)U
+1425(edges\).)S
+1670(The)S
+1806(nodes)S
+1994(with)S
+2145(the)S
+2259(minimal)S
+2511(indegree)S
+2771(come)S
+2947(\256rst.)S
+3123(This)S
+1194 3861(ay)U
+1278(have)S
+1424(various)S
+1640(effects)S
+1837(on)S
+1925(the)S
+2027(layout.)S
+3207 4155(5)U
+432(Release)S
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+EP
+%%Page: ? 6
+BP
+1 F
+66 Z
+432 228(V)U
+(CG)R
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+648 522(\261d)U
+740(maxindeg)S
+6 F
+1037(e)S
+3 F
+1059(\261d)S
+1151(maxindegree)S
+1 F
+1143 600(Prepare)U
+1367(the)S
+1469(nodes)S
+1645(by)S
+1733(sorting)S
+1938(them)S
+2091(according)S
+2372(decreasing)S
+2675(indegree.)S
+2962(The)S
+3086(nodes)S
+1143 756(l)U
+1143 678(with)U
+1285(the)S
+1390(maximal)S
+1644(indegree)S
+1895(come)S
+2061(\256rst.)S
+2227(This)S
+2368(may)S
+2505(have)S
+2653(various)S
+2871(effects)S
+3070(on)S
+3160(the)S
+1161 756(ayout.)U
+3 F
+1536 861(e)U
+648(\261d)S
+740(minoutdeg)S
+6 F
+1063(e)S
+3 F
+1085(\261d)S
+1177(minoutdegre)S
+1 F
+1143 939(Prepare)U
+1375(the)S
+1485(nodes)S
+1669(by)S
+1765(sorting)S
+1978(them)S
+2139(according)S
+2428(increasing)S
+2728(outdegree)S
+3017(\(number)S
+1143 1095(m)U
+1143 1017(of)U
+1223(outgoing)S
+1482(edges\).)S
+1717(The)S
+1843(nodes)S
+2021(with)S
+2162(the)S
+2266(minimal)S
+2508(outdegree)S
+2791(come)S
+2957(\256rst.)S
+3123(This)S
+1194 1095(ay)U
+1278(have)S
+1424(various)S
+1640(effects)S
+1837(on)S
+1925(the)S
+2027(layout.)S
+3 F
+648 1200(\261d)U
+740(maxoutdeg)S
+6 F
+1074(e)S
+3 F
+1096(\261d)S
+1188(maxoutdegree)S
+1 F
+1143 1278(Prepare)U
+1382(the)S
+1500(nodes)S
+1692(by)S
+1796(sorting)S
+2017(them)S
+2186(according)S
+2483(decreasing)S
+2802(outdegree.)S
+3138(The)S
+3214 1356(s)U
+1143 1434(o)U
+1143 1356(nodes)U
+1320(with)S
+1460(the)S
+1563(maximal)S
+1815(outdegree)S
+2097(come)S
+2262(\256rst.)S
+2427(This)S
+2567(may)S
+2703(have)S
+2849(various)S
+3065(effect)S
+1176 1434(n)U
+1231(the)S
+1333(layout.)S
+3 F
+648 1539(\261d)U
+740(mindeg)S
+6 F
+971(e)S
+3 F
+993(\261d)S
+1085(mindegree)S
+1 F
+1143 1617(Prepare)U
+1374(the)S
+1484(nodes)S
+1668(by)S
+1764(sorting)S
+1977(them)S
+2138(according)S
+2427(increasing)S
+2727(degree)S
+2932(\(number)S
+3185(of)S
+1143 1773(\256)U
+1143 1695(incoming)U
+1424(and)S
+1551(outgoing)S
+1817(edges\).)S
+2060(The)S
+2194(nodes)S
+2380(with)S
+2529(the)S
+2641(minimal)S
+2891(degree)S
+3098(come)S
+1180 1773(rst.)U
+1307(This)S
+1446(may)S
+1581(have)S
+1727(various)S
+1943(effects)S
+2140(on)S
+2228(the)S
+2330(layout.)S
+3 F
+648 1878(\261d)U
+740(maxdeg)S
+6 F
+982(e)S
+3 F
+1004(\261D)S
+1107(maxdeg)S
+1 F
+1143 1956(Prepare)U
+1372(the)S
+1480(nodes)S
+1661(by)S
+1754(sorting)S
+1964(them)S
+2122(according)S
+2408(decreasing)S
+2716(degree.)S
+2957(The)S
+3086(nodes)S
+1143 2112(l)U
+1143 2034(with)U
+1289(the)S
+1398(maximal)S
+1656(degree)S
+1860(come)S
+2031(\256rst.)S
+2202(This)S
+2348(may)S
+2489(have)S
+2641(various)S
+2863(effects)S
+3066(on)S
+3160(the)S
+1161 2112(ayout.)U
+3 F
+648 2217(\261)U
+(d)R
+740(tree)S
+1 F
+1143(Use)S
+1268(a)S
+1319(specialize)S
+1577(d)S
+1632(layout)S
+1818(for)S
+1917(trees.)S
+2080(It)S
+2142(does)S
+2285(not)S
+2391(work)S
+2549(with)S
+2688(non-trees.)S
+3 F
+54 Z
+432 2400(OPTIONS)U
+702(FOR)S
+843(THE)S
+984(VIEW)S
+1 F
+66 Z
+648 2478(The)U
+775(view)S
+928(of)S
+1008(a)S
+1062(graph)S
+1237(is)S
+1306(the)S
+1411(method)S
+1633(of)S
+1713(the)S
+1818(visual)S
+2000(appearance)S
+2342(of)S
+2422(the)S
+2527(graph)S
+2702(in)S
+2778(the)S
+2883(window)S
+3120(after)S
+3218 2556(-)U
+648 2634(t)U
+648 2556(the)U
+750(layout.)S
+975(Changing)S
+1253(the)S
+1355(view)S
+1505(does)S
+1648(not)S
+1754(require)S
+1962(a)S
+2013(relayout)S
+2250(of)S
+2327(the)S
+2429(graph.)S
+2640(Views)S
+2831(are)S
+2933(transforma)S
+666 2634(ions)U
+798(that)S
+918(are)S
+1020(done)S
+1170(during)S
+1364(the)S
+1466(drawing.)S
+2301 2739(.)U
+3 F
+648 2844(\261)U
+648 2739(\261view)U
+831(normal)S
+1 F
+1143(Normal)S
+1366(view)S
+1516(onto)S
+1655(the)S
+1757(graph.)S
+1946(No)S
+2049(distortion)S
+3 F
+681 2844(view)U
+831(c\256sh)S
+1 F
+1143(Cartesian)S
+1414(\256sheye)S
+1624(view.)S
+1814(The)S
+1939(graph)S
+2112(is)S
+2201(distorted)S
+2476(such)S
+2619(that)S
+2739(the)S
+2841(whole)S
+3024(graph)S
+3196(is)S
+3 F
+648 3027(\261)U
+1 F
+1143 2922(visible.)U
+1379(Horizontal)S
+1704(and)S
+1821(vertical)S
+2039(lines)S
+2185(don't)S
+2346(change)S
+2554(their)S
+2696(direction.)S
+3 F
+681 3027(view)U
+831(fc\256sh)S
+1 F
+1143(Cartesian)S
+1416(\256sheye)S
+1628(view)S
+1780(with)S
+1921(\256xed)S
+2077(size)S
+2203(focus.)S
+2409(The)S
+2535(graph)S
+2709(is)S
+2777(distorted,)S
+3048(but)S
+3156(not)S
+3 F
+648 3210(\261)U
+1 F
+1143 3105(necessarily)U
+1457(the)S
+1559(whole)S
+1742(graph)S
+1914(is)S
+1980(visible.)S
+3 F
+681 3210(view)U
+831(p\256sh)S
+1 F
+1143(Polar)S
+1314(\256sheye)S
+1533(view.)S
+1732(The)S
+1866(graph)S
+2048(is)S
+2146(distorted)S
+2430(such)S
+2583(that)S
+2712(the)S
+2823(whole)S
+3015(graph)S
+3196(is)S
+3 F
+648 3393(\261)U
+1 F
+1143 3288(visible.)U
+1379(Even)S
+1536(horizontal)S
+1824(and)S
+1941(vertical)S
+2159(lines)S
+2305(might)S
+2480(be)S
+2564(distorted.)S
+3 F
+681 3393(view)U
+831(fp\256sh)S
+1 F
+1143(Polar)S
+1308(\256sheye)S
+1521(view)S
+1697(with)S
+1862(\256xed)S
+2020(size)S
+2170(focus.)S
+2378(The)S
+2528(graph)S
+2704(is)S
+2774(distorted,)S
+3047(but)S
+3156(not)S
+3 F
+648 3576(\261)U
+1 F
+1143 3471(necessarily)U
+1457(the)S
+1559(whole)S
+1742(graph)S
+1914(is)S
+1980(visible.)S
+3 F
+681 3576(spline)U
+1 F
+1143(Use)S
+1272(splines)S
+1481(instead)S
+1693(of)S
+1774(polygons)S
+2042(to)S
+2119(draw)S
+2277(edges.)S
+2470(This)S
+2613(is)S
+2683(mainly)S
+2890(useful)S
+3076(if)S
+3141(you)S
+3222 3654(:)U
+1143 3732(D)U
+1143 3654(want)U
+1295(to)S
+1370(export)S
+1562(the)S
+1666(graph)S
+1840(into)S
+1966(a)S
+2019(high)S
+2159(quality)S
+2364(PostScript)S
+2658(picture.)S
+2902(WARNING)S
+1191 3732(rawing)U
+1396(splines)S
+1601(is)S
+1667(very)S
+1806(slow.)S
+432 4131(R)U
+3 F
+648 3837(\261nonodes)U
+1 F
+1143(Suppress)S
+1404(drawing)S
+1642(of)S
+1719(nodes.)S
+476 4131(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(6)S
+EP
+%%Page: ? 7
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3 F
+648 522(\261noedges)U
+1 F
+1143(Suppress)S
+1404(drawing)S
+1642(of)S
+1719(edges.)S
+3 F
+648 627(\261)U
+(xpos)R
+4 F
+832(<)S
+834(<)S
+3 F
+(num)R
+4 F
+(>)R
+1002(>)S
+1 F
+1143(Set)S
+1252(the)S
+1357(x-coordinate)S
+1714(of)S
+1794(the)S
+1899(initial)S
+2076(point)S
+2236(of)S
+2316(the)S
+2421(graph)S
+2596(that)S
+2719(appears)S
+2944(at)S
+3015(the)S
+3119(win-)S
+3 F
+648 810(\261)U
+1 F
+1143 705(dow)U
+1279(origin)S
+1458(or)S
+1535(of)S
+1612(the)S
+1714(initial)S
+1888(focus)S
+2053(point)S
+2210(to)S
+4 F
+2283(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+2471(.)S
+3 F
+681 810(ypos)U
+4 F
+832(<)S
+834(<)S
+3 F
+(num)R
+4 F
+(>)R
+1002(>)S
+1 F
+1143(Set)S
+1252(the)S
+1357(y-coordinate)S
+1714(of)S
+1794(the)S
+1899(initial)S
+2076(point)S
+2236(of)S
+2316(the)S
+2421(graph)S
+2596(that)S
+2719(appears)S
+2944(at)S
+3015(the)S
+3119(win-)S
+1143 888(dow)U
+1279(origin)S
+1458(or)S
+1535(of)S
+1612(the)S
+1714(initial)S
+1888(focus)S
+2053(point)S
+2210(to)S
+4 F
+2283(<)S
+2 F
+(num)R
+4 F
+(>)R
+2 F
+2471(.)S
+3 F
+54 Z
+1224 1071(E)U
+432(PRINTER)S
+702(DRIVER)S
+942(INTERFAC)S
+1 F
+66 Z
+648 1149(The)U
+774(printer)S
+973(driver)S
+1154(interface)S
+1406(allows)S
+1601(to)S
+1675(produce)S
+1910(an)S
+1995(output)S
+2186(\256le)S
+2293(of)S
+2371(the)S
+2474(visualized)S
+2763(graph)S
+2936(without)S
+3160(the)S
+3214 1227(s)U
+648 1305(a)U
+648 1227(need)U
+795(of)S
+873(interacti)S
+1087(on.)S
+1215(The)S
+1340(VCG)S
+1503(tool)S
+1628(acts)S
+1753(as)S
+1831(a)S
+1883(kind)S
+2023(of)S
+2101(converter)S
+2371(program)S
+2616(in)S
+2689(this)S
+2806(case:)S
+2959(it)S
+3017(convert)S
+707 1305(VCG)U
+877(\256le)S
+991(into)S
+1123(a)S
+1182(PostScript)S
+1483(or)S
+1568(bitmap)S
+1779(\256le.)S
+1931(It)S
+2000(is)S
+2073(recommended)S
+2474(to)S
+2554(use)S
+2671(the)S
+2780(option)S
+3 F
+2977(\261silent)S
+1 F
+3189(in)S
+3 F
+3223 1383(.)U
+1 F
+648 1461(E)U
+648 1383(combination)U
+1013(to)S
+1101(one)S
+1233(of)S
+1325(the)S
+1442(options)S
+3 F
+1673(\261vcgoutput,)S
+2042(\261psoutput,)S
+2379(\261pbmoutput,)S
+1 F
+2782(or)S
+3 F
+2873(\261ppmoutput)S
+1 F
+688 1461(xample:)U
+648 1617(x)U
+(vcg)R
+798(\261silent)S
+995(\261color)S
+1185(\261scale)S
+1371(75)S
+1459(\261psoutput)S
+1741(test.ps)S
+1930(test.vcg)S
+3207 1773(h)U
+648 1851(s)U
+648 1773(converts)U
+898(the)S
+1005(VCG)S
+1172(\256le)S
+1283(test.vcg)S
+1513(into)S
+1642(a)S
+1698(PostScript)S
+1996(\256le)S
+2107(that)S
+2232(contains)S
+2478(a)S
+2534(color)S
+2695(picture)S
+2903(of)S
+2984(the)S
+3090(grap)S
+674 1851(caled)U
+836(by)S
+926(75)S
+1016(%.)S
+1134(In)S
+1213(this)S
+1332(case)S
+1468(the)S
+1571(interacti)S
+1785(ve)S
+1870(display)S
+2083(is)S
+2150(suppressed.)S
+2502(If)S
+2569(the)S
+2672(graph)S
+2845(does)S
+2989(not)S
+3096(\256t)S
+3174(on)S
+3 F
+54 Z
+432 2112(P)U
+1 F
+66 Z
+648 1929(the)U
+750(page,)S
+913(the)S
+1015(output)S
+1205(might)S
+1380(be)S
+1464(nonsense.)S
+3 F
+54 Z
+465 2112(RINTER)U
+702(DRIVER)S
+942(OPTIONS)S
+4 F
+66 Z
+1265 2190(>)U
+3 F
+648(\261vcgoutput)S
+4 F
+986(<)S
+988(<)S
+3 F
+(\256lename)R
+4 F
+(>)R
+1 F
+1143 2268(Produce)U
+1387(a)S
+1444(VCG)S
+1612(\256le)S
+1724(named)S
+4 F
+1927(<)S
+2 F
+(\256lename)R
+4 F
+(>)R
+1 F
+2251(that)S
+2376(contains)S
+2622(the)S
+2729(graph)S
+2906(laid)S
+3031(out,)S
+3159(i.e.)S
+1143 2424(o)U
+1143 2346(including)U
+1417(information)S
+1753(about)S
+1925(the)S
+2031(co-ordinates)S
+2382(of)S
+2462(the)S
+2567(visible)S
+2767(nodes.)S
+2985(The)S
+3112(most)S
+1176 2424(f)U
+1220(the)S
+1322(following)S
+1600(format)S
+1797(options)S
+2013(have)S
+2159(no)S
+2247(effect)S
+2418(for)S
+2517(the)S
+2619(VCG)S
+2781(\256le)S
+2887(format.)S
+3 F
+648 2529(\261psoutput)U
+4 F
+954(<)S
+956(<)S
+3 F
+(\256lename)R
+4 F
+(>)R
+1233(>)S
+1 F
+1143 2607(Produce)U
+1381(a)S
+1432(PostScript)S
+1725(\256le)S
+1831(named)S
+4 F
+2028(<)S
+2 F
+(\256lename)R
+4 F
+(>)R
+1 F
+2347(that)S
+2467(contains)S
+2708(the)S
+2810(graph.)S
+3 F
+648 2712(\261pbmoutput)U
+4 F
+1020(<)S
+1022(<)S
+3 F
+(\256lename)R
+4 F
+(>)R
+1299(>)S
+1 F
+1143 2790(Produce)U
+1391(a)S
+1452(bitmap)S
+1666(\256le)S
+1782(named)S
+4 F
+1989(<)S
+2 F
+(\256lename)R
+4 F
+(>)R
+1 F
+2318(in)S
+2401(PBM)S
+2573(format)S
+2780(that)S
+2910(contains)S
+3160(the)S
+1143 2868(graph)U
+1315(in)S
+1388(black)S
+1552(and)S
+1669(white.)S
+4 F
+1299 2973(>)U
+3 F
+648(\261ppmoutput)S
+4 F
+1020(<)S
+1022(<)S
+3 F
+(\256lename)R
+4 F
+(>)R
+1 F
+1143 3051(Produce)U
+1392(a)S
+1454(bitmap)S
+1669(\256le)S
+1786(named)S
+4 F
+1994(<)S
+2 F
+(\256lename)R
+4 F
+(>)R
+1 F
+2324(in)S
+2407(PPM)S
+2572(format)S
+2779(that)S
+2909(contains)S
+3160(the)S
+1143 3129(graph)U
+1315(in)S
+1388(colors.)S
+4 F
+1195 3234(>)U
+3 F
+648(\261paper)S
+4 F
+868(<)S
+870(<)S
+3 F
+(papertype)R
+4 F
+(>)R
+1 F
+1143 3312(Select)U
+1325(the)S
+1427(paper)S
+1595(type.)S
+1747(Default)S
+1966(is)S
+2032(a4.)S
+4 F
+2155(<)S
+2 F
+(papertype)R
+4 F
+(>)R
+1 F
+2514(is)S
+2580(one)S
+2697(of:)S
+3 F
+1143 3546(A)U
+1143 3468(a4)U
+1 F
+1473(din)S
+1579(A4)S
+1682(\(21)S
+1792(x)S
+1847(30)S
+1935(cm\))S
+3 F
+1191 3546(4)U
+1 F
+1473(din)S
+1579(A4)S
+1682(\(21)S
+1792(x)S
+1847(30)S
+1935(cm\))S
+2061 3624(\))U
+3 F
+1143 3702(B)U
+1143 3624(b5)U
+1 F
+1473(din)S
+1579(B5)S
+1678(\(18.5)S
+1838(x)S
+1893(27)S
+1981(cm)S
+3 F
+1187 3702(5)U
+1 F
+1473(din)S
+1579(B5)S
+1678(\(18.5)S
+1838(x)S
+1893(27)S
+1981(cm\))S
+3 F
+1143 3858(A)U
+1143 3780(a5)U
+1 F
+1473(din)S
+1579(A5)S
+1682(\(15)S
+1792(x)S
+1847(21)S
+1935(cm\))S
+3 F
+1191 3858(5)U
+1 F
+1473(din)S
+1579(A5)S
+1682(\(15)S
+1792(x)S
+1847(21)S
+1935(cm\))S
+3207 4152(7)U
+432(Release)S
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+EP
+%%Page: ? 8
+BP
+1 F
+66 Z
+432 228(V)U
+(CG)R
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+1143 600(t)U
+1143 522(11x17)U
+1 F
+1473(tabloid)S
+1677(\(11)S
+1787(x)S
+1842(17)S
+1930(in\))S
+3 F
+1165 600(abloid)U
+1 F
+1473(tabloid)S
+1677(\(11)S
+1787(x)S
+1842(17)S
+1930(in\))S
+3 F
+1143 756(l)U
+1143 678(8x11)U
+1 F
+1473(letter)S
+1629(\(8.5)S
+1756(x)S
+1811(11)S
+1899(in\))S
+3 F
+1161 756(etter)U
+1 F
+1473(letter)S
+1629(\(8.5)S
+1756(x)S
+1811(11)S
+1899(in\))S
+3 F
+1143 912(l)U
+1143 834(8x14)U
+1 F
+1473(legal)S
+1622(\(8.5)S
+1749(x)S
+1804(14)S
+1892(in\))S
+3 F
+1161 912(egal)U
+1 F
+1473(legal)S
+1622(\(8.5)S
+1749(x)S
+1804(14)S
+1892(in\))S
+3 F
+648 1020(\261noBoundingBox)U
+1 F
+1143 1098(Suppress)U
+1404(the)S
+1506(calculat)S
+1709(ion)S
+1815(of)S
+1892(a)S
+1943(BoundingBox)S
+2335(\(PostScript)S
+2650(format\).)S
+3207 1206(.)U
+3 F
+648 1314(\261)U
+648 1206(\261color)U
+1 F
+1143(Select)S
+1325(a)S
+1376(color)S
+1533(\256le)S
+1639(output.)S
+1846(This)S
+1985(option)S
+2175(works)S
+2359(only)S
+2498(with)S
+2637(the)S
+2739(PostScript)S
+3032(format)S
+3 F
+681 1314(grey)U
+1 F
+1143(Select)S
+1331(a)S
+1388(greyscaled)S
+1697(\256le)S
+1809(output.)S
+2044(This)S
+2189(option)S
+2385(works)S
+2574(only)S
+2718(with)S
+2862(the)S
+2969(PostScript)S
+3 F
+648 1500(\261)U
+1 F
+1143 1392(format.)U
+3 F
+681 1500(blackwhite)U
+1 F
+1143(Select)S
+1333(a)S
+1392(monochromatic)S
+1834(\256le)S
+1948(output.)S
+2184(This)S
+2330(is)S
+2403(the)S
+2512(default)S
+2723(color.)S
+2926(This)S
+3072(option)S
+3 F
+648 1686(\261)U
+1 F
+1143 1578(works)U
+1327(only)S
+1466(with)S
+1605(the)S
+1707(PostScript)S
+2000(format.)S
+3 F
+681 1686(portrait)U
+1 F
+1143(Select)S
+1325(the)S
+1427(paper)S
+1595(orientation)S
+1901(`Portrait')S
+2164(\(default\).)S
+3 F
+648 1902(\261)U
+648 1794(\261landscape)U
+1 F
+1143(Select)S
+1325(the)S
+1427(paper)S
+1595(orientation)S
+1901(`Landscape'.)S
+3 F
+681 1902(split)U
+4 F
+824(<)S
+826(<)S
+3 F
+(num)R
+4 F
+(>)R
+994(>)S
+1 F
+1143(Split)S
+1313(the)S
+1439(graph)S
+1635(into)S
+4 F
+1783(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2017(pages.)S
+2252(This)S
+2415(option)S
+2629(works)S
+2836(only)S
+2998(with)S
+3160(the)S
+3 F
+648 2088(\261)U
+1 F
+1143 1980(PostScript)U
+1436(format.)S
+1672(The)S
+1796(number)S
+2019(of)S
+2096(pages)S
+2268(must)S
+2418(be)S
+2502(one)S
+2619(of)S
+2696(1,)S
+2768(4,)S
+2840(9,)S
+2912(16,)S
+3017(or)S
+3094(25.)S
+3 F
+681 2088(xdpi)U
+4 F
+828(<)S
+830(<)S
+3 F
+(num)R
+4 F
+(>)R
+998(>)S
+1 F
+1143(Set)S
+1255(the)S
+1362(horizontal)S
+1655(resolution)S
+1945(for)S
+2049(the)S
+2156(PPM)S
+2316(and)S
+2438(PBM)S
+2605(format.)S
+2846(This)S
+2990(allows)S
+3189(to)S
+3 F
+648 2274(\261)U
+1 F
+1143 2166(adapt)U
+1307(the)S
+1409(bitmap)S
+1613(formats)S
+1836(to)S
+1909(the)S
+2011(resolutions)S
+2322(of)S
+2399(the)S
+2501(printer.)S
+3 F
+681 2274(ydpi)U
+4 F
+828(<)S
+830(<)S
+3 F
+(num)R
+4 F
+(>)R
+998(>)S
+1 F
+1143(Set)S
+1260(the)S
+1373(vertical)S
+1602(resolution)S
+1898(for)S
+2008(the)S
+2121(PPM)S
+2287(and)S
+2415(PBM)S
+2588(format.)S
+2835(This)S
+2985(allows)S
+3189(to)S
+3 F
+648 2460(\261)U
+1 F
+1143 2352(adapt)U
+1307(the)S
+1409(bitmap)S
+1613(formats)S
+1836(to)S
+1909(the)S
+2011(resolutions)S
+2322(of)S
+2399(the)S
+2501(printer.)S
+3 F
+681 2460(scale)U
+4 F
+838(<)S
+840(<)S
+3 F
+(num)R
+4 F
+(>)R
+1008(>)S
+1 F
+1143(Scale)S
+1308(the)S
+1411(graph)S
+1584(to)S
+4 F
+1658(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+1869(percent)S
+2085(for)S
+2185(the)S
+2288(\256le)S
+2394(output.)S
+2623(The)S
+2747(default)S
+2951(scaling)S
+3159(\256ts)S
+1143 2538(the)U
+1245(graph)S
+1417(with)S
+1556(maximal)S
+1807(aspect)S
+1993(ratio)S
+2135(to)S
+2208(the)S
+2310(paper)S
+2478(size.)S
+4 F
+1271 2646(>)U
+3 F
+648(\261width)S
+4 F
+865(<)S
+867(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+1031(>)S
+1090(<)S
+1092(<)S
+3 F
+(units)R
+4 F
+(>)R
+1 F
+1143 2724(Fit)U
+1241(the)S
+1346(graph)S
+1521(such)S
+1667(that)S
+1790(its)S
+1877(width)S
+2052(is)S
+2121(smaller)S
+2339(than)S
+4 F
+2477(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2693(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2937(This)S
+3078(works)S
+3 F
+1143 2958(i)U
+1 F
+1143 2802(only)U
+1282(if)S
+1344(no)S
+1432(scaling)S
+1640(is)S
+1706(speci\256ed.)S
+4 F
+2001(<)S
+2 F
+(units)R
+4 F
+(>)R
+1 F
+2225(are:)S
+3 F
+1161 2958(n)U
+1 F
+1473(Inches)S
+1619 3036(s)U
+3 F
+1143 3114(f)U
+1143 3036(inch)U
+1 F
+1473(Inche)S
+3 F
+1165 3114(t)U
+1 F
+1473(Foot)S
+1576 3192(t)U
+3 F
+1143 3270(f)U
+1143 3192(foot)U
+1 F
+1473(Foo)S
+3 F
+1165 3270(eet)U
+1 F
+1473(Foot)S
+1731 3348(r)U
+3 F
+1143 3426(c)U
+1143 3348(mm)U
+1 F
+1473(Millimete)S
+3 F
+1172 3426(m)U
+1 F
+1473(Centimete)S
+1742(r)S
+3 F
+1143 3582(m)U
+1143 3504(dm)U
+1 F
+1473(Decimeter)S
+1473 3582(Meter)U
+3 F
+648 3690(\261height)U
+4 F
+879(<)S
+881(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+1045(>)S
+1104(<)S
+1106(<)S
+3 F
+(units)R
+4 F
+(>)R
+1285(>)S
+1 F
+1143 3768(Fit)U
+1240(the)S
+1344(graph)S
+1518(such)S
+1663(that)S
+1785(its)S
+1871(height)S
+2059(is)S
+2127(smaller)S
+2344(than)S
+4 F
+2481(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2696(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2938(This)S
+3078(works)S
+432 4140(R)U
+1143 3846(only)U
+1282(if)S
+1344(no)S
+1432(scaling)S
+1640(is)S
+1706(speci\256ed.)S
+476 4140(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(8)S
+EP
+%%Page: ? 9
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3 F
+648 522(\261lm)U
+4 F
+776(<)S
+778(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+942(>)S
+1001(<)S
+1003(<)S
+3 F
+(units)R
+4 F
+(>)R
+1182(>)S
+1 F
+1143 600(S)U
+(et)R
+1256(the)S
+1365(left)S
+1480(margin)S
+1694(of)S
+1777(the)S
+1885(output)S
+2081(to)S
+4 F
+2160(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2379(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2626(This)S
+2771(works)S
+2961(only)S
+3106(if)S
+3174(no)S
+3207 678(n)U
+1143 756(s)U
+1143 678(right)U
+1300(margin)S
+1519(is)S
+1596(speci\256ed.)S
+1880(The)S
+2014(default)S
+2228(position)S
+2472(is)S
+2548(centered)S
+2802(on)S
+2900(the)S
+3012(page.)S
+3185(I)S
+1169 756(ome)U
+1306(cases)S
+1469(the)S
+2 F
+1573(BoundingBox)S
+1 F
+1955(of)S
+2034(the)S
+2138(PostScript)S
+2432(output)S
+2623(meight)S
+2828(be)S
+2913(wrong.)S
+3144(If)S
+3211(a)S
+3 F
+1143 912(c)U
+2 F
+1143 834(BoundingBox)U
+1 F
+1529(is)S
+1601(needed)S
+1837(then)S
+1978(we)S
+2083(recommend)S
+2421(the)S
+2529(options)S
+3 F
+2751(\261lm)S
+2884(0)S
+2944(cm)S
+3055(\261bm)S
+3207(0)S
+1172 912(m.)U
+648 1020(\261rm)U
+4 F
+787(<)S
+789(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+953(>)S
+1012(<)S
+1014(<)S
+3 F
+(units)R
+4 F
+(>)R
+1193(>)S
+1 F
+1143 1098(Set)U
+1253(the)S
+1359(right)S
+1509(margin)S
+1721(of)S
+1802(the)S
+1908(output)S
+2102(to)S
+4 F
+2178(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2394(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2638(This)S
+2780(works)S
+2967(only)S
+3109(if)S
+3174(no)S
+1143 1176(left)U
+1252(margin)S
+1460(is)S
+1526(speci\256ed.)S
+1799(The)S
+1923(default)S
+2127(position)S
+2361(is)S
+2427(centered)S
+2671(on)S
+2759(the)S
+2861(page.)S
+4 F
+1186 1284(>)U
+3 F
+648(\261tm)S
+4 F
+780(<)S
+782(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+946(>)S
+1005(<)S
+1007(<)S
+3 F
+(units)R
+4 F
+(>)R
+1 F
+1143 1362(Set)U
+1256(the)S
+1365(top)S
+1478(margin)S
+1693(of)S
+1777(the)S
+1885(output)S
+2081(to)S
+4 F
+2160(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2379(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2626(This)S
+2771(works)S
+2961(only)S
+3106(if)S
+3174(no)S
+1143 1440(bottom)U
+1351(margin)S
+1559(is)S
+1625(speci\256ed.)S
+1898(The)S
+2022(default)S
+2226(position)S
+2460(is)S
+2526(centered)S
+2770(on)S
+2858(the)S
+2960(page.)S
+4 F
+1201 1548(>)U
+3 F
+648(\261bm)S
+4 F
+795(<)S
+797(<)S
+3 F
+(\257oat)R
+4 F
+(>)R
+961(>)S
+1020(<)S
+1022(<)S
+3 F
+(units)R
+4 F
+(>)R
+1 F
+1143 1626(Set)U
+1255(the)S
+1363(bottom)S
+1577(margin)S
+1791(of)S
+1874(the)S
+1982(output)S
+2178(to)S
+4 F
+2257(<)S
+2 F
+(\257oat)R
+4 F
+(>)R
+2476(<)S
+2 F
+(units)R
+4 F
+(>)R
+2 F
+(.)R
+1 F
+2723(This)S
+2867(works)S
+3056(only)S
+3200(if)S
+3 F
+54 Z
+432 1890(X11)U
+552(OPTIONS)S
+1 F
+66 Z
+1143 1704(no)U
+1231(top)S
+1337(margin)S
+1545(is)S
+1611(speci\256ed.)S
+1884(The)S
+2008(default)S
+2212(position)S
+2446(is)S
+2512(centered)S
+2756(on)S
+2844(the)S
+2946(page.)S
+3 F
+648 1968(\261display)U
+4 F
+905(<)S
+907(<)S
+3 F
+(host:dp)R
+1158(y)S
+4 F
+(>)R
+1193(>)S
+1 F
+1143 2046(S)U
+(et)R
+1249(the)S
+1351(remote)S
+1555(X11)S
+1691(server)S
+1874(to)S
+2 F
+1947(host:dpy.)S
+1 F
+2213(This)S
+2352(is)S
+2418(analogous)S
+2707(to)S
+2 F
+2780(xterm\(1l\).)S
+3 F
+648 2154(\261geometry)U
+4 F
+966(<)S
+968(<)S
+3 F
+(geom)R
+4 F
+(>)R
+1157(>)S
+1 F
+1143 2232(Specify)U
+1369(the)S
+1474(hint)S
+1601(of)S
+1681(size)S
+1808(and)S
+1928(location)S
+2164(of)S
+2244(the)S
+2349(X11)S
+2488(window.)S
+2764(This)S
+2905(is)S
+2973(analogous)S
+3 F
+648 2418(\261)U
+1 F
+1143 2310(to)U
+2 F
+1216(xterm\(1l\).)S
+3 F
+681 2418(bw)U
+4 F
+788(<)S
+790(<)S
+3 F
+(num)R
+4 F
+(>)R
+958(>)S
+1 F
+1143(Set)S
+1249(the)S
+1351(border)S
+1545(width)S
+1717(of)S
+1794(the)S
+1896(X11)S
+2032(window)S
+2267(to)S
+4 F
+2340(<)S
+2 F
+(num)R
+4 F
+(>)R
+1 F
+2550(pixels.)S
+2768(This)S
+2907(is)S
+2973(analogous)S
+3 F
+648 2604(\261)U
+1 F
+1143 2496(to)U
+2 F
+1216(xterm\(1l\).)S
+3 F
+681 2604(font)U
+4 F
+817(<)S
+819(<)S
+3 F
+(xfont)R
+4 F
+(>)R
+1005(>)S
+1 F
+1143(Set)S
+1252(the)S
+1357(font)S
+1488(used)S
+1633(for)S
+1734(messages)S
+2007(and)S
+2126(menu)S
+2296(items)S
+2462(in)S
+2537(the)S
+2641(X11)S
+2779(window.)S
+3055(This)S
+3196(is)S
+3 F
+648 2790(\261)U
+1 F
+1143 2682(analogous)U
+1432(to)S
+2 F
+1505(xterm\(1l\).)S
+3 F
+681 2790(grabinputfocus)U
+1 F
+1143(Switch)S
+1358(setting)S
+1565(of)S
+1651(InputFocus)S
+1979(on)S
+2076(or)S
+2162(off)S
+2270(\(depending)S
+2597(on)S
+2694(the)S
+2805(default\).)S
+3079(Cause)S
+3218 2868(-)U
+1143 2946(p)U
+1143 2868(the)U
+1247(VCG)S
+1411(tool)S
+1537(to)S
+1612(execute)S
+1836(a)S
+1889(XSetInputFocus,)S
+2359(or)S
+2438(to)S
+2513(avoid)S
+2682(to)S
+2756(execute)S
+2979(a)S
+3031(XSetIn)S
+1176 2946(utFocus)U
+1407(on)S
+1495(initiali)S
+1665(zation.)S
+3 F
+54 Z
+432 3210(GRAMMAR)U
+1 F
+66 Z
+648 3288(The)U
+772(grammar)S
+1031(of)S
+1108(the)S
+1210(speci\256cation)S
+1564(language)S
+1823(is)S
+1889(the)S
+1991(following:)S
+3 F
+648 3396(graph)U
+1 F
+813 3474(::=)U
+5 F
+930(")S
+1 F
+(graph:)R
+5 F
+(")R
+1 F
+1176(')S
+5 F
+({)R
+1 F
+(')R
+1273(graph)S
+6 F
+(i)R
+1 F
+(entry)R
+6 F
+(i)R
+1 F
+(list)R
+1726(')S
+5 F
+(})R
+1 F
+(')R
+3 F
+648 3660(g)U
+1 F
+813 3552(;)U
+3 F
+681 3660(raph)U
+6 F
+(i)R
+819(i)S
+3 F
+(entry)R
+6 F
+(i)R
+1004(i)S
+3 F
+(list)R
+1 F
+813 3738(:)U
+(:=)R
+930(graph)S
+6 F
+(i)R
+1 F
+(entry)R
+6 F
+(i)R
+1 F
+(list)R
+1383(graph)S
+6 F
+(i)R
+1 F
+(entry)R
+432 4188(R)U
+813 3894(;)U
+6 F
+813 3816(e)U
+1 F
+835(graph)S
+6 F
+(i)R
+1 F
+(entry)R
+476 4188(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3207(9)S
+EP
+%%Page: ? 10
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3 F
+648 522(graph)U
+6 F
+(i)R
+819(i)S
+3 F
+(entry)R
+1 F
+813 600(:)U
+(:=)R
+930(graph)S
+6 F
+(i)R
+1 F
+(attribute)R
+6 F
+813 756(e)U
+678(e)T
+1 F
+835(node)S
+6 F
+(i)R
+1 F
+(defaults)R
+835 756(edge)U
+6 F
+(i)R
+1 F
+(defaults)R
+1284 834(s)U
+6 F
+813 912(e)U
+834(e)T
+1 F
+835(foldnode)S
+6 F
+(i)R
+1 F
+(default)R
+835 912(foldedge)U
+6 F
+(i)R
+1 F
+(default)R
+1280(s)S
+6 F
+813 1068(e)U
+990(e)T
+1 F
+835(graph)S
+835 1068(node)U
+6 F
+813 1224(e)U
+1146(e)T
+1 F
+835(edge)S
+835 1224(nearedge)U
+1156 1302(e)U
+6 F
+813 1380(e)U
+1302(e)T
+1 F
+835(bentnearedg)S
+835 1380(backedge)U
+3 F
+648 1566(g)U
+1 F
+813 1458(;)U
+3 F
+681 1566(raph)U
+6 F
+(i)R
+819(i)S
+3 F
+(attribute)R
+1 F
+813 1644(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(title)R
+5 F
+(")R
+1 F
+1109(':')S
+1193(string)S
+6 F
+813 1800(e)U
+1722(e)T
+5 F
+835(")S
+1 F
+(label)R
+5 F
+(")R
+1 F
+1040(':')S
+1124(string)S
+5 F
+835 1800(")U
+1 F
+(info1)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(string)S
+1253 1878(g)U
+6 F
+813 1956(e)U
+1878(e)T
+5 F
+835(")S
+1 F
+(info2)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(strin)S
+5 F
+835 1956(")U
+1 F
+(info3)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(string)S
+1424 2034(r)U
+6 F
+813 2112(e)U
+2034(e)T
+5 F
+835(")S
+1 F
+(color)R
+5 F
+(")R
+1 F
+1048(':')S
+1132(enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 2112(")U
+1 F
+(textcolor)R
+5 F
+(")R
+1 F
+1146(':'enum)S
+6 F
+(i)R
+1 F
+(color)R
+1574 2190(r)U
+6 F
+813 2268(e)U
+2190(e)T
+5 F
+835(")S
+1 F
+(bordercolor)R
+5 F
+(")R
+1 F
+1220(':'enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 2268(")U
+1 F
+(width)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(integer)S
+1321 2346(r)U
+6 F
+813 2424(e)U
+2346(e)T
+5 F
+835(")S
+1 F
+(height)R
+5 F
+(")R
+1 F
+1077(':')S
+1161(intege)S
+5 F
+835 2424(")U
+1 F
+(borderwidth)R
+5 F
+(")R
+1 F
+1235(':')S
+1319(integer)S
+6 F
+813 2580(e)U
+2502(e)T
+1 F
+835('x')S
+934(':')S
+1018(integer)S
+835 2580('y')U
+934(':')S
+1018(integer)S
+6 F
+813 2658(e)U
+5 F
+835(")S
+1 F
+(loc:)R
+5 F
+(")R
+1 F
+1011(')S
+5 F
+({)R
+1 F
+(')R
+1108('x')S
+1207(':')S
+1291(integer)S
+1495('y')S
+1594(':')S
+1678(integer)S
+1882(')S
+5 F
+(})R
+1 F
+(')R
+6 F
+813 2814(e)U
+2736(e)T
+5 F
+835(")S
+1 F
+(folding)R
+5 F
+(")R
+1 F
+1103(':')S
+1187(integer)S
+5 F
+835 2814(")U
+1 F
+(scaling)R
+5 F
+(")R
+1 F
+1099(':')S
+1183(\257oat)S
+1322 2892(r)U
+6 F
+813 2970(e)U
+2892(e)T
+5 F
+835(")S
+1 F
+(shrink)R
+5 F
+(")R
+1 F
+1078(':')S
+1162(intege)S
+5 F
+835 2970(")U
+1 F
+(stretch)R
+5 F
+(")R
+1 F
+1088(':')S
+1172(integer)S
+6 F
+813 3048(e)U
+5 F
+835(")S
+1 F
+(textmode)R
+5 F
+(")R
+1 F
+1157(':')S
+1241(enum)S
+6 F
+(i)R
+1 F
+(textmode)R
+6 F
+813 3204(e)U
+3126(e)T
+5 F
+835(")S
+1 F
+(shape)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(enum)S
+6 F
+(i)R
+1 F
+(shape)R
+5 F
+835 3204(")U
+1 F
+(level)R
+5 F
+(")R
+1 F
+1040(':')S
+1124(integer)S
+1525 3282(r)U
+6 F
+813 3360(e)U
+3282(e)T
+5 F
+835(")S
+1 F
+(vertical)R
+6 F
+(i)R
+1 F
+(order)R
+5 F
+(")R
+1 F
+1281(':')S
+1365(intege)S
+5 F
+835 3360(")U
+1 F
+(horizontal)R
+6 F
+(i)R
+1 F
+(order)R
+5 F
+(")R
+1 F
+1351(':')S
+1435(integer)S
+6 F
+813 3516(e)U
+3438(e)T
+5 F
+835(")S
+1 F
+(status)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(enum)S
+6 F
+(i)R
+1 F
+(status)R
+5 F
+835 3516(")U
+1 F
+(xmax)R
+5 F
+(")R
+1 F
+1059(':')S
+1143(integer)S
+1303 3594(r)U
+6 F
+813 3672(e)U
+3594(e)T
+5 F
+835(")S
+1 F
+(ymax)R
+5 F
+(")R
+1 F
+1059(':')S
+1143(intege)S
+5 F
+835 3672(")U
+1 F
+(xbase)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(integer)S
+1307 3750(r)U
+6 F
+813 3828(e)U
+3750(e)T
+5 F
+835(")S
+1 F
+(ybase)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(intege)S
+5 F
+835 3828(")U
+1 F
+(xspace)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+432 4122(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(10)S
+EP
+%%Page: ? 11
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+6 F
+813 522(e)U
+5 F
+835(")S
+1 F
+(xlspace)R
+5 F
+(")R
+1 F
+1110(':')S
+1194(integer)S
+6 F
+813 678(e)U
+600(e)T
+5 F
+835(")S
+1 F
+(yspace)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+5 F
+835 678(")U
+1 F
+(xraster)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+1354 756(r)U
+6 F
+813 834(e)U
+756(e)T
+5 F
+835(")S
+1 F
+(xlraster)R
+5 F
+(")R
+1 F
+1110(':')S
+1194(intege)S
+5 F
+835 834(")U
+1 F
+(yraster)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+1383 912(r)U
+6 F
+813 990(e)U
+912(e)T
+5 F
+835(")S
+1 F
+(invisible)R
+5 F
+(")R
+1 F
+1139(':')S
+1223(intege)S
+5 F
+835 990(")U
+1 F
+(hidden)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+1588 1068(g)U
+6 F
+813 1146(e)U
+1068(e)T
+5 F
+835(")S
+1 F
+(classname)R
+5 F
+(")R
+1 F
+1183(integer)S
+1387(':')S
+1471(strin)S
+5 F
+835 1146(")U
+1 F
+(infoname)R
+5 F
+(")R
+1 F
+1161(integer)S
+1365(':')S
+1449(string)S
+2039 1224(r)U
+6 F
+813 1302(e)U
+1224(e)T
+5 F
+835(")S
+1 F
+(colorentry)R
+5 F
+(")R
+1 F
+1183(integer)S
+1387(':')S
+1471(integer)S
+1675(integer)S
+1879(intege)S
+5 F
+835 1302(")U
+1 F
+(layoutalgorithm)R
+5 F
+(")R
+1 F
+1332(':')S
+1416(enum)S
+6 F
+(i)R
+1 F
+(layoutal)R
+1806(gorithm)S
+6 F
+813 1458(e)U
+1380(e)T
+5 F
+835(")S
+1 F
+(layout)R
+6 F
+(i)R
+1 F
+(downfactor)R
+5 F
+(")R
+1 F
+1410(':')S
+1494(integer)S
+5 F
+835 1458(")U
+1 F
+(layout)R
+6 F
+(i)R
+1 F
+(upfactor)R
+5 F
+(")R
+1 F
+1329(':')S
+1413(integer)S
+1620 1536(r)U
+6 F
+813 1614(e)U
+1536(e)T
+5 F
+835(")S
+1 F
+(layout)R
+6 F
+(i)R
+1 F
+(nearfactor)R
+5 F
+(")R
+1 F
+1376(':')S
+1460(intege)S
+5 F
+835 1614(")U
+1 F
+(splinefactor)R
+5 F
+(")R
+1 F
+1223(':')S
+1307(integer)S
+1767 1692(o)U
+6 F
+813 1770(e)U
+1692(e)T
+5 F
+835(")S
+1 F
+(late)R
+6 F
+(i)R
+1 F
+(edge)R
+6 F
+(i)R
+1 F
+(label)R
+1274(s)S
+5 F
+(")R
+1 F
+1350(':')S
+1434(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 1770(")U
+1 F
+(display)R
+6 F
+(i)R
+1 F
+(edge)R
+6 F
+(i)R
+1 F
+(labels)R
+5 F
+(")R
+1 F
+1446(':')S
+1530(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+6 F
+813 1926(e)U
+1848(e)T
+5 F
+835(")S
+1 F
+(dirty)R
+6 F
+(i)R
+1 F
+(edge)R
+6 F
+(i)R
+1 F
+(labels)R
+5 F
+(")R
+1 F
+1380(':')S
+1464(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+5 F
+835 1926(")U
+1 F
+(\256netuning)R
+5 F
+(")R
+1 F
+1180(':')S
+1264(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1703 2004(o)U
+6 F
+813 2082(e)U
+2004(e)T
+5 F
+835(")S
+1 F
+(ignoresingles)R
+5 F
+(")R
+1 F
+1286(':')S
+1370(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 2082(")U
+1 F
+(straight)R
+6 F
+(i)R
+1 F
+(phase)R
+5 F
+(")R
+1 F
+1293(':')S
+1399(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1732 2160(o)U
+6 F
+813 2238(e)U
+2160(e)T
+5 F
+835(")S
+1 F
+(priority)R
+6 F
+(i)R
+1 F
+(phase)R
+5 F
+(")R
+1 F
+1293(':')S
+1399(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 2238(")U
+1 F
+(manhattan)R
+6 F
+(i)R
+1 F
+(edges)R
+5 F
+(")R
+1 F
+1369(':')S
+1475(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1834 2316(o)U
+6 F
+813 2394(e)U
+2316(e)T
+5 F
+835(")S
+1 F
+(smanhattan)R
+6 F
+(i)R
+1 F
+(edges)R
+5 F
+(")R
+1 F
+1395(':')S
+1501(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 2394(")U
+1 F
+(nearedges)R
+5 F
+(")R
+1 F
+1176(':')S
+1260(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1711 2472(n)U
+6 F
+813 2550(e)U
+2472(e)T
+5 F
+835(")S
+1 F
+(orientation)R
+5 F
+(")R
+1 F
+1197(':')S
+1281(enum)S
+6 F
+(i)R
+1 F
+(orientat)R
+1660(io)S
+5 F
+835 2550(")U
+1 F
+(node)R
+6 F
+(i)R
+1 F
+(alignment)R
+5 F
+(")R
+1 F
+1336(':')S
+1420(enum)S
+6 F
+(i)R
+1 F
+(node)R
+6 F
+(i)R
+1 F
+(align)R
+6 F
+813 2706(e)U
+2628(e)T
+5 F
+835(")S
+1 F
+(port)R
+6 F
+(i)R
+1 F
+(sharing)R
+5 F
+(")R
+1 F
+1246(':')S
+1330(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+5 F
+835 2706(")U
+1 F
+(arrowmode)R
+5 F
+(")R
+1 F
+1213(':')S
+1297(enum)S
+6 F
+(i)R
+1 F
+(arrow)R
+6 F
+(i)R
+1 F
+(mode)R
+6 F
+813 2862(e)U
+2784(e)T
+5 F
+835(")S
+1 F
+(spreadlevel)R
+5 F
+(")R
+1 F
+1212(':')S
+1296(integer)S
+5 F
+835 2862(")U
+1 F
+(treefactor)R
+5 F
+(")R
+1 F
+1164(':')S
+1248(\257oat)S
+1733 2940(o)U
+6 F
+813 3018(e)U
+2940(e)T
+5 F
+835(")S
+1 F
+(crossingphase2)R
+5 F
+(")R
+1 F
+1316(':')S
+1400(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 3018(")U
+1 F
+(crossingoptimization)R
+5 F
+(")R
+1 F
+1464(':')S
+1548(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1905 3096(t)U
+6 F
+813 3174(e)U
+3096(e)T
+5 F
+835(")S
+1 F
+(crossingweight)R
+5 F
+(")R
+1 F
+1312(':')S
+1396(enum)S
+6 F
+(i)R
+1 F
+(cross)R
+6 F
+(i)R
+1 F
+(weigh)R
+5 F
+835 3174(")U
+1 F
+(view)R
+5 F
+(")R
+1 F
+1041(':')S
+1147(enum)S
+6 F
+(i)R
+1 F
+(view)R
+1480 3252(o)U
+6 F
+813 3330(e)U
+3252(e)T
+5 F
+835(")S
+1 F
+(edges)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 3330(")U
+1 F
+(nodes)R
+5 F
+(")R
+1 F
+1067(':')S
+1151(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(no)R
+1513 3408(o)U
+6 F
+813 3486(e)U
+3408(e)T
+5 F
+835(")S
+1 F
+(splines)R
+5 F
+(")R
+1 F
+1096(':')S
+1180(enum)S
+6 F
+(i)R
+1 F
+(yes)R
+6 F
+(i)R
+1 F
+(n)R
+5 F
+835 3486(")U
+1 F
+(bmax)R
+5 F
+(")R
+1 F
+1059(':')S
+1143(integer)S
+6 F
+813 3642(e)U
+3564(e)T
+5 F
+835(")S
+1 F
+(cmax)R
+5 F
+(")R
+1 F
+1055(':')S
+1139(integer)S
+5 F
+835 3642(")U
+1 F
+(cmin)R
+5 F
+(")R
+1 F
+1044(':')S
+1128(integer)S
+1303 3720(r)U
+6 F
+813 3798(e)U
+3720(e)T
+5 F
+835(")S
+1 F
+(pmax)R
+5 F
+(")R
+1 F
+1059(':')S
+1143(intege)S
+5 F
+835 3798(")U
+1 F
+(pmin)R
+5 F
+(")R
+1 F
+1048(':')S
+1132(integer)S
+1292 3876(r)U
+432 4170(R)U
+6 F
+813 3876(e)U
+5 F
+835(")S
+1 F
+(rmax)R
+5 F
+(")R
+1 F
+1048(':')S
+1132(intege)S
+476 4170(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(11)S
+EP
+%%Page: ? 12
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+6 F
+813 522(e)U
+5 F
+835(")S
+1 F
+(rmin)R
+5 F
+(")R
+1 F
+1037(':')S
+1121(integer)S
+1296 600(r)U
+3 F
+648 786(e)U
+1 F
+813 678(;)U
+6 F
+813 600(e)U
+5 F
+835(")S
+1 F
+(smax)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(intege)S
+3 F
+677 786(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(color)R
+1 F
+813 864(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(aquamarine)R
+5 F
+(")R
+6 F
+813 1020(e)U
+942(e)T
+5 F
+835(")S
+1 F
+(black)R
+5 F
+(")R
+835 1020(")U
+1 F
+(blue)R
+5 F
+(")R
+987 1098(")U
+6 F
+813 1176(e)U
+1098(e)T
+5 F
+835(")S
+1 F
+(cyan)R
+5 F
+835 1176(")U
+1 F
+(darkblue)R
+5 F
+(")R
+1104 1254(")U
+6 F
+813 1332(e)U
+1254(e)T
+5 F
+835(")S
+1 F
+(darkcyan)R
+5 F
+835 1332(")U
+1 F
+(darkgreen)R
+5 F
+(")R
+6 F
+813 1488(e)U
+1410(e)T
+5 F
+835(")S
+1 F
+(darkgrey)R
+5 F
+(")R
+835 1488(")U
+1 F
+(darkmagenta)R
+5 F
+(")R
+6 F
+813 1644(e)U
+1566(e)T
+5 F
+835(")S
+1 F
+(darkred)R
+5 F
+(")R
+835 1644(")U
+1 F
+(darkyellow)R
+5 F
+(")R
+6 F
+813 1800(e)U
+1722(e)T
+5 F
+835(")S
+1 F
+(gold)R
+5 F
+(")R
+835 1800(")U
+1 F
+(green)R
+5 F
+(")R
+1009 1878(")U
+6 F
+813 1956(e)U
+1878(e)T
+5 F
+835(")S
+1 F
+(khaki)R
+5 F
+835 1956(")U
+1 F
+(lightblue)R
+5 F
+(")R
+1107 2034(")U
+6 F
+813 2112(e)U
+2034(e)T
+5 F
+835(")S
+1 F
+(lightcyan)R
+5 F
+835 2112(")U
+1 F
+(lightgreen)R
+5 F
+(")R
+6 F
+813 2268(e)U
+2190(e)T
+5 F
+835(")S
+1 F
+(lightgrey)R
+5 F
+(")R
+835 2268(")U
+1 F
+(lightmagenta)R
+5 F
+(")R
+6 F
+813 2424(e)U
+2346(e)T
+5 F
+835(")S
+1 F
+(lightred)R
+5 F
+(")R
+835 2424(")U
+1 F
+(lightyellow)R
+5 F
+(")R
+6 F
+813 2580(e)U
+2502(e)T
+5 F
+835(")S
+1 F
+(lilac)R
+5 F
+(")R
+835 2580(")U
+1 F
+(magenta)R
+5 F
+(")R
+6 F
+813 2736(e)U
+2658(e)T
+5 F
+835(")S
+1 F
+(orange)R
+5 F
+(")R
+835 2736(")U
+1 F
+(orchid)R
+5 F
+(")R
+6 F
+813 2892(e)U
+2814(e)T
+5 F
+835(")S
+1 F
+(pink)R
+5 F
+(")R
+835 2892(")U
+1 F
+(purple)R
+5 F
+(")R
+6 F
+813 3048(e)U
+2970(e)T
+5 F
+835(")S
+1 F
+(red)R
+5 F
+(")R
+835 3048(")U
+1 F
+(turquoise)R
+5 F
+(")R
+6 F
+813 3204(e)U
+3126(e)T
+5 F
+835(")S
+1 F
+(white)R
+5 F
+(")R
+835 3204(")U
+1 F
+(yellow)R
+5 F
+(")R
+1188 3282(")U
+6 F
+813 3360(e)U
+3282(e)T
+5 F
+835(")S
+1 F
+(yellowgreen)R
+835 3360(integer)U
+3 F
+648 3546(e)U
+1 F
+813 3438(;)U
+3 F
+677 3546(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(orientation)R
+5 F
+1345 3624(")U
+6 F
+813 3702(e)U
+1 F
+3624(::=)T
+5 F
+930(")S
+1 F
+(top)R
+6 F
+(i)R
+1 F
+(to)R
+6 F
+(i)R
+1 F
+(bottom)R
+5 F
+835 3702(")U
+1 F
+(bottom)R
+6 F
+(i)R
+1 F
+(to)R
+6 F
+(i)R
+1 F
+(top)R
+5 F
+(")R
+6 F
+813 3858(e)U
+3780(e)T
+5 F
+835(")S
+1 F
+(left)R
+6 F
+(i)R
+1 F
+(to)R
+6 F
+(i)R
+1 F
+(right)R
+5 F
+(")R
+835 3858(")U
+1 F
+(right)R
+6 F
+(i)R
+1 F
+(to)R
+6 F
+(i)R
+1 F
+(left)R
+5 F
+(")R
+1 F
+432 4152(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(12)S
+EP
+%%Page: ? 13
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+813 522(;)U
+3 F
+648 630(e)U
+(num)R
+6 F
+(i)R
+808(i)S
+3 F
+(layoutalgorithm)R
+6 F
+813 786(e)U
+1 F
+708(::=)T
+5 F
+835 786(")U
+1 F
+(tree)R
+5 F
+(")R
+6 F
+813 864(e)U
+5 F
+835(")S
+1 F
+(maxdepth)R
+5 F
+(")R
+6 F
+813 1020(e)U
+942(e)T
+5 F
+835(")S
+1 F
+(mindepth)R
+5 F
+(")R
+835 1020(")U
+1 F
+(maxdepthslow)R
+5 F
+(")R
+6 F
+813 1176(e)U
+1098(e)T
+5 F
+835(")S
+1 F
+(mindepthslow)R
+5 F
+(")R
+835 1176(")U
+1 F
+(maxdegree)R
+5 F
+(")R
+6 F
+813 1332(e)U
+1254(e)T
+5 F
+835(")S
+1 F
+(mindegree)R
+5 F
+(")R
+835 1332(")U
+1 F
+(maxindegree)R
+5 F
+(")R
+6 F
+813 1488(e)U
+1410(e)T
+5 F
+835(")S
+1 F
+(minindegree)R
+5 F
+(")R
+835 1488(")U
+1 F
+(maxoutdegree)R
+5 F
+(")R
+6 F
+813 1644(e)U
+1566(e)T
+5 F
+835(")S
+1 F
+(minoutdegree)R
+5 F
+(")R
+835 1644(")U
+1 F
+(minbackward)R
+5 F
+(")R
+3 F
+648 1908(e)U
+1 F
+813 1800(;)U
+6 F
+813 1722(e)U
+5 F
+835(")S
+1 F
+(dfs)R
+5 F
+(")R
+3 F
+677 1908(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(status)R
+5 F
+1100 1986(")U
+6 F
+813 2064(e)U
+1 F
+1986(::=)T
+5 F
+930(")S
+1 F
+(black)R
+5 F
+835 2064(")U
+1 F
+(grey)R
+5 F
+(")R
+1009 2142(")U
+3 F
+648 2328(e)U
+1 F
+813 2220(;)U
+6 F
+813 2142(e)U
+5 F
+835(")S
+1 F
+(white)R
+3 F
+677 2328(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(yes)R
+6 F
+(i)R
+931(i)S
+3 F
+(no)R
+5 F
+1046 2406(")U
+6 F
+813 2484(e)U
+1 F
+2406(::=)T
+5 F
+930(")S
+1 F
+(yes)R
+5 F
+835 2484(")U
+1 F
+(no)R
+5 F
+(")R
+3 F
+648 2670(e)U
+1 F
+813 2562(;)U
+3 F
+677 2670(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(cross)R
+6 F
+(i)R
+986(i)S
+3 F
+(weight)R
+6 F
+813 2826(e)U
+1 F
+2748(::=)T
+5 F
+930(")S
+1 F
+(bary)R
+5 F
+(")R
+835 2826(")U
+1 F
+(median)R
+5 F
+(")R
+1173 2904(")U
+6 F
+813 2982(e)U
+2904(e)T
+5 F
+835(")S
+1 F
+(barymedian)R
+5 F
+835 2982(")U
+1 F
+(medianbary)R
+5 F
+(")R
+1 F
+813 3060(;)U
+3 F
+921 3168(w)U
+648(enum)S
+6 F
+(i)R
+808(i)S
+3 F
+(vie)R
+1 F
+813 3246(::=)U
+5 F
+930(")S
+1 F
+(c\256sh)R
+5 F
+(")R
+6 F
+813 3402(e)U
+3324(e)T
+5 F
+835(")S
+1 F
+(fc\256sh)R
+5 F
+(")R
+835 3402(")U
+1 F
+(p\256sh)R
+5 F
+(")R
+1014 3480(")U
+3 F
+648 3666(e)U
+1 F
+813 3558(;)U
+6 F
+813 3480(e)U
+5 F
+835(")S
+1 F
+(fp\256sh)R
+3 F
+677 3666(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(arrow)R
+6 F
+(i)R
+1015(i)S
+3 F
+(mode)R
+6 F
+813 3822(e)U
+1 F
+3744(::=)T
+5 F
+908(")S
+1 F
+(\256xed)R
+5 F
+(")R
+835 3822(")U
+1 F
+(free)R
+5 F
+(")R
+1 F
+432 4116(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(13)S
+EP
+%%Page: ? 14
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+813 522(;)U
+3 F
+648 630(f)U
+(oldnode)R
+6 F
+(i)R
+896(i)S
+3 F
+(defaults)R
+1 F
+813 708(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(foldnode.)R
+5 F
+(")R
+1 F
+1259(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+3 F
+648 894(f)U
+1 F
+813 786(;)U
+3 F
+670 894(oldedge)U
+6 F
+(i)R
+888(i)S
+3 F
+(defaults)R
+1 F
+813 972(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(foldedge.)R
+5 F
+(")R
+1 F
+1255(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1601(e)S
+3 F
+648 1158(n)U
+1 F
+813 1050(;)U
+3 F
+685 1158(ode)U
+6 F
+(i)R
+786(i)S
+3 F
+(defaults)R
+1 F
+813 1236(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(node.)R
+5 F
+(")R
+1 F
+1153(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+3 F
+648 1422(e)U
+1 F
+813 1314(;)U
+3 F
+677 1422(dge)U
+6 F
+(i)R
+778(i)S
+3 F
+(defaults)R
+1 F
+813 1500(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(edge.)R
+5 F
+(")R
+1 F
+1149(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1495(e)S
+3 F
+648 1686(n)U
+1 F
+813 1578(;)U
+3 F
+685 1686(ode)U
+1 F
+813(::=)S
+5 F
+930(")S
+1 F
+(node:)R
+5 F
+(")R
+1 F
+1154(')S
+5 F
+({)R
+1 F
+(')R
+1251(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+6 F
+1630(i)S
+1 F
+(list)R
+1765(')S
+5 F
+(})R
+1 F
+(')R
+3 F
+648 1872(n)U
+1 F
+813 1764(;)U
+3 F
+685 1872(ode)U
+6 F
+(i)R
+786(i)S
+3 F
+(attribute)R
+6 F
+(i)R
+1070(i)S
+3 F
+(list)R
+1 F
+813 1950(:)U
+(:=)R
+930(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+6 F
+1309(i)S
+1 F
+(list)R
+1444(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+3 F
+648 2214(e)U
+1 F
+813 2106(;)U
+6 F
+813 2028(e)U
+1 F
+835(node)S
+6 F
+(i)R
+1 F
+(attribute)R
+3 F
+677 2214(dge)U
+1 F
+813(::=)S
+5 F
+930(")S
+1 F
+(edge:)R
+5 F
+(")R
+1 F
+1150(')S
+5 F
+({)R
+1 F
+(')R
+1247(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1593(e)S
+6 F
+(i)R
+1 F
+(list)R
+1757(')S
+5 F
+(})R
+1 F
+(')R
+813 2292(;)U
+3 F
+875 2400(e)U
+648(nearedg)S
+1 F
+813 2478(::=)U
+5 F
+930(")S
+1 F
+(nearedge:)R
+5 F
+(")R
+1 F
+1263(')S
+5 F
+({)R
+1 F
+(')R
+1360(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1706(e)S
+6 F
+(i)R
+1 F
+(list)R
+1870(')S
+5 F
+(})R
+1 F
+(')R
+3 F
+648 2664(b)U
+1 F
+813 2556(;)U
+3 F
+685 2664(entnearedge)U
+1 F
+813 2742(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(bentnearedge:)R
+5 F
+(")R
+1 F
+1376(')S
+5 F
+({)R
+1 F
+(')R
+1473(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1819(e)S
+6 F
+(i)R
+1 F
+(list)R
+1983(')S
+5 F
+(})R
+1 F
+(')R
+813 2820(;)U
+3 F
+883 2928(e)U
+648(backedg)S
+1 F
+813 3006(::=)U
+5 F
+930(")S
+1 F
+(backedge:)R
+5 F
+(")R
+1 F
+1274(')S
+5 F
+({)R
+1 F
+(')R
+1371(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1717(e)S
+6 F
+(i)R
+1 F
+(list)R
+1881(')S
+5 F
+(})R
+1 F
+(')R
+3 F
+648 3192(e)U
+1 F
+813 3084(;)U
+3 F
+677 3192(dge)U
+6 F
+(i)R
+778(i)S
+3 F
+(attribute)R
+6 F
+(i)R
+1062(i)S
+3 F
+(list)R
+1 F
+813 3270(:)U
+(:=)R
+930(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1276(e)S
+6 F
+(i)R
+1 F
+(list)R
+1440(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1786(e)S
+3 F
+648 3534(n)U
+1 F
+813 3426(;)U
+6 F
+813 3348(e)U
+1 F
+835(edge)S
+6 F
+(i)R
+1 F
+(attribut)R
+1181(e)S
+3 F
+685 3534(ode)U
+6 F
+(i)R
+786(i)S
+3 F
+(attribute)R
+1 F
+813 3612(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(title)R
+5 F
+(")R
+1 F
+1109(':')S
+1193(string)S
+6 F
+813 3768(e)U
+3690(e)T
+5 F
+835(")S
+1 F
+(label)R
+5 F
+(")R
+1 F
+1040(':')S
+1124(string)S
+5 F
+835 3768(")U
+1 F
+(info1)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(string)S
+1253 3846(g)U
+432 4140(R)U
+6 F
+813 3846(e)U
+5 F
+835(")S
+1 F
+(info2)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(strin)S
+476 4140(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(14)S
+EP
+%%Page: ? 15
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+6 F
+813 522(e)U
+5 F
+835(")S
+1 F
+(info3)R
+5 F
+(")R
+1 F
+1052(':')S
+1136(string)S
+1424 600(r)U
+6 F
+813 678(e)U
+600(e)T
+5 F
+835(")S
+1 F
+(color)R
+5 F
+(")R
+1 F
+1048(':')S
+1132(enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 678(")U
+1 F
+(textcolor)R
+5 F
+(")R
+1 F
+1146(':'enum)S
+6 F
+(i)R
+1 F
+(color)R
+1574 756(r)U
+6 F
+813 834(e)U
+756(e)T
+5 F
+835(")S
+1 F
+(bordercolor)R
+5 F
+(")R
+1 F
+1220(':'enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 834(")U
+1 F
+(width)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(integer)S
+1321 912(r)U
+6 F
+813 990(e)U
+912(e)T
+5 F
+835(")S
+1 F
+(height)R
+5 F
+(")R
+1 F
+1077(':')S
+1161(intege)S
+5 F
+835 990(")U
+1 F
+(borderwidth)R
+5 F
+(")R
+1 F
+1235(':')S
+1319(integer)S
+1935 1068(')U
+6 F
+813 1146(e)U
+1068(e)T
+5 F
+835(")S
+1 F
+(loc:)R
+5 F
+(")R
+1 F
+1011(')S
+5 F
+({)R
+1 F
+(')R
+1108('x')S
+1207(':')S
+1291(integer)S
+1495('y')S
+1594(':')S
+1678(integer)S
+1882(')S
+5 F
+(})R
+835 1146(")U
+1 F
+(folding)R
+5 F
+(")R
+1 F
+1103(':')S
+1187(integer)S
+6 F
+813 1302(e)U
+1224(e)T
+5 F
+835(")S
+1 F
+(scaling)R
+5 F
+(")R
+1 F
+1099(':')S
+1183(\257oat)S
+5 F
+835 1302(")U
+1 F
+(shrink)R
+5 F
+(")R
+1 F
+1078(':')S
+1162(integer)S
+1332 1380(r)U
+6 F
+813 1458(e)U
+1380(e)T
+5 F
+835(")S
+1 F
+(stretch)R
+5 F
+(")R
+1 F
+1088(':')S
+1172(intege)S
+5 F
+835 1458(")U
+1 F
+(textmode)R
+5 F
+(")R
+1 F
+1157(':')S
+1241(enum)S
+6 F
+(i)R
+1 F
+(textmode)R
+6 F
+813 1614(e)U
+1536(e)T
+5 F
+835(")S
+1 F
+(shape)R
+5 F
+(")R
+1 F
+1063(':')S
+1147(enum)S
+6 F
+(i)R
+1 F
+(shape)R
+5 F
+835 1614(")U
+1 F
+(level)R
+5 F
+(")R
+1 F
+1040(':')S
+1124(integer)S
+1525 1692(r)U
+6 F
+813 1770(e)U
+1692(e)T
+5 F
+835(")S
+1 F
+(vertical)R
+6 F
+(i)R
+1 F
+(order)R
+5 F
+(")R
+1 F
+1281(':')S
+1365(intege)S
+5 F
+835 1770(")U
+1 F
+(horizontal)R
+6 F
+(i)R
+1 F
+(order)R
+5 F
+(")R
+1 F
+1351(':')S
+1435(integer)S
+3 F
+648 1956(e)U
+1 F
+813 1848(;)U
+3 F
+677 1956(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(textmode)R
+5 F
+1118 2034(")U
+6 F
+813 2112(e)U
+1 F
+2034(::=)T
+5 F
+930(")S
+1 F
+(center)R
+5 F
+835 2112(")U
+1 F
+(left)R
+6 F
+(i)R
+1 F
+(justify)R
+5 F
+(")R
+1188 2190(")U
+3 F
+648 2376(e)U
+1 F
+813 2268(;)U
+6 F
+813 2190(e)U
+5 F
+835(")S
+1 F
+(right)R
+6 F
+(i)R
+1 F
+(justify)R
+3 F
+677 2376(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(shape)R
+5 F
+1057 2454(")U
+6 F
+813 2532(e)U
+1 F
+2454(::=)T
+5 F
+930(")S
+1 F
+(box)R
+5 F
+835 2532(")U
+1 F
+(rhomb)R
+5 F
+(")R
+6 F
+813 2688(e)U
+2610(e)T
+5 F
+835(")S
+1 F
+(ellipse)R
+5 F
+(")R
+835 2688(")U
+1 F
+(triangle)R
+5 F
+(")R
+3 F
+648 2874(e)U
+1 F
+813 2766(;)U
+3 F
+677 2874(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(node)R
+6 F
+(i)R
+979(i)S
+3 F
+(align)R
+5 F
+1144 2952(")U
+6 F
+813 3030(e)U
+1 F
+2952(::=)T
+5 F
+930(")S
+1 F
+(bottom)R
+5 F
+835 3030(")U
+1 F
+(top)R
+5 F
+(")R
+1023 3108(")U
+3 F
+648 3294(e)U
+1 F
+813 3186(;)U
+6 F
+813 3108(e)U
+5 F
+835(")S
+1 F
+(center)R
+3 F
+677 3294(dge)U
+6 F
+(i)R
+778(i)S
+3 F
+(attribute)R
+1 F
+813 3372(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(sourcename)R
+5 F
+(")R
+1 F
+1322(':')S
+1406(string)S
+6 F
+813 3528(e)U
+3450(e)T
+5 F
+835(")S
+1 F
+(targetname)R
+5 F
+(")R
+1 F
+1204(':')S
+1288(string)S
+5 F
+835 3528(")U
+1 F
+(label)R
+5 F
+(")R
+1 F
+1040(':')S
+1124(string)S
+1500 3606(r)U
+6 F
+813 3684(e)U
+3606(e)T
+5 F
+835(")S
+1 F
+(textcolor)R
+5 F
+(")R
+1 F
+1146(':'enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 3684(")U
+1 F
+(color)R
+5 F
+(")R
+1 F
+1048(':')S
+1132(enum)S
+6 F
+(i)R
+1 F
+(color)R
+6 F
+813 3840(e)U
+3762(e)T
+5 F
+835(")S
+1 F
+(thickness)R
+5 F
+(")R
+1 F
+1158(':')S
+1242(integer)S
+5 F
+835 3840(")U
+1 F
+(class)R
+5 F
+(")R
+1 F
+1041(':')S
+1125(integer)S
+432 4134(R)U
+(elease)R
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(15)S
+EP
+%%Page: ? 16
+BP
+1 F
+66 Z
+3218 228(\))U
+432(VCG)S
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+6 F
+813 522(e)U
+5 F
+835(")S
+1 F
+(priority)R
+5 F
+(")R
+1 F
+1110(':')S
+1194(integer)S
+1578 600(r)U
+6 F
+813 678(e)U
+600(e)T
+5 F
+835(")S
+1 F
+(arrowcolor)R
+5 F
+(")R
+1 F
+1202(':')S
+1286(enum)S
+6 F
+(i)R
+1 F
+(colo)R
+5 F
+835 678(")U
+1 F
+(backarrowcolor)R
+5 F
+(")R
+1 F
+1326(':')S
+1410(enum)S
+6 F
+(i)R
+1 F
+(color)R
+6 F
+813 834(e)U
+756(e)T
+5 F
+835(")S
+1 F
+(arrowsize)R
+5 F
+(")R
+1 F
+1169(':')S
+1253(integer)S
+5 F
+835 834(")U
+1 F
+(backarrowsize)R
+5 F
+(")R
+1 F
+1293(':')S
+1377(integer)S
+1703 912(e)U
+6 F
+813 990(e)U
+912(e)T
+5 F
+835(")S
+1 F
+(arrowstyle)R
+5 F
+(")R
+1 F
+1191(':')S
+1275(enum)S
+6 F
+(i)R
+1 F
+(arrowstyl)R
+5 F
+835 990(")U
+1 F
+(backarrowstyle)R
+5 F
+(")R
+1 F
+1315(':')S
+1399(enum)S
+6 F
+(i)R
+1 F
+(arrowstyle)R
+6 F
+813 1146(e)U
+1068(e)T
+5 F
+835(")S
+1 F
+(linestyle)R
+5 F
+(")R
+1 F
+1135(':')S
+1219(enum)S
+6 F
+(i)R
+1 F
+(linestyle)R
+5 F
+835 1146(")U
+1 F
+(anchor)R
+5 F
+(")R
+1 F
+1092(':')S
+1176(integer)S
+1595 1224(r)U
+3 F
+648 1410(e)U
+1 F
+813 1302(;)U
+6 F
+813 1224(e)U
+5 F
+835(")S
+1 F
+(horizontal)R
+6 F
+(i)R
+1 F
+(order)R
+5 F
+(")R
+1 F
+1351(':')S
+1435(intege)S
+3 F
+677 1410(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(linestyle)R
+1 F
+813 1488(:)U
+(:=)R
+5 F
+930(")S
+1 F
+(continuous)R
+5 F
+(")R
+6 F
+813 1644(e)U
+1566(e)T
+5 F
+835(")S
+1 F
+(solid)R
+5 F
+(")R
+835 1644(")U
+1 F
+(dotted)R
+5 F
+(")R
+1046 1722(")U
+6 F
+813 1800(e)U
+1722(e)T
+5 F
+835(")S
+1 F
+(dashed)R
+5 F
+835 1800(")U
+1 F
+(invisible)R
+5 F
+(")R
+3 F
+648 1986(e)U
+1 F
+813 1878(;)U
+3 F
+677 1986(num)U
+6 F
+(i)R
+808(i)S
+3 F
+(arrowstyle)R
+6 F
+813 2142(e)U
+1 F
+2064(::=)T
+930(none)S
+835 2142(line)U
+930 2220(d)U
+3 F
+54 Z
+432 2484(WARNINGS)U
+1 F
+66 Z
+813 2298(;)U
+6 F
+813 2220(e)U
+1 F
+835(soli)S
+648 2562(The)U
+2 F
+773(VCG)S
+928(tool)S
+1 F
+1053(needs)S
+1226(about)S
+1395(200)S
+1517(bytes)S
+1679(per)S
+1786(edge)S
+1933(and)S
+2051(node.)S
+2241(Depending)S
+2553(on)S
+2642(the)S
+2745(layout,)S
+2948(it)S
+3006(will)S
+3130(pro-)S
+3223 2640(.)U
+648 2718(T)U
+648 2640(duce)U
+796(a)S
+849(lot)S
+942(of)S
+1021(additional)S
+1307(dummy)S
+1532(nodes)S
+1710(and)S
+1829(dummy)S
+2054(edges,)S
+2245(such)S
+2390(that)S
+2512(it)S
+2572(may)S
+2708(run)S
+2819(out)S
+2926(of)S
+3004(memory)S
+688 2718(he)U
+772(layout)S
+958(algorithm)S
+1235(needs)S
+1407(exponentiall)S
+1731(y)S
+1786(time)S
+1924(in)S
+1997(the)S
+2099(worst)S
+2268(case.)S
+3 F
+54 Z
+432 2904(ACKNOWLEDGEMENTS)U
+1 F
+66 Z
+648 2982(The)U
+2 F
+773(Edge)S
+930(tool)S
+1 F
+1054(was)S
+1179(developed)S
+1471(at)S
+1540(the)S
+1642(University)S
+1942(of)S
+2019(Karlsruhe.)S
+2340(GRL)S
+2494(was)S
+2619(described)S
+2893(by)S
+2981(S.)S
+3057(Manke)S
+648 3138(O)U
+648 3060(and)U
+765(F.N.)S
+906(Paulisch.)S
+696 3138(ur)U
+781(colleagues)S
+1088(M.)S
+1194(Alt)S
+1308(and)S
+1433(C.)S
+1524(Ferdinand)S
+1821(found)S
+2005(the)S
+2115(most)S
+2273(bugs)S
+2428(and)S
+2553(gave)S
+2706(many)S
+2881(proposals)S
+3163(for)S
+648 3294(T)U
+648 3216(improvements.)U
+688 3294(he)U
+775(Institute)S
+1015(of)S
+1095(Compiler)S
+1367(Construction)S
+1731(at)S
+1802(the)S
+1906(University)S
+2208(of)S
+2287(Saarland,)S
+2558(Germany,)S
+2844(and)S
+2963(the)S
+3067(COM-)S
+648 3450(m)U
+648 3372(PARE)U
+846(Consortium)S
+1186(were)S
+1343(the)S
+1452(\256rst)S
+1584(and)S
+1708(most)S
+1865(important)S
+2149(users)S
+2314(of)S
+2398(the)S
+2 F
+2507(VCG)S
+2668(tool)S
+1 F
+2798(and)S
+2921(gave)S
+3073(us)S
+3160(the)S
+699 3450(otivation,)U
+971(the)S
+1073(time)S
+1211(and)S
+1328(many)S
+1496(hints)S
+1646(during)S
+1840(the)S
+1942(development)S
+2303(of)S
+2380(the)S
+2482(tool.)S
+3 F
+54 Z
+432 3636(SEE)U
+561(ALSO)S
+1 F
+66 Z
+648 3714(Sunview\(1\))U
+978(X11\(1l\))S
+1209(edge\(l\))S
+2051 3792(\))U
+2 F
+648 3870(V)U
+1 F
+648 3792(vcgdemomaker\(l)U
+1093(\))S
+1137(pbmshift\(l\))S
+1455(pbmrot90\(l\))S
+1795(pbm2hp\(l)S
+2 F
+688 3870(CG)U
+821(\261)S
+895(Visualization)S
+1283(of)S
+1375(Compiler)S
+1664(Graphs,)S
+1 F
+1920(Design)S
+2147(Report)S
+2366(and)S
+2501(User)S
+2666(Documentation,)S
+3128(Ref.)S
+432 4164(Release)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(16)S
+EP
+%%Page: ? 17
+BP
+1 F
+66 Z
+432 228(V)U
+(CG)R
+6 F
+594(e)S
+1 F
+616(XVCG)S
+815(\()S
+848(1l)S
+910(\))S
+1274(MISC.)S
+1475(REFERENCE)S
+1874(MANUAL)S
+2187(PAGES)S
+2740(VCG)S
+6 F
+2902(e)S
+1 F
+2924(XVCG)S
+3123(\()S
+3156(1l)S
+3218(\))S
+3 F
+54 Z
+432 708(BUGS)U
+1 F
+66 Z
+648 522(Compare,)U
+928(USAAR-1049-visual,)S
+1525(January)S
+1752(1994,)S
+1923(updated)S
+2153(January)S
+2380(1995)S
+648 786(The)U
+776(X11)S
+916(version)S
+1136(has)S
+1250(the)S
+1356(`InputFocus')S
+1723(problem.)S
+1985(This)S
+2128(problem)S
+2373(is)S
+2443(solved)S
+2641(for)S
+2743(99)S
+2834(%)S
+2914(of)S
+2994(all)S
+3084(cases,)S
+648 942(I)U
+648 864(but)U
+754(may)S
+889(still)S
+1009(occur.)S
+670 942(f)U
+716(a)S
+769(graph)S
+943(is)S
+1011(written)S
+1221(to)S
+1296(a)S
+1349(\256le)S
+1457(and)S
+1576(reload)S
+1764(from)S
+1916(this)S
+2035(\256le,)S
+2160(the)S
+2264(layout)S
+2452(may)S
+2589(be)S
+2675(different)S
+2924(and)S
+3042(may)S
+3178(be)S
+648 1098(T)U
+648 1020(ugly.)U
+688 1098(he)U
+777(attribute)S
+1022(horizontal)S
+6 F
+(i)R
+1 F
+(order)R
+1487(does)S
+1635(only)S
+1779(works)S
+1968(for)S
+2072(connected)S
+2365(graphs,)S
+2585(but)S
+2695(not)S
+2805(for)S
+2908(unconnected)S
+648 1254(F)U
+648 1176(graphs.)U
+685 1254(or)U
+772(some)S
+943(parameters,)S
+1280(negative)S
+1534(values)S
+1734(are)S
+1846(inappropriate)S
+2227(even)S
+2382(if)S
+2453(the)S
+2564(tool)S
+2697(does)S
+2849(not)S
+2964(crashes)S
+3189(in)S
+3207 1332(d)U
+2 F
+648 1410(y)U
+1 F
+648 1332(such)U
+796(situations.)S
+1114(However)S
+1383(the)S
+1490(result)S
+1663(will)S
+1792(be)S
+1881(very)S
+2025(ugly.)S
+2208(For)S
+2327(instance,)S
+2586(the)S
+2693(values)S
+2888(of)S
+2 F
+2969(xbase)S
+1 F
+3145(an)S
+2 F
+677 1410(base)U
+1 F
+820(should)S
+1018(always)S
+1223(be)S
+1307(greater)S
+1511(than)S
+1646(zero.)S
+648 1488(T)U
+(he)R
+789(spline)S
+985(routine)S
+1210(is)S
+1293(still)S
+1429(too)S
+1551(slow)S
+1714(and)S
+1847(has)S
+1973(some)S
+2150(bugs)S
+2313(when)S
+2494(exporting)S
+2784(to)S
+2873(a)S
+2940(multi)S
+3116(page)S
+648 1644(C)U
+648 1566(PostScript)U
+941(\256le.)S
+692 1644(urrently,)U
+939(no)S
+1027(further)S
+1228(bugs)S
+1375(are)S
+1477(known.)S
+3 F
+54 Z
+432 1830(AUTHORS)U
+1 F
+66 Z
+648 1908(Georg)U
+835(Sander,)S
+1057(University)S
+1357(of)S
+1434(Saarland,)S
+1703(Germany.)S
+432 4116(R)U
+648 1986(Iris)U
+758(Lemke,)S
+979(University)S
+1279(of)S
+1356(Saarland,)S
+1625(Germany.)S
+476 4116(elease)U
+658(1.3)S
+1505(Last)S
+1640(change:)S
+1866(1995/01/05)S
+3174(17)S
+EP
+%%Trailer
+pscatsave end restore
+%%Pages: 17

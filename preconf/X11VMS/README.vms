@@ -1,0 +1,28 @@
+
+The port of an older version of the VCG tool to VAX/VMS systems 
+was done by some people at Steria.  
+Thanks to Laurent Voisin (laurent@steria.fr) for this port.
+
+I have no possibility to check the functionality of the port.
+Thus, on VAX/VMS systems, the configuration and making of the
+tool is not fully automatical. Further, there may be problems
+with the new features implemented in this newest version of the 
+VCG tool. But anyway, I think is is a good starting point for a
+new port of the VCG tool.
+
+
+What is to do:
+
+1) Copy the files of this directory into the source directory, i.e.
+   into ../../src.
+
+2) With VAX/VMS there is no Makefile. There is a script named `genvcg.com'
+   used for building VCG.
+   Start this script in the Source directory.
+
+
+I hope this works, but I'm not sure.
+
+There is currently no possibility to see the demo show of the UNIX version,
+but you can try the examples in the directory ../../expl.
+

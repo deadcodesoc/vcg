@@ -1,0 +1,171 @@
+/* SCCS-info %W% %E% */
+/* $Id: softmain.vcg,v 1.4 1995/02/09 11:41:53 sander Exp $ */
+
+graph: {
+
+title: "Software Wartung"
+layoutalgorithm: minbackward
+
+layout_nearfactor: 0
+layout_upfactor: 40 
+x: 30
+y: 30
+
+splines: yes
+
+xbase: 75 
+xspace: 10 
+xlspace: 10 
+xraster: 75
+yspace: 30
+stretch: 65
+shrink: 100
+width: 850
+height: 700
+color: aquamarine
+priority_phase: yes
+straight_phase: yes
+
+edge.color: red
+edge.arrowsize: 15
+node.bordercolor: darkyellow
+foldnode.shape: triangle
+
+node: { title: "A"
+	label: "\fuVerhaltensregeln fuer die\fn\n    \fuSoftware-Wartung\fn"
+	borderwidth: 0
+	stretch: 2
+	color: aquamarine
+	textcolor: magenta 
+      }
+
+edge: { sourcename: "A" targetname: "Start" linestyle: invisible }
+
+node: { title: "Start"  borderwidth: 0 color: aquamarine }
+
+node: { title: "1"  
+	label: "Funktioniert\ndas\nSystem?"
+	shape: rhomb
+	width: 200
+	height:132
+      }
+
+edge: { sourcename: "Start" targetname: "1" }
+
+node: { title: "2a" label: "ja" borderwidth: 0 color: aquamarine textcolor: red } 
+node: { title: "2" 
+	label: "Fummel bloss\nnicht dran rum!"
+	width: 178
+	height: 42
+      }
+
+edge: { sourcename: "2" targetname: "fin" } 
+nearedge: { sourcename: "1"  targetname: "2a" arrowsize:0  } 
+nearedge: { sourcename: "2a" targetname: "2" } 
+
+node: { title: "3" label: "nein" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "4"  
+	label: "Hast Du\ndamit\nrumgespielt?"
+	shape: rhomb
+	width: 200
+	height:132
+      }
+
+nearedge: { sourcename: "1" targetname: "3" arrowsize:0 } 
+edge: { sourcename: "3" targetname: "4" priority: 100} 
+
+node: { title: "5a" label: "ja" borderwidth: 0 color: aquamarine textcolor: red } 
+node: { title: "5" 
+	label: "\Du Rindvieh!"
+	stretch: 3
+	shrink: 2
+	width: 178
+	height: 42
+      }
+
+
+nearedge: { sourcename: "4" targetname: "5a" arrowsize:0 } 
+nearedge: { sourcename: "5a" targetname: "5" } 
+
+node: { title: "6" label: "nein" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "7"  
+	label: "Wird man\nDich dafuer\nverantwortlich\nmachen?"
+	shape: rhomb
+	width: 200
+	height:132
+	textmode: left_justify
+      }
+
+nearedge: { sourcename: "4" targetname: "6" arrowsize:0 } 
+edge: { sourcename: "6" targetname: "7" } 
+
+node: { title: "8"  
+	label: "Hat es\njemand\ngesehen?"
+	shape: rhomb
+	width: 200
+	height:132
+      }
+
+edge: { sourcename: "5" targetname: "8" } 
+
+
+node: { title: "9a" label: "nein" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "9"  
+	label: "Kuemmer dich\nnicht drum!"
+	width: 178
+	height: 42
+      }
+
+nearedge: { sourcename: "7" targetname: "9a" arrowsize:0 } 
+edge: { sourcename: "9a" targetname: "9" } 
+edge: { sourcename: "9" targetname: "fin" } 
+
+node: { title: "10a" label: "ja" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "10"  
+	label: "Du armes Schwein!"
+	shape: ellipse 
+	stretch: 2
+      }
+
+nearedge: { sourcename: "7" targetname: "10a" arrowsize:0 } 
+edge: { sourcename: "10a" targetname: "10" } 
+
+node: { title: "11a" label: "nein" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "11"  
+	label: "Verdufte unauffaellig"
+	width: 178
+	height: 42
+      }
+
+nearedge: { sourcename: "8" targetname: "11a" arrowsize:0 } 
+edge: { sourcename: "11a" targetname: "11" } 
+edge: { sourcename: "11" targetname: "fin" } 
+
+node: { title: "12a" label: "ja" borderwidth: 0 color: aquamarine textcolor: red }
+nearedge: { sourcename: "8" targetname: "12a" arrowsize:0 } 
+edge: { sourcename: "12a" targetname: "10" } 
+
+node: { title: "13"  
+	label: "Kannst Du\njemand die Schuld\nin die Schuhe\nschieben?"
+	shape: rhomb
+	width: 200
+	height:132
+	textmode: left_justify 
+      }
+
+edge: { sourcename: "10" targetname: "13" } 
+node: { title: "14a" label: "ja" borderwidth: 0 color: aquamarine textcolor: red }
+node: { title: "15a" label: "nein" borderwidth: 0 color: aquamarine textcolor: red }
+nearedge: { sourcename: "13" targetname: "14a" arrowsize:0 } 
+nearedge: { sourcename: "13" targetname: "15a" arrowsize:0 } 
+edge: { sourcename: "14a" targetname: "fin" } 
+edge: { sourcename: "15a" targetname: "10" } 
+
+node: { title: "fin"  
+	label: "Alles klar!"
+	shape: ellipse 
+	stretch: 2
+      }
+
+}
+

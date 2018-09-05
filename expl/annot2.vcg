@@ -1,0 +1,48 @@
+/* SCCS-info %W% %E% */
+/* $Id: annot2.vcg,v 1.5 1995/02/09 11:41:53 sander Exp $ */
+
+graph: { title: "SYNTAXTREE"
+	 height: 700
+	 width: 700
+	 x: 400 
+	 y: 30
+	 color: lightcyan
+	 layout_downfactor: 10
+	 layout_upfactor:   1
+	 layout_nearfactor: 5
+         layoutalgorithm: dfs
+	 node: { title:"A" label:"A"  color: lightgreen textcolor: blue}
+	 node: { title:"B" label:"B"  color: lightgreen textcolor: blue}
+	 node: { title:"C" label:"C"  color: lightgreen textcolor: blue}
+	 node: { title:"D" label:"D"  color: lightgreen textcolor: blue}
+	 node: { title:"E" label:"E"  color: lightgreen textcolor: blue}
+	 node: { title:"F" label:"F"  color: lightgreen textcolor: blue}
+	 node: { title:"G" label:"G"  color: lightgreen textcolor: blue}
+	 node: { title:"H" label:"H"  color: lightgreen textcolor: blue}
+	 node: { title:"I" label:"I"  color: lightgreen textcolor: blue}
+	 node: { title:"J" label:"J"  color: lightgreen textcolor: blue}
+	 node: { title:"K" label:"K"  color: lightgreen textcolor: blue}
+	 node: { title:"L" label:"L"  color: lightgreen textcolor: blue}
+	 node: { title:"M" label:"M"  color: lightgreen textcolor: blue}
+	 node: { title:"N" label:"N"  color: lightgreen textcolor: blue}
+	 node: { title:"O" label:"O"  color: lightgreen textcolor: blue}
+	 edge: { sourcename:"A" targetname:"B" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"A" targetname:"C" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"B" targetname:"D" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"B" targetname:"E" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"C" targetname:"F" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"C" targetname:"G" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"D" targetname:"H" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"D" targetname:"I" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"E" targetname:"J" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"E" targetname:"K" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"F" targetname:"L" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"F" targetname:"M" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"G" targetname:"N" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"G" targetname:"O" color: red thickness: 4 priority: 8 }
+	 edge: { sourcename:"L" targetname:"A" priority: 1 color: blue }
+	 edge: { sourcename:"D" targetname:"A" priority: 1 color: blue }
+	 edge: { sourcename:"C" targetname:"N" priority: 1 color: blue }
+	 edge: { sourcename:"M" targetname:"A" priority: 1 color: blue }
+}
+

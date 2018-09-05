@@ -1,0 +1,61 @@
+/* SCCS-info %W% %E% */
+/* $Id: structs.vcg,v 1.3 1995/02/09 19:49:49 sander Exp $ */
+
+graph: { title: "SYNTAXTREE"
+	 height: 700
+	 width: 700
+	 x: 30 
+	 y: 30
+	 color: lightcyan
+	 stretch: 7
+         shrink: 10
+         layout_downfactor: 10
+         layout_upfactor:   1
+         layout_nearfactor: 0
+	 manhattan_edges: yes
+         node: {title:"A" 
+		label:"Struct bar\n\f22next\n\f29content" }
+         node: {title:"B" 
+		label:"Struct bar\n\f22next\n\f29content" }
+         node: {title:"C" 
+		label:"Struct bar\n\f22next\n\f29content" }
+         node: {title:"D" 
+		label:"Struct bar\n\f22next\n\f29content" }
+	 edge: { color: lilac sourcename:"A" targetname:"B" anchor: 2 }
+	 edge: { color: lilac sourcename:"B" targetname:"C" anchor: 2 }
+	 edge: { color: lilac sourcename:"C" targetname:"D" anchor: 2 }
+
+         node: {title:"AS" 
+		label:"Struct foo\n\f01field A\n\f02field B\n\f11field C"  }
+         node: {title:"BS" 
+		label:"Struct foo\n\f01field A\n\f02field B\n\f11field C"  }
+         node: {title:"CS" 
+		label:"Struct foo\n\f01field A\n\f02field B\n\f11field C"  }
+         node: {title:"DS" 
+		label:"Struct foo\n\f01field A\n\f02field B\n\f11field C"  }
+	 edge: { color: orange sourcename:"A" targetname:"AS" anchor: 3 }
+	 edge: { color: orange sourcename:"B" targetname:"BS" anchor: 3 }
+	 edge: { color: orange sourcename:"C" targetname:"CS" anchor: 3 }
+	 edge: { color: orange sourcename:"D" targetname:"DS" anchor: 3 }
+
+         node: {title:"X1" } 
+         node: {title:"X2" } 
+         node: {title:"X3" } 
+         node: {title:"Y1" } 
+         node: {title:"Y2" } 
+         node: {title:"Y3" } 
+         node: {title:"Z1" } 
+         node: {title:"Z2" } 
+         node: {title:"Z3" } 
+
+	 edge: { color: blue sourcename:"AS" targetname:"X1" anchor: 2 }
+	 edge: { color: red sourcename:"AS" targetname:"X2" anchor: 3 }
+	 edge: { color: darkyellow sourcename:"AS" targetname:"X3" anchor: 4 }
+	 edge: { color: blue sourcename:"BS" targetname:"Y1" anchor: 2 }
+	 edge: { color: red sourcename:"BS" targetname:"Y2" anchor: 3 }
+	 edge: { color: darkyellow sourcename:"BS" targetname:"Y3" anchor: 4 }
+	 edge: { color: blue sourcename:"CS" targetname:"Z1" anchor: 2 }
+	 edge: { color: red sourcename:"CS" targetname:"Z2" anchor: 3 }
+	 edge: { color: darkyellow sourcename:"CS" targetname:"Z3" anchor: 4 }
+}
+

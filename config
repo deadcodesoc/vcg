@@ -1,0 +1,2052 @@
+#!/bin/sh 
+#
+# /*--------------------------------------------------------------------*/
+# /*                                                                    */
+# /*              VCG : Visualization of Compiler Graphs                */
+# /*              --------------------------------------                */
+# /*                                                                    */
+# /*   file:         config                                             */
+# /*   version:      1.00.00                                            */
+# /*   creation:     1.4.1993                                           */
+# /*   author:       I. Lemke  (...-Version 0.99.99)                    */
+# /*                 G. Sander (Version 1.00.00-...)                    */  
+# /*                 Universitaet des Saarlandes, W-66041 Saarbruecken  */
+# /*                 ESPRIT Project #5399 Compare                       */
+# /*   description:  Configuring script                                 */
+# /*   status:       in work                                            */
+# /*                                                                    */
+# /*--------------------------------------------------------------------*/
+#
+# SCCS-info %W% %E% 
+# $Id$
+#
+# Shell script to configure the tMakefile, demo/demo.csh, src/globals.h
+#
+# ====================== Change area ============================
+
+# WARNING: The following words are internally used and should not be
+# -------  used as substitute names, file names etc.
+#
+#	GSGSTARTGSG, GSGENDGSG, GSGTRENNERGSG, GSGSPACEGSG
+
+
+
+# Standard places we look for Unix tools like rm, wc, awk, etc.
+#
+
+STDPATH="/bin /usr/bin /usr/ucb /etc /usr/etc /usr/bsd /usr/sbin /usr/local/bin"
+
+
+# Standard Unix tools we look for. 
+# Please note: we do not need to add the tools sed, sync, touch, rm, chmod, 
+# sleep here, because these utilities are checked always.
+# If cc is in this list, there is a special treatment of it, see
+# ANSI and NOANSI.
+#
+# TOOLS="wc awk cc"
+
+TOOLS="cc cat wc fgrep make mv ln clear"
+
+
+# Tool substitute names we use in the files to configure.
+# The substitute names are substituted by the access pathes we found
+# at the standard pathes or user pathes.
+# Note: The order in TOOLS and TOOLSUBSTITUTES must be the same.
+#       The substitute names for the predefined utilities are 
+#       CCLINKNAME, SEDNAME, SYNCNAME, TOUCHNAME, RMNAME, CHMODNAME, 
+#       SLEEPNAME.
+#
+# TOOLSUBSTITUTES="WCNAME AWKNAME CCNAME"
+
+TOOLSUBSTITUTES="CCNAME CATNAME WCNAME FGREPNAME MAKENAME MVNAME \
+                 LNNAME CLEARNAME"
+
+
+
+# Programs where we should force to ask for a name, because the name
+# is not standard. These tools need not to be in the TOOLS list.
+# First, we look for the existence of the tool and give that as
+# proposal. Then we ask.
+# IMPORTANT: Please use the Underscore _ instead of blancs to 
+# separate the options.
+#
+# PROGRAMS="bison_-ydt flex"
+
+PROGRAMS=""
+
+
+# Program substitute names we use in the files to configure.
+# The substitute names are substituted by the access pathes we entered
+# for the programs. 
+# Note: The order in PROGRAMS and PROGRAMSUBSTITUTES must be the same.
+#
+# PROGRAMSUBSTITUTES="BISONNAME FLEXNAME"
+
+PROGRAMSUBSTITUTES=""
+
+
+# Program descriptions (short, only few words) for the programs
+# listed in PROGRAMS. 
+# Note: The order in PROGRAMS and PROGRAMDESCRIPTIONS must be the same.
+# IMPORTANT: Please use the Underscore _ instead of blancs.
+
+PROGRAMDESCRIPTIONS=""
+
+
+
+# If cc is not in the list TOOLS, please ignore the following.
+# If we look for cc, and ANSI is set to "yes", we first look for gcc.
+# If we do not get gcc, we ask whether it is an ANSI C compiler.
+# If yes, we set the ANSINAME to #define ANSI_C, otherwise to
+# #undef ANSI_C.
+#
+# ANSI="no"
+
+ANSI="yes"
+
+
+# If cc is not in the list TOOLS, please ignore the following.
+# If ANSI="yes" but NOANSI="no", we give a warning if a nonansi
+# compiler was selected.
+#
+# NOANSI="no"
+
+NOANSI="yes" 
+
+
+# Files that must be configured. We assume that for each file, a template
+# exists that has the ending tpl, e.g. globals.h.tpl is configured to
+# the file globals.h.
+#
+# CONFIGFILES="tMakefile src/globals.h"
+
+CONFIGFILES="tMakefile src/globals.h demo/demo.csh"
+
+
+# Files that must be touched. We touch the files exactly in the order
+# specified here. Between the touches, we synchronize the file system and 
+# sleep 3 seconds. As side effect, the files become writable for the
+# user.
+# It is recommended to touch the sources first, then the files generated
+# from these sources, etc. This is needed for the make time stamp algorithm
+# to avoid to generate files that are already there.
+#
+# TOUCHFILES="src/lex.yy.c y.tab.c y.tab.h"
+
+TOUCHFILES=
+# TOUCHFILES="src/grammar.pgs src/grammar.y src/grammar.h src/grammar.l \
+# 	src/lex.yy.c src/y.tab.h src/y.tab.c"
+
+# ================== End of Change area =========================
+
+# --------------------------------------------------------------
+
+# ======================
+# Exit, cleanup routines
+# ======================
+
+# Cleanup before abortion 
+# -----------------------
+# Synopsis:   cleanup   (no arguments)
+# Result:     no result
+#
+
+cleanup() {
+
+	echo "Cleanup ... "
+	$myrm -f configure.1 configure.2
+
+}
+
+
+# Abort on error
+# --------------
+# Synopsis:   abort_unsuccessfully   (no arguments)
+# Result:     no result
+#
+
+abort_unsuccessfully() {
+
+	echo "Abort unsuccessfully ..."
+	$myrm -f stamp-doc stamp-shortdoc
+	cleanup 
+	exit 1
+
+}
+
+
+# Abort 
+# -----
+# Synopsis:   abort_successfully   (no arguments)
+# Result:     no result
+#
+
+abort_successfully() {
+
+	echo "Ready ..."
+	cleanup 
+	echo "Good bye."
+	exit 0 
+
+}
+
+
+# --------------------------------------------------------------
+
+# ===================
+# Utilities for lists
+# ===================
+
+# Shift the tool list to the left 
+# -------------------------------
+# i.e. consume the first argument. A "list tail" command.
+# Synopsis:   shift_toollist list  
+# Result:     toollist contains the shifted list
+#
+
+shift_toollist() {
+	shift
+	toollist="$*"
+}
+
+
+# Get the first element of a list 
+# -------------------------------
+# A "list head" command.
+# Synopsis:   toollist_first list  
+# Result:     tool contains the shifted list
+#
+
+toollist_first() {
+	tool="$1"
+}
+
+
+# Remove the blancs from a subsitute string
+# -----------------------------------------
+# All blancs are replaced by GSGSPACEGSG.
+# Synopsis:   remove_blancs subststring  
+# Result:     myresult contains the subststring without blancs 
+#
+
+remove_blancs() {
+	myresult=`echo "$1" | "$mysed" -e "s/ /GSGSPACEGSG/g"`
+}
+
+
+
+# Add a substitute to the TOOLNAMES and TOOLSUBSTITUTES
+# -----------------------------------------------------
+# We protect the spaces first such that the shell is not 
+# confused by spaces in the string.
+# Synopsis:   add_substitute substitutestring substitutename  
+# Result:     no result, but TOOLSUBSTITUTES and TOOLNAMES changed.
+#
+
+add_substitute() {
+
+	tmp="$2"
+	remove_blancs "$1"
+	TOOLNAMES="$TOOLNAMES $myresult"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES $tmp"
+
+}
+
+
+# --------------------------------------------------------------
+
+# ===============================
+# Check the important basic tools
+# ===============================
+#
+# We look for the tools (see variable TOOLS) at the standard places
+# (see variable STDPATH) and at the user path (imported variable PATH).
+# If the tool was not found, we ask for an appropriate name of the
+# tool. Note: We do not check the answer.
+#
+
+# Search a tool at the standard places
+# ------------------------------------
+# This is only executed if myresult is still empty.
+# Synopsis:   search_tool_at_stdplaces tool
+# Result:     myresult contains the access path
+# 
+
+search_tool_at_stdplaces() {
+
+	if (test -n "$myresult") then return; fi
+	for i in $STDPATH; do 
+		if (test -x "$i/$1") then
+        		myresult="$i/$1"
+			break
+		fi
+	done
+
+}
+
+
+# Search a tool in the user path
+# ------------------------------
+# This is only executed if myresult is still empty.
+# Synopsis:   search_tool_in_path tool
+# Result:     myresult contains the access path
+# 
+
+search_tool_in_path() {
+
+	if (test -n "$myresult") then return; fi
+	for i in $MYPATH; do 
+		if (test -x "$i/$1") then
+       	 		myresult="$i/$1"
+			break
+		fi
+	done
+
+}
+
+
+# Ask for the access path of a tool
+# ---------------------------------
+# This is only executed if myresult is still empty.
+# Synopsis:   ask_for_tool tool
+# Result:     myresult contains the access path
+# 
+
+ask_for_tool() {
+
+	if (test -n "$myresult") then return; fi
+	while (test ! -n "$myresult") do 
+       		echo "Command $1 not found."
+       		echo "Please enter the name (access path)"
+		echo "of the $1 command."
+       		read myresult 
+	done
+
+}
+
+
+# Ask for the access path of a program 
+# ------------------------------------
+# Different than tools, the name of the program is not standard.
+# Thus we ask which program should be used and give a default proposal.
+# Synopsis:   ask_for_program description default 
+# Result:     myresult contains the access path
+# 
+
+ask_for_program() {
+
+	mydefault="$2"
+	echo ""
+       	echo "Please enter the name (access path + options) "
+       	echo "of $1 [$mydefault]"
+	myresult=""
+       	read myresult 
+	if (test ! -n "$myresult") then
+		myresult="$mydefault"
+	fi
+	echo "$myresult found. I take it."
+	remove_blancs "$myresult"
+
+}
+
+
+# Look for one tool
+# -----------------
+# We look in the standard path, the user path, and finally, we ask
+# for the access path.
+# Synopsis:   search_a_tool toolname 
+# Result:     myresult contains the access path
+#
+
+search_a_tool() {
+
+	myresult=""
+	tmpa="$1"
+	search_tool_at_stdplaces "$tmpa"
+	search_tool_in_path      "$tmpa"
+	ask_for_tool		 "$tmpa"
+	echo "$myresult found. I take it."
+	if (test -n "$mysed") then
+		remove_blancs "$myresult"
+	fi
+
+}
+
+
+# Main routine to look for tools
+# ------------------------------
+# Check the places of all tools in the variable TOOLS.
+# Synopsis:   search_tools   (no arguments)
+# Result:     TOOLNAMES contains the list of access pathes of tools 
+#
+
+search_tools() {
+
+	if (test ! -n "$TOOLS") then return; fi
+
+	echo ""
+	for j in $TOOLS; do 
+		case "$j" in
+			cc|gcc) 	case "$ANSI" in
+						yes)  	check_ansi_cc;; 
+						*)	search_a_tool $j
+							mycclink="$myresult";; 
+					esac;;
+			*) 		search_a_tool $j;;
+		esac
+		TOOLNAMES="$TOOLNAMES $myresult"
+	done
+
+}
+
+
+# --------------------------------------------------------------
+
+# ========================
+# Ask for special programs
+# ========================
+#
+# We look for the programs (see variable PROGRAMS) at the standard places
+# (see variable STDPATH) and at the user path (imported variable PATH).
+# We take the found path as default, but ask for the real name,
+# because the user may wish to use another program instead.
+# Note: We do not check the answer.
+#
+
+# Look for one program 
+# --------------------
+# We look in the standard path, the user path, but only to find
+# the default. 
+# In any case, we ask for the access path.
+# Synopsis:   search_a_program programname description 
+# Result:     myresult contains the access path
+#
+
+search_a_program() {
+
+	mydescr=`echo "$2" | $mysed -e "s/_/ /g"`
+	toollist=`echo "$1" | $mysed -e "s/_/ /g"`
+	toollist_first $toollist
+	shift_toollist $toollist
+	myprog="$tool"
+	myopts="$toollist"
+
+	myresult=""
+	search_tool_at_stdplaces "$myprog"
+	search_tool_in_path      "$myprog"
+	if (test ! -n "$myresult") then 
+		mydefault="no_default" 
+	else
+		mydefault="$myresult $myopts"
+	fi
+
+	myresult="GSGSPACEGSG"
+	while (true) do 
+		case "$myresult" in
+			GSGSPACEGSG)  
+				ask_for_program "$mydescr" "$mydefault";;
+			no_default)  
+				echo "*** invalid input, try again ***"
+				ask_for_program "$mydescr" "$mydefault";;
+			*)	break;;
+		esac
+	done
+
+}
+
+
+# Main routine to look for programs 
+# ---------------------------------
+# Ask for the names (pathes) of all programs in the variable PROGRAMS.
+# Note: this should be called after search_tools.
+# Synopsis:   search_programs   (no arguments)
+# Result:     no result, but TOOLSUBSTITUTES and TOOLNAMES changed.
+#
+
+search_programs() {
+
+	if (test ! -n "$PROGRAMS") then return; fi
+
+	echo ""
+	descrlist="$PROGRAMDESCRIPTIONS"
+	substitutelist="$PROGRAMSUBSTITUTES"
+	for j in $PROGRAMS; do 
+		toollist="$descrlist"
+		toollist_first $toollist
+		shift_toollist $toollist
+		descrlist="$toollist"
+		descr="$tool"
+		toollist="$substitutelist"
+		toollist_first $toollist
+		shift_toollist $toollist
+		substitutelist="$toollist"
+		mysubstitute="$tool"
+		search_a_program "$j" "$descr"
+		add_substitute "$myresult" "$mysubstitute"  
+	done
+
+}
+
+
+# --------------------------------------------------------------
+
+# =====================================
+# Check for tools needed in this script
+# =====================================
+#
+# These tools are always checked and aliased to names according
+# to the following scheme:
+#     sed -> $mysed -> SEDNAME
+
+
+# Look for these tools
+# --------------------
+# The very first we do, is to look for the tools we need in
+# this configure script itself. Note: mycclink is set, if an
+# C compiler is needed.
+# Synopsis:   init_tools_needed_by_myself   (no arguments)
+# Result:     mysed, mysync, mytouch, myrm, etc.
+#
+
+init_tools_needed_by_myself() {
+
+        echo "If the following does not work, please move demotrue"
+        echo "to true and add the true command into your PATH."
+        echo "If it works, you will see the message: Okay, it works."
+        while (true) do
+                echo "Okay, it works"
+                break
+        done
+	mysed="";
+        echo "If the following does not work, you cannot use config."
+        echo "If it works, you will see the message: Okay, it works."
+        while (test ! -n "$mysed") do
+                echo "Okay, it works"
+                break
+        done
+
+	search_a_tool "sed"
+	mysed="$myresult"
+	MYPATH=`echo $PATH | $mysed -e "s/:/ /g"`
+	search_a_tool "sync"
+	mysync="$myresult"
+	search_a_tool "touch"
+	mytouch="$myresult"
+	search_a_tool "rm"
+	myrm="$myresult"
+	search_a_tool "chmod"
+	mychmod="$myresult"
+	search_a_tool "sleep"
+	mysleep="$myresult"
+	mycclink=""
+
+	mysystem="UNKNOWN"
+	myresult=""
+	search_tool_at_stdplaces "uname"
+	search_tool_in_path      "uname"
+	if (test -n "$myresult") then
+		mysystem=`$myresult`
+	fi
+
+	echo ""
+	echo "=========================================================="
+	echo "System is $mysystem"
+	echo "=========================================================="
+	echo ""
+
+	case "$mysystem" in
+		OSF1)	echo "Operating system seems okay.";;
+		AIX)	echo "Operating system seems okay.";;
+		SunOS)	echo "Operating system seems okay.";;
+		IRIX)	echo "Operating system seems okay.";;
+		HP-UX)	echo "Operating system seems okay.";;
+		Linux)	echo "Operating system seems okay.";;
+		ULTRIX)	echo "Operating system ULTRIX is only partially tested.";;
+		*)	echo "WARNING: operating system is unknown."
+			echo "I have never tested this script on $mysystem."
+			echo "Some of my guesses might be wrong.";;
+	esac
+
+}
+
+
+# Update TOOLSUBSTITUTES and TOOLNAMES
+# ------------------------------------
+# The substitute name (e.g. SEDNAME) is added to the TOOLSUBSTITUTES
+# and the access path (e.g. $mysed)  is added to the TOOLNAMES.
+# If no C compiler is needed, we also do not need a cclink.
+# Synopsis:   update_toolnames_needed_by_myself  (no arguments)
+# Result:     no result, but TOOLSUBSTITUES and TOOLNAMES changed.
+#
+
+update_toolnames_needed_by_myself() {
+
+	TOOLNAMES="$TOOLNAMES $mysed"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES SEDNAME"
+	TOOLNAMES="$TOOLNAMES $mysync"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES SYNCNAME"
+	TOOLNAMES="$TOOLNAMES $mytouch"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES TOUCHNAME"
+	TOOLNAMES="$TOOLNAMES $myrm"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES RMNAME"
+	TOOLNAMES="$TOOLNAMES $mychmod"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES CHMODNAME"
+	TOOLNAMES="$TOOLNAMES $mysleep"
+	TOOLSUBSTITUTES="$TOOLSUBSTITUTES SLEEPNAME"
+	if (test -n "$mycclink") then
+		TOOLNAMES="$TOOLNAMES $mycclink"
+		TOOLSUBSTITUTES="$TOOLSUBSTITUTES CCLINKNAME"
+	fi
+}
+
+
+# --------------------------------------------------------------
+
+# =====================================================
+# Print the list of substitutes and ask for configuring
+# =====================================================
+
+final_check_of_substitutes() {
+
+	echo ""
+	echo "==================================================="
+	echo "LIST OF SUBSTITUTES"
+	echo "-------------------"
+	toollist="$TOOLNAMES"
+	for i in $TOOLSUBSTITUTES; do 
+		toollist_first $toollist
+		shift_toollist $toollist
+		mytext=`echo "$tool" | $mysed -e "s/GSGSPACEGSG/ /g"`
+		echo "$i == $mytext"
+	done
+	echo "==================================================="
+
+	myresult=""
+	while (test ! -n "$myresult") do 
+		echo ""
+	  	echo "Please enter: Are these substitutes correct ?"
+	  	echo "1|y|Y|yes|Yes = yes      2|n|N|no|No = no"
+		read myresult
+		case "$myresult" in 
+			Y) 	myresult="yes";;
+			N) 	myresult="no";;
+			y) 	myresult="yes";;
+			n) 	myresult="no";;
+			Yes) 	myresult="yes";;
+			No) 	myresult="no";;
+			yes) 	myresult="yes";;
+			no) 	myresult="no";;
+			1) 	myresult="yes";;
+			2) 	myresult="no";;
+			*) 	echo "*** invalid input ***"
+				myresult="";;
+		esac
+	done
+
+	case "$myresult" in
+		yes)	echo "Okay, we continue ...";;
+		no)	echo "Configuration not done."
+			echo "Restart this shellscript to correct errors."
+			abort_unsuccessfully;;
+	esac
+}
+
+
+# --------------------------------------------------------------
+
+# ==========================================
+# Update the tools in the files to configure
+# ==========================================
+#
+# Configure one file
+# ------------------
+# We subsequently replace the words listed in TOOLSUBSTITUTES by
+# the access pathes we found in TOOLNAMES.
+# Synopsis:   config_one_file filename  
+# Result:     no result
+#
+
+config_one_file() {
+
+	tmpb="$1"
+	$myrm -f configure.1 configure.2
+	$myrm -f $tmpb
+	if (test ! -r $tmpb.tpl) then
+		echo "File $tmpb.tpl is not readable or does not exist."
+		abort_unsuccessfully
+	fi
+
+	toollist="$TOOLNAMES"
+	for i in $TOOLSUBSTITUTES; do 
+		toollist_first $toollist
+		shift_toollist $toollist
+		echo $i "GSGTRENNERGSG" $tool >> configure.1
+	done
+	$mysed -e "s/ //" configure.1 |\
+	$mysed -e "s/ //" |\
+	$mysed -e "s/\//\\\\\//g" |\
+	$mysed -e "s/GSGSPACEGSG/ /g" |\
+	$mysed -e "s/.*/GSGSTARTGSG&GSGENDGSG/" |\
+	$mysed -e "s/GSGSTARTGSG/s\//" |\
+	$mysed -e "s/GSGENDGSG/\//" |\
+	$mysed -e "s/GSGTRENNERGSG/\//" > configure.2
+
+	echo "s/.*/&GSGENDGSG/" >> configure.2
+	echo "s/[ 	]*GSGENDGSG/GSGENDGSG/g" >> configure.2
+	echo "s/GSGENDGSG//" >> configure.2
+	$mysed -f configure.2 $tmpb.tpl > $tmpb
+
+}
+
+
+# Configure all files in CONFIGFILES
+# ----------------------------------
+# Synopsis:   config_files  (no argument) 
+# Result:     no result
+#
+
+config_files() {
+
+	if (test ! -n "$CONFIGFILES") then return; fi
+
+# tMakefile
+
+	echo "Configure tMakefile"
+	$myrm -f configure.1 configure.2
+	$myrm -f tMakefile
+	if (test ! -r tMakefile.tpl) then
+		echo "File tMakefile.tpl is not readable or does not exist."
+		abort_unsuccessfully
+	fi
+
+	toollist="$TOOLNAMES"
+	for i in $TOOLSUBSTITUTES; do 
+		toollist_first $toollist
+		shift_toollist $toollist
+		echo $i "GSGTRENNERGSG" $tool >> configure.1
+	done
+	$mysed -e "s/ //" configure.1 |\
+	$mysed -e "s/ //" |\
+	$mysed -e "s/\//\\\\\//g" |\
+	$mysed -e "s/GSGSPACEGSG/ /g" |\
+	$mysed -e "s/.*/GSGSTARTGSG&GSGENDGSG/" |\
+	$mysed -e "s/GSGSTARTGSG/s\//" |\
+	$mysed -e "s/GSGENDGSG/\//" |\
+	$mysed -e "s/GSGTRENNERGSG/\//" > configure.2
+
+	echo "s/.*/&GSGENDGSG/" >> configure.2
+	echo "s/[ 	]*GSGENDGSG/GSGENDGSG/g" >> configure.2
+	echo "s/GSGENDGSG//" >> configure.2
+	$mysed -f configure.2 tMakefile.tpl > tMakefile
+
+# src/globals.h
+
+	echo "Configure src/globals.h"
+	$myrm -f configure.1 configure.2
+	$myrm -f src/globals.h
+	if (test ! -r src/globals.h.tpl) then
+		echo "File src/globals.h.tpl is not readable or does not exist."
+		abort_unsuccessfully
+	fi
+
+	toollist="$TOOLNAMES"
+	for i in $TOOLSUBSTITUTES; do 
+		toollist_first $toollist
+		shift_toollist $toollist
+		echo $i "GSGTRENNERGSG" $tool >> configure.1
+	done
+	$mysed -e "s/ //" configure.1 |\
+	$mysed -e "s/ //" |\
+	$mysed -e "s/\//\\\\\//g" |\
+	$mysed -e "s/GSGSPACEGSG/ /g" |\
+	$mysed -e "s/.*/GSGSTARTGSG&GSGENDGSG/" |\
+	$mysed -e "s/GSGSTARTGSG/s\//" |\
+	$mysed -e "s/GSGENDGSG/\//" |\
+	$mysed -e "s/GSGTRENNERGSG/\//" > configure.2
+
+	echo "s/.*/&GSGENDGSG/" >> configure.2
+	echo "s/[ 	]*GSGENDGSG/GSGENDGSG/g" >> configure.2
+	echo "s/GSGENDGSG//" >> configure.2
+	$mysed -f configure.2 src/globals.h.tpl > src/globals.h
+
+# demo/demo.csh
+
+	echo "Configure demo/demo.csh"
+	$myrm -f configure.1 configure.2
+	$myrm -f demo/demo.csh
+	if (test ! -r demo/demo.csh.tpl) then
+		echo "File demo/demo.csh.tpl is not readable or does not exist."
+		abort_unsuccessfully
+	fi
+
+	toollist="$TOOLNAMES"
+	for i in $TOOLSUBSTITUTES; do 
+		toollist_first $toollist
+		shift_toollist $toollist
+		echo $i "GSGTRENNERGSG" $tool >> configure.1
+	done
+	$mysed -e "s/ //" configure.1 |\
+	$mysed -e "s/ //" |\
+	$mysed -e "s/\//\\\\\//g" |\
+	$mysed -e "s/GSGSPACEGSG/ /g" |\
+	$mysed -e "s/.*/GSGSTARTGSG&GSGENDGSG/" |\
+	$mysed -e "s/GSGSTARTGSG/s\//" |\
+	$mysed -e "s/GSGENDGSG/\//" |\
+	$mysed -e "s/GSGTRENNERGSG/\//" > configure.2
+
+	echo "s/.*/&GSGENDGSG/" >> configure.2
+	echo "s/[ 	]*GSGENDGSG/GSGENDGSG/g" >> configure.2
+	echo "s/GSGENDGSG//" >> configure.2
+	$mysed -f configure.2 demo/demo.csh.tpl > demo/demo.csh
+
+
+}
+
+
+# --------------------------------------------------------------
+
+# ======================================
+# Touch the files in a file to configure
+# ======================================
+#
+# We touch all files in TOUCHFILES in exactly this order, 
+# synchronize the file system and wait for 3 seconds in between.
+# This is needed for the make time stamp algorithm
+# to avoid to generate files that are already there.
+# Synopsis:   touch_files   (no argument)  
+# Result:     no result
+#
+
+
+touch_files() {
+
+	if (test ! -n "$TOUCHFILES") then return; fi
+
+	for j in $TOUCHFILES; do 
+		echo "Touch $j ..."
+		if (test -r $j) then
+			$mychmod 644 $j
+			$mysync
+			$mytouch $j
+			$mysync
+			$mysync
+			$mysleep 3
+		else
+			echo "WARNING: File $j is not readable or does not exist."
+			echo "         This may be fatal or not. Try to make."
+			echo "         If make does not work, files or generators"
+			echo "         are missing. Then it is fatal."
+		fi
+	done
+
+}
+
+# --------------------------------------------------------------
+
+# ====================================
+# Check anything around the C compiler
+# ====================================
+
+# Look for the gcc first. If gcc is available, we set mycc and mycclink
+# to gcc, and set ansidef to #define ANSI_C.
+# If gcc is not available, we ask for cc and cclink, and ask wether
+# it is ANSI. If NOANSI="no", we give a warning, if a nonansi compiler
+# is selected. 
+# Synopsis:   check_ansi_cc   (no argument)  
+# Result:     myresult contains the access path of cc
+#             mycclink contains the access path of the cc linker
+#	      ansidef  contains the #define for ANSI_C
+#	      gccavail is "yes" if gcc is available 
+#
+
+check_ansi_cc() {
+
+	echo ""
+	echo "For the case, that you do not have gcc, my compiler estimate:"
+	case "$mysystem" in
+		OSF1)	echo "On OSF systems, cc should be an ANSI C compiler.";;
+		AIX)	echo "On AIX systems, cc is an ANSI C compiler.";;
+		IRIX)	echo "On IRIX systems, cc is an ANSI C compiler.";;
+		HP-UX)  echo "On HP-UX systems, c89 is an ANSI C compiler,"
+			echo "while, cc is a K&R C compiler.";;
+		SunOS)	echo "On Suns, cc is probably a K&R C compiler.";;
+		ULTRIX)	echo "On ULTRIX, preferably gcc should be used.";;
+		*)	echo "I do not know it.";;
+	esac
+	myresult=""
+	search_tool_at_stdplaces "gcc"
+	search_tool_in_path      "gcc"
+	if (test -n "$myresult") then 
+		gccavail="yes"
+		echo "Gnu gcc ($myresult) is available, thus we use it."
+	else
+		gccavail="no"
+		search_tool_at_stdplaces "cc"
+		search_tool_in_path      "cc"
+		ask_for_program "the C compiler (preferably ANSI C)" \
+				"$myresult"
+	fi
+	mycc="$myresult" 
+
+	case "$gccavail" in 
+		yes) 	mycclink="$mycc"
+			echo "Gnu gcc ($myresult) is available, thus we link with gcc.";;
+		no)	echo ""
+			ask_for_program "the C object file linker" "$mycc"
+			mycclink="$myresult";;
+	esac
+
+	ansidef=""
+	case "$gccavail" in
+		yes) 	echo "Okay, it is ANSI C."
+			ansidef="#define ANSI_C";;
+	esac
+
+	while (test ! -n "$ansidef") do 
+		echo ""
+	  	echo "Please select: Is the C compiler ANSI C ?"
+	  	echo "1 : ANSI C      2 : traditional K&R C"
+		read myresult
+		case "$myresult" in 
+			1) 	ansidef="#define ANSI_C";;
+			2) 	ansidef="#undef  ANSI_C";;
+			*) 	echo "*** invalid input ***";;
+		esac
+	done
+
+	case "$NOANSI" in
+		no)	case "$ansidef" in
+				"#undef  ANSI_C") 	
+					echo ""
+					echo "WARNING: We need an ANSI C compiler"
+					echo "         to compile this software.";;
+			esac;;
+	esac
+
+	myresult="$mycc"
+}
+
+
+# --------------------------------------------------------------
+
+# ==========================================================
+# Other standard questions about names, pathes, manual pages 
+# ==========================================================
+#
+# The following is a collection of standard questions about
+# pathes. They can be used in the main program, if necessary.
+#
+
+# Question about something
+# ------------------------
+# We ask for something, described by an abbreviation. 
+# If we get no answer, we set a default answer.
+# The description should be printed before this procedure.
+# Synopsis:   ask_for_something abbreviation default 
+# Result:     myresult contains the answer 
+#
+
+ask_for_something() {
+
+	mydefault="$2"
+	myresult=""
+       	read myresult
+	if (test ! -n "$myresult") then
+		myresult="$mydefault"
+	fi
+	echo "The $1 is $myresult."
+	remove_blancs "$myresult"
+}
+
+
+# Question about the name of a generated program
+# ----------------------------------------------
+# We ask for the name of a program that is generated by make.
+# The management of the result is up to the user.
+# We allow two lines of description. If these are not used, 
+# the description nodesc.
+# Synopsis:   ask_for_name abbreviation descr1 descr2 default 
+# Result:     myresult contains the name 
+# 
+
+ask_for_name() {
+
+	mydefault="$4"
+	echo ""
+	echo "How the $1 should be called ..."
+
+	case "$2" in
+		nodesc)		mydummy="";;
+		*)		echo "$2";;
+	esac
+	case "$3" in
+		nodesc)		mydummy="";;
+		*)		echo "$3";;
+	esac
+       	echo "Please enter the name of the $1 [$mydefault]"
+	ask_for_something "$1" "$mydefault"
+
+}
+
+
+# Question about the binary path 
+# ------------------------------
+# We ask for the binary path, i.e. where the executables 
+# are installed.
+# Later, we add the substitute name BINPATHNAME and the 
+# binary path into the substitute list.
+# Synopsis:   ask_for_binpath default 
+# Result:     mybinpath contains the binary path 
+# 
+
+ask_for_binpath() {
+
+	mydefault="$1"
+	echo ""
+	echo "Where the binaries go ..."
+	echo "Please enter the directory where the executables"
+	echo "should be placed [$mydefault]:"
+	ask_for_something "binary path" "$mydefault"
+	mybinpath="$myresult"
+
+}
+
+
+# Question about the library path 
+# -------------------------------
+# We ask for the library path, i.e. where the library files 
+# are installed.
+# Later, we add the substitute name LIBPATHNAME and the 
+# library path into the substitute list.
+# Synopsis:   ask_for_libpath default 
+# Result:     mylibpath contains the library path 
+# 
+
+ask_for_libpath() {
+
+	mydefault="$1"
+	echo ""
+	echo "Where the libraries go ..."
+	echo "Please enter the directory where the library files"
+	echo "should be placed [$mydefault]:"
+	ask_for_something "library path" "$mydefault"
+	mylibpath="$myresult"
+
+}
+
+
+# Question about the manual path 
+# ------------------------------
+# We ask for the manual path, i.e. where the manual pages 
+# are installed.
+# Later, we add the substitute name MANPATHNAME and the 
+# manual path into the substitute list.
+# Synopsis:   ask_for_manpath default 
+# Result:     mymanpath contains the manual path 
+# 
+
+ask_for_manpath() {
+
+	mydefault="$1"
+	echo ""
+	echo "Where the manual pages go ..."
+	echo "Please enter the directory where the manual pages"
+	echo "should be placed [$mydefault]:"
+	ask_for_something "manual path" "$mydefault"
+	mymanpath="$myresult"
+
+}
+
+
+# Question about the manual page extension 
+# ----------------------------------------
+# We ask for the manual page extension, i.e. how the manual page
+# should be called.
+# Later, we add the substitute name MANEXTNAME and the 
+# manual path extension into the substitute list.
+# Synopsis:   ask_for_manext default 
+# Result:     mymanext contains the manual page extension 
+# 
+
+ask_for_manext() {
+
+	mydefault="$1"
+	echo ""
+	echo "What the manual page extension is ..."
+	echo "Please enter the extension of the manual pages [$mydefault]:"
+	ask_for_something "manual page extension" "$mydefault"
+	mymanext="$myresult"
+
+}
+
+
+# --------------------------------------------------------------
+
+# ================================================
+# Standard questions about flags of the C compiler 
+# ================================================
+
+# Question about the C flags used to compile
+# ------------------------------------------
+# We ask for the C flags used to compile to object files.
+# Later, we add the substitute name CFLAGSNAME and the 
+# cflags into the substitute list.
+# Synopsis:   ask_for_cflags  (no argument) 
+# Result:     mycflags contains the C compiler options 
+
+ask_for_cflags() {
+
+	case "$mysystem" in
+	   ULTRIX)   	mydefault="-c -O -DULTRIX";;
+	   OSF1)   	mydefault="-c -O -DOSF";;
+	   AIX)   	mydefault="-c -O -DAIXCC -DAIX";;
+	   IRIX)	mydefault="-c -O -D__STDC__";;
+	   HP-UX)	mydefault="-c -O -DHPUX -D_INCLUDE_POSIX_SOURCE";;
+	   *)		mydefault="-c -O";;
+	esac
+	case "$gccavail" in
+		yes)	mydefault="-c -O -finline-functions -pipe";;
+	esac
+	echo ""
+	echo "Which C compile flags do we use ..."
+	case "$mysystem" in
+	   ULTRIX)
+	     echo "On ULTRIX systems, please add -DULTRIX"
+	     echo "to the list of flags.";;
+	   HP-UX)
+	     echo "On HP-UX systems, please add -DHPUX for the c89,"
+	     echo "and the cc compiler, but not for the gcc, and add"
+	     echo "-D_INCLUDE_POSIX_SOURCE to the list of flags.";;
+	   OSF1)
+	     echo "On OSF1 compilers please add -DOSF to the"
+	     echo "list of flags.";;
+	   AIX)
+	     echo "On IBM AIX XL C compiler (ANSI C)"
+	     echo "please add -DAIXCC to the list of flags."
+	     echo "For Gnu gcc, it is not necessary."
+	     echo "For both, add -DAIX to the list of flags.";;
+	   IRIX)
+	     echo "On Silicon Graphics MIPS ucode C compiler (ANSI C)"
+	     echo "please add -D__STDC__ to the list of flags."
+	     echo "For Gnu gcc, it is not necessary.";;
+	   *)
+	     echo "For ANSI C compilers, the flag -D__STDC__ might be needed";;
+	esac
+	echo "Please enter the flags used to compile"
+	echo "to object files."
+	echo "On very small machines, please avoid expensive optimization"
+	echo "flags like inlining (-finline-functions)."
+	echo "Enter a dot for no flags [$mydefault]:"
+	ask_for_something "flags used to compile" "$mydefault"
+	case "$myresult" in
+		".")	myresult="GSGSPACEGSG";;
+	esac
+	mycflags="$myresult"
+
+}
+
+
+# Question about the C link flags used to link objects together 
+# -------------------------------------------------------------
+# We ask for the C flags used to link the object files into an
+# executable binary.
+# Later, we add the substitute name CLINKFLAGSNAME and the 
+# clinkflags into the substitute list.
+# Synopsis:   ask_for_clinkflags  (no argument) 
+# Result:     myclinkflags contains the C compiler options 
+
+ask_for_clinkflags() {
+
+	case "$gccavail" in
+		yes)	mydefault="-o";;
+		no)	mydefault="-o";;
+	esac
+	echo ""
+	echo "Which C linker flags do we use ..."
+	echo "Please enter the flags used to link object files"
+	echo "into an executable. Note: the first argument"
+	echo "after these flags will be the name of the executable"
+	echo "we want to produce."
+	echo "Enter a dot for no flags [$mydefault]:"
+	ask_for_something "flags used to link" "$mydefault"
+	case "$myresult" in
+		".")	myresult="GSGSPACEGSG";;
+	esac
+	myclinkflags="$myresult"
+
+}
+
+
+# Question about the INCLUDE path used to compile
+# -----------------------------------------------
+# We ask for the INCLUDE path used to compile to object files.
+# Later, we add the substitute name ADDINCLUDEPATHNAME and the 
+# cincludes flags into the substitute list.
+# Synopsis:   ask_for_includepath  (no argument) 
+# Result:     mycincludes contains the C compiler options 
+
+ask_for_includepath() {
+
+	mydefault="-I/usr/local/include/"
+	echo ""
+	echo "Which additional INCLUDE path do we use ..."
+	case "$mywindowsystem" in 
+	  "#define X11")
+	     echo "If you are not sure, then look for one of the"
+	     echo "files Xlib.h, Xproto.h, or Xutil.h for X11."
+	     echo "For instance, if you find /usr/X11/include/X11/Xlib.h"
+	     echo "then please use -I/usr/X11/include/";;
+	  "#define SUNVIEW")
+	     echo "If you are not sure, then look for the file sunview.h."
+	     echo "For instance, if you find /usr/mumpf/suntool/sunview.h"
+	     echo "then please use -I/usr/mumpf/";;
+	esac
+	echo ""
+	echo "Please enter the additional include paths flags"
+	echo "needed to compile."
+	echo "Enter a dot for no flags [$mydefault]:"
+	ask_for_something "include path flags used to compile" "$mydefault"
+	case "$myresult" in
+		".")	myresult="GSGSPACEGSG";;
+	esac
+	mycincludes="$myresult"
+
+}
+
+
+# Question about the library path used to link 
+# --------------------------------------------
+# We ask for the library path used to link the object files
+# into a binary.
+# Later, we add the substitute name ADDLIBPATHNAME and the 
+# libpath flags into the substitute list.
+# Synopsis:   ask_for_addlibpath  (no argument) 
+# Result:     myclibpath contains the C linker options 
+
+ask_for_addlibpath() {
+
+	mydefault="-L/usr/local/lib/"
+	echo ""
+	echo "Where are the libraries we use ..."
+	case "$mywindowsystem" in 
+	  "#define X11")
+	     echo "If you are not sure, then look for one of the"
+	     echo "files libX11.a, libX11.so.<version_number>, "
+	     echo "or libXext.a etc."
+	     echo "For instance, if you find /usr/local/X11/lib/X11/libX11.a"
+	     echo "then please use -L/usr/local/X11/lib/";;
+	  "#define SUNVIEW")
+	     echo "If you are not sure, then look for one of the"
+	     echo "Sunview files libsuntool.a, libsunwindow.a"
+	     echo "or libsuntool.so.<version_number>, etc."
+	     echo "For instance, if you find /usr/mumpf/suntool/libsuntool.a"
+	     echo "then please use -L/usr/mumpf/";;
+	esac
+	echo ""
+	echo "Please enter the additional library paths flags"
+	echo "needed to compile and link."
+	echo "Enter a dot for no flags [$mydefault]:"
+	ask_for_something "library path flags used to link" "$mydefault"
+	case "$myresult" in
+		".")	myresult="GSGSPACEGSG";;
+	esac
+	myclibpath="$myresult"
+
+}
+
+
+# Question about the libraries used to link 
+# -----------------------------------------
+# We ask for the libraries used to link the object files
+# into a binary.
+# Later, we add the substitute name ADDLIBSNAME and the 
+# libraryflags into the substitute list.
+# Synopsis:   ask_for_libs  defaultlibs
+# Result:     myclibs contains the C libraries as options 
+
+ask_for_libs() {
+
+	if (test -n "$1") then
+		mydefault="$1"
+	else
+		mydefault="-lm"
+	fi
+	echo ""
+	echo "Which libraries do we need ..."
+	case "$mywindowsystem" in 
+	  "#define X11")
+		mydefault="-lXext -lX11 -lm";;
+	  "#define SUNVIEW")
+		mydefault="-lsuntool -lsunwindow -lpixrect -lm";;
+	esac
+	echo ""
+	echo "Please enter the flags for additional libraries"
+	echo "needed e.g. for X11, Sunview, Mathematics."
+	echo "Enter a dot for no flags [$mydefault]:"
+	ask_for_something "flags for additional libraries" "$mydefault"
+	case "$myresult" in
+		".")	myresult="GSGSPACEGSG";;
+	esac
+	myclibs="$myresult"
+
+}
+
+
+
+# --------------------------------------------------------------
+
+# ==============================================
+# Standard questions about very special programs 
+# ==============================================
+
+# Question about the Makedepend 
+# -----------------------------
+# We ask for the Makedepend program.
+# Later, we add the substitute name MAKEDEPENDNAME and the 
+# makedepend into the substitute list.
+# Synopsis:   ask_for_makedepend  (no argument) 
+# Result:     mymakedepend contains path of the make depend tool 
+
+ask_for_makedepend() {
+
+	myresult=""
+	search_tool_at_stdplaces "makedepend"
+	search_tool_in_path      "makedepend"
+	if (test ! -n "$myresult") then 
+		mydefault="no_default"
+	else
+		mydefault="$myresult"
+	fi
+	echo ""
+	echo "Which make depend do we use ..."
+	echo "To execute make depend, we need a command makedepend"
+	echo "that understands the -f option."
+	echo "Example: MakeDepend -f myMakefile   creates all dependences"
+	echo "between the sources listed in the makefile called myMakefile."
+	echo "If no command makedepend is available, please enter a dummy."
+	echo "REMARK: To execute make depend is normally not necessary."
+	echo "        Thus it is not fatal, if make depend is not available."
+	echo ""
+       	echo "Please enter the name (access path) and options"
+       	echo "of a command that creates the dependences of a makefile."
+	echo "NOTE: The option -f will be added automatically, thus do not"
+	echo "      add this option here [$mydefault]:"
+	myresult=""
+       	read myresult
+	if (test ! -n "$myresult") then
+		myresult="$mydefault"
+	fi
+	echo "$myresult found. I take it."
+	remove_blancs "$myresult"
+
+        if (test -n "$myresult") then
+		mytext=`echo "$myresult" | $mysed -e "s/GSGSPACEGSG/ /g"`
+                toollist_first $mytext
+                if (test ! -x "$tool") then 
+			echo "Correction: $mytext not found."
+			echo "Note: makedepend is not available."
+			myresult=""
+		else 
+			echo "Really: $mytext found. I take it."
+		fi
+        fi
+	mymakedepend="$myresult"
+
+}
+
+
+
+# Question about an optional executable
+# -------------------------------------
+# We ask for an optional executable. First, we check whether
+# the executable exists with some default name. Then we ask
+# for the name. At last we check if the entered executable exists.
+# Synopsis:   ask_for_optional_executable  name_with_flags description
+# Result:     myresult contains the path and options of the executable 
+#	      Note: myresult may be empty, if the executable does not
+#             exists.
+#
+
+ask_for_optional_executable() {
+
+	tmpc="$1"
+	tmpd="$2"
+	toollist_first $1
+	shift_toollist $tmpc 
+	myprog="$tool"
+	myopts="$toollist"
+
+	myresult=""
+	search_tool_at_stdplaces "$myprog"
+	search_tool_in_path      "$myprog"
+	if (test ! -n "$myresult") then 
+		mydefault="no_default"
+	else
+		mydefault="$myresult $myopts"
+	fi
+
+	shift
+        ask_for_program "$tmpd (optional)" "$mydefault"
+        if (test -n "$myresult") then
+		mytext=`echo "$myresult" | $mysed -e "s/GSGSPACEGSG/ /g"`
+                toollist_first $mytext
+                if (test ! -x "$tool") then 
+			echo "Correction: $mytext not found."
+			echo "Note: $tmpd is not available."
+			myresult=""
+		else 
+			echo "Really: $mytext found. I take it."
+		fi
+        fi
+
+}
+
+
+# Question about bison 
+# --------------------
+# We ask for the optional parser generator bison. 
+# Later, we add the substitute name BISONNAME and the 
+# bison into the substitute list.
+# Synopsis:   ask_for_bison  (no arguments) 
+# Result:     mybison contains the path and options of bison. 
+#	      Note: mybison may be empty, if bison does not
+#             exists.
+#
+
+ask_for_bison() {
+
+	ask_for_optional_executable "bison -ydt" "the parser generator bison"
+        mybison="$myresult"
+
+}
+
+
+# Question about flex 
+# -------------------
+# We ask for the optional scanner generator flex. 
+# Later, we add the substitute name FLEXNAME and the 
+# flex into the substitute list.
+# Synopsis:   ask_for_flex  (no arguments) 
+# Result:     myflex contains the path and options of flex. 
+#	      Note: myflex may be empty, if flex does not
+#             exists.
+#
+
+ask_for_flex() {
+
+	ask_for_optional_executable "flex" "the scanner generator flex"
+        myflex="$myresult"
+
+}
+
+
+# Question about install for directories 
+# --------------------------------------
+# We ask for the optional install command of directories. 
+# Later, we add the substitute name INSTALLDIRNAME and the 
+# install into the substitute list.
+# Synopsis:   ask_for_installdir  (no arguments) 
+# Result:     mydirinstall contains the path and options. 
+#
+
+ask_for_installdir() {
+
+	echo ""
+	echo "On some Unix System V, install for directories is "
+	echo "not necessary. We use the dummy command echo instead."
+	echo "In any case, it is a good idea if the directories"
+	echo "already exist where you want to install something."
+	echo "On SunOS, it depends whether it is Solaris or SunOS 4.1.3."
+	case "$mysystem" in
+	   HP-UX)
+	     installname="echo";;
+	   OSF1)
+	     installname="echo";;
+	   AIX)
+	     installname="echo";;
+	   IRIX)
+	     installname="echo";;
+	   ULTRIX)
+	     echo "On ULTRIX, try /usr/bin/install."
+	     installname="/usr/bin/install -d -m 755";;
+	   SunOS)
+	     echo "On Solaris, I hope you get /usr/ucb/install."
+	     echo "On SunOs 4.x, I hope you get /bin/install."
+	     installname="install -d -m 755";;
+	   *)
+	     installname="install -d -m 755";;
+	esac
+	
+	ask_for_optional_executable "$installname" \
+		"the installation program for directories"
+        mydirinstall="$myresult"
+	if (test ! -n "$mydirinstall") then
+		echo "WARNING: make install is not possible."
+	fi
+
+}
+
+
+# Question about install for binaries 
+# -----------------------------------
+# We ask for the optional install command of binaries. 
+# Later, we add the substitute name INSTALLBINNAME and the 
+# install into the substitute list.
+# Synopsis:   ask_for_installbin  (no arguments) 
+# Result:     mybininstall contains the path and options. 
+#
+
+ask_for_installbin() {
+
+	echo ""
+	myspcbnph=`echo "$mybinpath" | sed -e "s/.*/&GSGENDGSG/" |\
+			sed -e "s/\/GSGENDGSG/GSGENDGSG/" |\
+			sed -e "s/GSGENDGSG//" `
+	echo "Assume that you want to install an executable called dummy."
+	echo "Insert the command to install dummy."
+	echo "On Unix System V, use install -s -m 755 -f $myspcbnph dummy."
+	echo "On other systems, use install -s -m 755 dummy $myspcbnph/dummy."
+	echo "On SunOS, it depends whether it is Solaris or SunOS 4.1.3."
+	case "$mysystem" in
+	   AIX)
+	     echo "I hope to get /bin/install"
+	     installname="install -s -S -M 755 -f $myspcbnph dummy";;
+	   OSF1)
+	     echo "I hope to get /usr/bin/install"
+	     installname="install -g bin -u bin -S -m 755 -f $myspcbnph dummy";;
+	   HP-UX)
+	     installname="install -s -m 755 -f $myspcbnph dummy";;
+	   IRIX)
+	     installname="install -s -m 755 -f $myspcbnph dummy";;
+	   ULTRIX)
+	     echo "On ULTRIX, try /usr/bin/install."
+	     installname="/usr/bin/install -s -m 755 dummy $myspcbnph/dummy";;
+	   SunOS)
+	     echo "On Solaris, I hope you get /usr/ucb/install."
+	     echo "On SunOs 4.x, I hope you get /bin/install."
+	     installname="install -s -m 755 dummy $myspcbnph/dummy";;
+	   *)
+	     installname="install -s -m 755 dummy $myspcbnph/dummy";;
+	esac
+	
+	ask_for_optional_executable "$installname" \
+		"the installation program for executable binaries"
+        mybininstall="$myresult"
+	if (test ! -n "$myresult") then
+		echo "WARNING: make install is not possible."
+	fi
+
+}
+
+
+# Question about install for manual pages 
+# ---------------------------------------
+# We ask for the optional install command of manual pages. 
+# Later, we add the substitute name INSTALLMANNAME and the 
+# install into the substitute list.
+# Synopsis:   ask_for_installman  (no arguments) 
+# Result:     mymaninstall contains the path and options. 
+#
+
+ask_for_installman() {
+
+	echo ""
+	myspcbnph=`echo "$mymanpath" | sed -e "s/.*/&GSGENDGSG/" |\
+			sed -e "s/\/GSGENDGSG/GSGENDGSG/" |\
+			sed -e "s/GSGENDGSG//" `
+	echo "Assume that you want to install a manual page called dummy."
+	echo "Insert the command to install dummy."
+	echo "On Unix System V, use install -m 644 -f $myspcbnph dummy."
+	echo "On other systems, use install -m 644 dummy $myspcbnph/dummy."
+	echo "On SunOS, it depends whether it is Solaris or SunOS 4.1.3."
+	case "$mysystem" in
+	   AIX)
+	     echo "I hope to get /bin/install"
+	     installname="install -s -M 644 -f $myspcbnph dummy";;
+	   OSF1)
+	     echo "I hope to get /usr/bin/install"
+	     installname="install -g bin -u bin -m 644 -f $myspcbnph dummy";;
+	   HP-UX)
+	     installname="install -m 644 -f $myspcbnph dummy";;
+	   IRIX)
+	     installname="install -m 644 -f $myspcbnph dummy";;
+	   ULTRIX)
+	     echo "On ULTRIX, try /usr/bin/install."
+	     installname="/usr/bin/install -s -m 644 dummy $myspcbnph/dummy";;
+	   SunOS)
+	     echo "On Solaris, I hope you get /usr/ucb/install."
+	     echo "On SunOs 4.x, I hope you get /bin/install."
+	     installname="install -m 644 dummy $myspcbnph/dummy";;
+	   *)
+	     installname="install -m 644 dummy $myspcbnph/dummy";;
+	esac
+	
+	ask_for_optional_executable "$installname" \
+		"the installation program for manual pages"
+        mymaninstall="$myresult"
+	if (test ! -n "$myresult") then
+		echo "WARNING: make install is not possible."
+	fi
+
+}
+
+
+# Question about install for library files 
+# ----------------------------------------
+# We ask for the optional install command of libaray or data files. 
+# Later, we add the substitute name INSTALLLIBNAME and the 
+# install into the substitute list.
+# Synopsis:   ask_for_installlib  (no arguments) 
+# Result:     mylibinstall contains the path and options. 
+#
+
+ask_for_installlib() {
+
+	echo ""
+	myspcbnph=`echo "$mylibpath" | sed -e "s/.*/&GSGENDGSG/" |\
+			sed -e "s/\/GSGENDGSG/GSGENDGSG/" |\
+			sed -e "s/GSGENDGSG//" `
+	echo "Assume that you want to install a library file called dummy."
+	echo "Insert the command to install dummy."
+	echo "On Unix System V, use install -m 644 -f $myspcbnph dummy."
+	echo "On other systems, use install -m 644 dummy $myspcbnph/dummy."
+	echo "On SunOS, it depends whether it is Solaris or SunOS 4.1.3."
+	case "$mysystem" in
+	   AIX)
+	     echo "I hope to get /bin/install"
+	     installname="install -s -M 644 -f $myspcbnph dummy";;
+	   OSF1)
+	     echo "I hope to get /usr/bin/install"
+	     installname="install -g bin -u bin -m 644 -f $myspcbnph dummy";;
+	   IRIX)
+	     installname="install -m 644 -f $myspcbnph dummy";;
+	   HP-UX)
+	     installname="install -m 644 -f $myspcbnph dummy";;
+	   ULTRIX)
+	     echo "On ULTRIX, try /usr/bin/install."
+	     installname="/usr/bin/install -m 644 dummy $myspcbnph/dummy";;
+	   SunOS)
+	     echo "On Solaris, I hope you get /usr/ucb/install."
+	     echo "On SunOs 4.x, I hope you get /bin/install."
+	     installname="install -m 644 dummy $myspcbnph/dummy";;
+	   *)
+	     installname="install -m 644 dummy $myspcbnph/dummy";;
+	esac
+	
+	ask_for_optional_executable "$installname" \
+		"the installation program for library files"
+        mylibinstall="$myresult"
+	if (test ! -n "$myresult") then
+		echo "WARNING: make install is not possible."
+	fi
+
+}
+
+# --------------------------------------------------------------
+
+# ================================
+# Add the other substitute strings
+# ================================
+#
+# Synopsis:   add_other_substitutes   (no argument)  
+# Result:     no result, but TOOLSUBSTITUTES and TOOLNAMES changed.
+#
+
+add_other_subsitutes() {
+
+	if (test -n "$mymakedepend") then
+		add_substitute "$mymakedepend" MAKEDEPENDNAME
+	fi
+	if (test -n "$mybison") then
+		add_substitute "$mybison" BISONNAME
+	fi
+	if (test -n "$myflex") then
+		add_substitute "$myflex" FLEXNAME
+	fi
+	if (test -n "$ansidef") then
+		add_substitute "$ansidef" ANSINAME
+	fi
+	if (test -n "$mybinpath") then
+		add_substitute "$mybinpath" BINPATHNAME
+	fi
+	if (test -n "$mylibpath") then
+		add_substitute "$mylibpath" LIBPATHNAME
+	fi
+	if (test -n "$mymanpath") then
+		add_substitute "$mymanpath" MANPATHNAME
+	fi
+	if (test -n "$mymanext") then
+		add_substitute "$mymanext" MANEXTNAME
+	fi
+	if (test -n "$mycflags") then
+		add_substitute "$mycflags" CFLAGSNAME
+	fi
+	if (test -n "$myclinkflags") then
+		add_substitute "$myclinkflags" CLINKFLAGSNAME
+	fi
+	if (test -n "$mycincludes") then
+		add_substitute "$mycincludes" ADDINCLUDEPATHNAME
+	fi
+	if (test -n "$myclibpath") then
+		add_substitute "$myclibpath" ADDLIBPATHNAME
+	fi
+	if (test -n "$myclibs") then
+		add_substitute "$myclibs" ADDLIBSNAME
+	fi
+	if (test -n "$mydirinstall") then
+		add_substitute "$mydirinstall" INSTALLDIRNAME
+	fi
+	if (test -n "$mybininstall") then
+		add_substitute "$mybininstall" INSTALLBINNAME
+	fi
+	if (test -n "$mymaninstall") then
+		add_substitute "$mymaninstall" INSTALLMANNAME
+	fi
+	if (test -n "$mylibinstall") then
+		add_substitute "$mylibinstall" INSTALLLIBNAME
+	fi
+
+}
+
+# --------------------------------------------------------------
+
+# Check whether a documentation file is there
+# -------------------------------------------
+# Synopsis:   check_docfile file
+# Result:     no result, directory stamps are created, if needed.
+#
+
+check_docfile () {
+
+	if (test -r "doc/$1") then
+		echo "doc/$1 is there. Okay. "
+	else
+		echo "doc/$1 is not there."
+		echo "We cannot generate the documentation."
+		$mytouch stamp-doc
+		$mytouch stamp-shortdoc
+	fi	
+}
+
+
+# Touch a file
+# ------------
+# Synopsis:   touch_a_file file 
+# Result:     no result
+#
+touch_a_file() {
+
+	echo "Touch $1 ..."
+	if (test -r $1) then
+		$mychmod 644 $1
+		$mysync
+		$mytouch $1
+		$mysync
+		$mysync
+	fi
+}
+
+# --------------------------------------------------------------
+
+# ============
+# Main Program
+# ============
+
+
+echo "Configuring ..."
+
+
+# First, initialize myself
+# ------------------------
+
+init_tools_needed_by_myself
+TOOLNAMES=""
+
+
+# Ask for VCG name
+# ----------------
+
+ask_for_name "VCG tool" \
+	"For the Sunview version I use the name vcg." \
+	"For the X11 version I prefer the name xvcg." \
+	"xvcg"
+myvcg="$myresult"
+
+
+# Different pathes and extensions
+# -------------------------------
+
+ask_for_binpath "/usr/local/bin/"
+# ask_for_libpath "/usr/local/lib/"
+ask_for_manpath "/usr/local/man/manl/"
+ask_for_manext "l"
+
+
+# Special utilities
+# -----------------
+
+ask_for_makedepend
+
+# ask_for_bison
+# 
+# ask_for_flex
+
+
+# How to produce the documentation
+# --------------------------------
+
+# mydocfmt=""
+# while (test ! -n "$mydocfmt") do 
+# 	echo ""
+#  	echo "Please select which documentation do you want ?"
+#  	echo "If you do not have a PostScript printer, you must"
+#  	echo "select 2. However in this case, you need big-latex."
+#  	echo ""
+#  	echo "1 : full  documentation (includes PostScript pictures)"
+#  	echo "2 : short documentation (needs a big-latex, uses pictex)" 
+#	read myresult
+#	case "$myresult" in 
+#		1) 	mydocfmt="doc";;
+#		2) 	mydocfmt="shortdoc";;
+#		*) 	echo "*** invalid input ***";;
+#	esac
+# done
+#
+#case "$mydocfmt" in 
+#	doc)
+#		$mytouch stamp-shortdoc
+#		ask_for_optional_executable "latex" \
+#			"the LaTeX text processing system"
+#        	mylatex="$myresult"
+#		if (test ! -n "$mylatex") then
+#			echo "WARNING: latex is not available."
+#			echo "         We do not generate the documentation."
+#			$mytouch stamp-doc
+#			mydocfmt=""
+#		fi;;
+#	shortdoc)
+#		$mytouch stamp-doc
+#		ask_for_optional_executable "big-latex" \
+#			"the BIG LaTeX text processing system"
+#        	mybiglatex="$myresult"
+#		if (test ! -n "$mybiglatex") then
+#			echo "WARNING: big-latex is not available."
+#			echo "         We do not generate the documentation."
+#			$mytouch stamp-shortdoc	
+#			mydocfmt=""
+#		fi;;
+#esac
+#
+#case "$mydocfmt" in 
+#	doc)
+#		ask_for_optional_executable "fig2dev" \
+#			"the Figure to PostScript translator"
+#        	myfigtodev="$myresult"
+#		if (test ! -n "$myfigtodev") then
+#		   echo "WARNING: fig2dev is not available."
+#		   echo "         Hopefully, you have the picture ps files."
+#			check_docfile "foldpath.ps"
+#			check_docfile "foldtree.ps"
+#			check_docfile "hideedge.ps"
+#			check_docfile "hideedge.ps"
+#		fi
+#		ask_for_optional_executable "fig2ps2tex" \
+#			"the Figure and PostScript to TeX translator"
+#        	myfigtopstotex="$myresult"
+#		if (test ! -n "$myfigtopstotex") then
+#		   echo "WARNING: fig2ps2tex is not available."
+#		   echo "         Hopefully, you have the picture tex files."
+#			check_docfile "foldpath1.tex"
+#			check_docfile "foldtree1.tex"
+#			check_docfile "hideedge1.tex"
+#			check_docfile "hideedge1.tex"
+#		fi;; 
+#	shortdoc)
+#		ask_for_optional_executable "fig2dev" \
+#			"the Figure to PicTeX translator"
+#        	myfigtodev="$myresult"
+#		if (test ! -n "$myfigtodev") then
+#		   echo "WARNING: fig2dev is not available."
+#		   echo "         Hopefully, you have the picture tex files."
+#			check_docfile "foldpath2.tex"
+#			check_docfile "foldtree2.tex"
+#			check_docfile "hideedge2.tex"
+#			check_docfile "hideedge2.tex"
+#		fi;; 
+#esac
+
+
+# How to install the stuff
+# ------------------------
+
+ask_for_installdir
+ask_for_installbin
+ask_for_installman
+# ask_for_installlib
+
+
+
+# Now we look for tools and programs (see TOOLS and PROGRAMS)
+# -----------------------------------------------------------
+
+search_tools
+search_programs
+update_toolnames_needed_by_myself
+
+
+# Check the Window system
+# -----------------------
+
+#mywindowsystem=""
+mywindowsystem="#define X11"
+while (test ! -n "$mywindowsystem") do 
+	echo ""
+  	echo "Please select the window system."
+  	echo "1 : X11      2 : Sunview  "
+	read myresult
+	case "$myresult" in 
+		1) 	mywindowsystem="#define X11";;
+		2) 	mywindowsystem="#define SUNVIEW";;
+		*) 	echo "*** invalid input ***";;
+	esac
+done
+
+case "$mywindowsystem" in
+	"#define X11")
+	   echo ""
+	   echo "Which is the default X11 font ... "
+	   echo "Please insert the alias of the default X11 font"
+	   echo "you wish to use. Appropriate fonts should have"
+	   echo "a pointsize of 14-17. Please do not select a  "
+	   echo "too large font.  [-*-courier-*-*-*--14-*-*-*-*-*-*-*]:"
+	   ask_for_something "font alias" \
+		"-*-courier-*-*-*--14-*-*-*-*-*-*-*"
+	   myfontalias="$myresult"
+
+	   echo ""
+	   echo "Which solution do we take for the InputFocus problem ... "
+	   echo "Normally, X11 programs do not take aktively the input"
+	   echo "focus, but some window managers do not work correctly"
+	   echo "on setting the input focus. In this case, the keypresses"
+	   echo "are sometimes ignored by the VCG tool."
+	   echo "The solution is that the VCG tool grabs actively the input"
+	   echo "focus. But this solutions is only appropriate if you really"
+	   echo "want to input something when the VCG tool is called."
+	   echo "Do you wish the VCG tool to grab the input focus ?"
+	   echo "The conservative answer should be no."
+	   echo "Please enter yes or no to answer this [no]:"
+	   ask_for_something "input focussing" "no"
+	   case "$myresult" in 
+		n|no|No|N)	myinputgrab="#define NOINPUTFOCUS";;
+		*)		myinputgrab="#undef  NOINPUTFOCUS";;
+	   esac
+esac
+
+
+# Any flags for the C compiler
+# ----------------------------
+
+ask_for_cflags
+ask_for_clinkflags
+ask_for_includepath
+ask_for_libs "dummy"
+ask_for_addlibpath
+
+# Check memory organinsation of our tool 
+# --------------------------------------
+#
+echo ""
+echo "Memory organisation ..."
+echo ""
+echo "How structs must be aligned ..."
+echo "Structs containing chars, pointers, integers and"
+echo "floats must be aligned. Normally, alignment of 8"
+echo "is sufficient. It should be a power of 2."
+echo "Please enter the alignment required by the compiler [8]:"
+ask_for_something "alignment required by the compiler" "8"
+myalignment="$myresult"
+
+echo ""
+echo "How many bytes should be a block ..."
+echo "The memory management allocates blocks of this size,"
+echo "and dynamically increases the number of blocks, if more"
+echo "memory is necessary. Do not set the blocksize too small."
+echo "For instance the tool does not work with blockssize less"
+echo "than 1 KB. Propose for good performance: 256 KB minimal."
+echo "Please enter the number of bytes per block for the memory"
+echo "manager [1048576]:"
+ask_for_something "number of bytes per block for the memory manager" "1048576"
+myblocksize="$myresult"
+
+
+
+# Update the substitute list
+# ---------------------------
+
+echo "Wait"
+add_substitute "$myvcg" VCGNAME
+if (test -n "$mylatex") then
+	add_substitute "$mylatex" LATEXNAME
+fi
+if (test -n "$mybiglatex") then
+	add_substitute "$mybiglatex" BIGLTEXNAME
+fi
+if (test -n "$myfigtodev") then
+	add_substitute "$myfigtodev" FIGTODEVNAME
+fi
+if (test -n "$myfigtopstotex") then
+	add_substitute "$myfigtopstotex" FIGTOPSTOTEXNAME
+fi
+if (test -n "$mywindowsystem") then
+	add_substitute "$mywindowsystem" WINDOWSYSTEMNAME
+fi
+if (test -n "$myfontalias") then
+	add_substitute "$myfontalias" FONTALIASNAME
+fi
+if (test -n "$myinputgrab") then
+	add_substitute "$myinputgrab" INPUTFOCUSNAME
+fi
+add_substitute "$myalignment" ALIGNMENTNAME
+add_substitute "$myblocksize" BLOCKSIZENAME
+
+
+
+add_other_subsitutes
+
+
+# Final check and configuration
+# -----------------------------
+
+final_check_of_substitutes
+config_files
+touch_files
+case "$mydocfmt" in 
+	doc)
+		if (test ! -n "$myfigtodev") then
+			touch_a_file doc/foldpath.ps
+			touch_a_file doc/foldtree.ps
+			touch_a_file doc/hideedge.ps
+			touch_a_file doc/window.ps
+		fi
+		$mysleep 3
+		$mysync
+		$mysync
+		if (test ! -n "$myfigtopstotex") then
+			touch_a_file doc/foldpath1.tex
+			touch_a_file doc/foldtree1.tex
+			touch_a_file doc/hideedge1.tex
+			touch_a_file doc/window1.tex
+		fi;;
+	shortdoc)
+		if (test ! -n "$myfigtodev") then
+			touch_a_file doc/foldpath2.tex
+			touch_a_file doc/foldtree2.tex
+			touch_a_file doc/hideedge2.tex
+			touch_a_file doc/window2.tex
+		fi;;
+esac
+abort_successfully
+
+######################## NEVER REACHED ###########################
+
+

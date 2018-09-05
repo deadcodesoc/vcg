@@ -1,0 +1,46 @@
+/* SCCS-info %W% %E% */
+/* $Id: anchors.vcg,v 1.3 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { title: "ABC"
+height: 700
+width: 700
+x: 30
+y: 30
+color: lightyellow 
+infoname 1 : "Normal BackInfo"
+infoname 2 : "Special BackInfo"
+infoname 3 : "Other BackInfo"
+node: { title: "A" 
+color: lightgrey
+label: 
+"uMirUnitn
+01Field1:00
+02Field2:00
+10Field3:00
+09Field4:00
+30Field5:00"
+info1: 
+"uValuen: 25
+uTest1n: Test 
+uTest2n: Test"
+info2: 
+"uValuen: 26
+uTest3n: Test 
+uTest4n: Test"
+info3: 
+"uValuen: 27
+uTest5n: Test 
+uTest6n: Test"
+}
+node: { title: "B" color: lightcyan textcolor: darkgreen }
+node: { title: "C" color: lightcyan textcolor: darkgreen }
+node: { title: "D" color: lightcyan textcolor: darkgreen }
+node: { title: "E" color: lightcyan textcolor: darkgreen }
+node: { title: "F" color: lightcyan textcolor: darkgreen }
+edge: { sourcename: "A" targetname: "B" anchor: 2 color: blue }
+edge: { sourcename: "A" targetname: "C" anchor: 3 color: red  }
+edge: { sourcename: "A" targetname: "D" anchor: 4 color: darkgreen }
+edge: { sourcename: "A" targetname: "E" anchor: 5 color: darkgreen }
+edge: { sourcename: "A" targetname: "F" anchor: 6 color: orchid    }
+}
+

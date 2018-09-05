@@ -1,0 +1,271 @@
+/* SCCS-info %W% %E%  */
+/* $Id: tree2.vcg,v 1.2 1995/02/09 19:49:49 sander Exp $ */
+
+graph: { title: "SYNTAXTREE" 
+ 
+x: 450
+y: 30
+width:  550
+height: 500
+color: lightcyan
+
+
+stretch: 4
+shrink: 10
+layoutalgorithm: tree 
+
+
+node: { color: black textcolor: white title:"503160"
+label:"Identifier
+tst3 (0)"
+}
+node: { title:"T0"
+label:"no type"
+}
+nearedge: { sourcename: "503160" targetname: "T0" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503240"
+label:"Identifier
+x (0)"
+}
+node: { title:"T1"
+label:"no type"
+}
+nearedge: { sourcename: "503240" targetname: "T1" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"502952"
+label:"INTEGER"
+}
+node: { title:"T2"
+label:"int"
+}
+nearedge: { sourcename: "502952" targetname: "T2" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503304"
+label:"VarDecl"
+}
+edge: { thickness: 6 color: red sourcename: "503304" targetname: "503240" }
+edge: { thickness: 6 color: red sourcename: "503304" targetname: "502952" }
+node: { title:"T3"
+label:"int"
+}
+nearedge: { sourcename: "503304" targetname: "T3" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503368"
+label:"Decl"
+}
+edge: { thickness: 6 color: red sourcename: "503368" targetname: "503304" }
+node: { title:"T4"
+label:"no type"
+}
+nearedge: { sourcename: "503368" targetname: "T4" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503448"
+label:"Identifier
+b (0)"
+}
+node: { title:"T5"
+label:"no type"
+}
+nearedge: { sourcename: "503448" targetname: "T5" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503512"
+label:"LabDecl"
+}
+edge: { thickness: 6 color: red sourcename: "503512" targetname: "503448" }
+node: { title:"T6"
+label:"label"
+}
+nearedge: { sourcename: "503512" targetname: "T6" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503576"
+label:"Decl"
+}
+edge: { thickness: 6 color: red sourcename: "503576" targetname: "503368" }
+edge: { thickness: 6 color: red sourcename: "503576" targetname: "503512" }
+node: { title:"T7"
+label:"no type"
+}
+nearedge: { sourcename: "503576" targetname: "T7" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504216"
+label:"Identifier
+b (0)"
+}
+node: { title:"T8"
+label:"label"
+}
+nearedge: { sourcename: "504216" targetname: "T8" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504280"
+label:"Identifier
+x (0)"
+}
+node: { title:"T9"
+label:"int"
+}
+nearedge: { sourcename: "504280" targetname: "T9" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504344"
+label:"Identifier
+x (0)"
+}
+node: { title:"T10"
+label:"int"
+}
+nearedge: { sourcename: "504344" targetname: "T10" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504408"
+label:"Int
+1"
+}
+node: { title:"T11"
+label:"int"
+}
+nearedge: { sourcename: "504408" targetname: "T11" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504472"
+label:"Binop
+  -"
+}
+edge: { thickness: 6 color: red sourcename: "504472" targetname: "504344" }
+edge: { thickness: 6 color: red sourcename: "504472" targetname: "504408" }
+node: { title:"T12"
+label:"int"
+}
+nearedge: { sourcename: "504472" targetname: "T12" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504536"
+label:"Assign"
+}
+edge: { thickness: 6 color: red sourcename: "504536" targetname: "504280" }
+edge: { thickness: 6 color: red sourcename: "504536" targetname: "504472" }
+node: { title:"T13"
+label:"no type"
+}
+nearedge: { sourcename: "504536" targetname: "T13" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504600"
+label:"LabStat"
+}
+edge: { thickness: 6 color: red sourcename: "504600" targetname: "504216" }
+edge: { thickness: 6 color: red sourcename: "504600" targetname: "504536" }
+node: { title:"T14"
+label:"no type"
+}
+nearedge: { sourcename: "504600" targetname: "T14" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504664"
+label:"StatList"
+}
+edge: { thickness: 6 color: red sourcename: "504664" targetname: "504600" }
+node: { title:"T15"
+label:"no type"
+}
+nearedge: { sourcename: "504664" targetname: "T15" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503960"
+label:"Identifier
+b (0)"
+}
+node: { title:"T16"
+label:"label"
+}
+nearedge: { sourcename: "503960" targetname: "T16" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504024"
+label:"Goto"
+}
+edge: { thickness: 6 color: red sourcename: "504024" targetname: "503960" }
+node: { title:"T17"
+label:"no type"
+}
+nearedge: { sourcename: "504024" targetname: "T17" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504088"
+label:"Stat"
+}
+edge: { thickness: 6 color: red sourcename: "504088" targetname: "504024" }
+node: { title:"T18"
+label:"no type"
+}
+nearedge: { sourcename: "504088" targetname: "T18" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504152"
+label:"StatList"
+}
+edge: { thickness: 6 color: red sourcename: "504152" targetname: "504664" }
+edge: { thickness: 6 color: red sourcename: "504152" targetname: "504088" }
+node: { title:"T19"
+label:"no type"
+}
+nearedge: { sourcename: "504152" targetname: "T19" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503640"
+label:"Identifier
+x (0)"
+}
+node: { title:"T20"
+label:"int"
+}
+nearedge: { sourcename: "503640" targetname: "T20" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503704"
+label:"Int
+1"
+}
+node: { title:"T21"
+label:"int"
+}
+nearedge: { sourcename: "503704" targetname: "T21" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503768"
+label:"Assign"
+}
+edge: { thickness: 6 color: red sourcename: "503768" targetname: "503640" }
+edge: { thickness: 6 color: red sourcename: "503768" targetname: "503704" }
+node: { title:"T22"
+label:"no type"
+}
+nearedge: { sourcename: "503768" targetname: "T22" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503832"
+label:"Stat"
+}
+edge: { thickness: 6 color: red sourcename: "503832" targetname: "503768" }
+node: { title:"T23"
+label:"no type"
+}
+nearedge: { sourcename: "503832" targetname: "T23" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"503896"
+label:"StatList"
+}
+edge: { thickness: 6 color: red sourcename: "503896" targetname: "504152" }
+edge: { thickness: 6 color: red sourcename: "503896" targetname: "503832" }
+node: { title:"T24"
+label:"no type"
+}
+nearedge: { sourcename: "503896" targetname: "T24" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504728"
+label:"Block"
+}
+edge: { thickness: 6 color: red sourcename: "504728" targetname: "503576" }
+edge: { thickness: 6 color: red sourcename: "504728" targetname: "503896" }
+node: { title:"T25"
+label:"no type"
+}
+nearedge: { sourcename: "504728" targetname: "T25" 
+ color: blue thickness: 6  }
+node: { color: black textcolor: white title:"504792"
+label:"Program"
+}
+edge: { thickness: 6 color: red sourcename: "504792" targetname: "503160" }
+edge: { thickness: 6 color: red sourcename: "504792" targetname: "504728" }
+node: { title:"T26"
+label:"no type"
+}
+nearedge: { sourcename: "504792" targetname: "T26" 
+ color: blue thickness: 6  }
+}

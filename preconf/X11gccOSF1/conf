@@ -1,0 +1,41 @@
+ADDINCLUDEPATHNAME|-I/usr/local/include/
+ADDLIBPATHNAME|-L/usr/local/lib/
+ADDLIBSNAME|-lXext -lX11 -lm
+ALIGNMENTNAME|8
+ANSINAME|#define ANSI_C
+BIGLTEXNAME|big-latex
+BINPATHNAME|/usr/local/bin/
+BISONNAME|false
+BLOCKSIZENAME|1048576
+CATNAME|/bin/cat
+CCLINKNAME|gcc
+CCNAME|gcc
+CFLAGSNAME|-c -O -DOSF 
+CLEARNAME|/bin/clear
+CLINKFLAGSNAME|-o
+FGREPNAME|/bin/fgrep
+FIGTODEVNAME|fig2dev
+FIGTOPSTOTEXNAME|fig2ps2tex
+FLEXNAME|false
+PARSEGENNAME|false
+FONTALIASNAME|-*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME|#define NOINPUTFOCUS
+INSTALLBINNAME|/usr/bin/install -g bin -u bin -S -m 755 dummy $(BINDIR) dummy
+INSTALLDIRNAME|echo
+INSTALLMANNAME|/usr/bin/install -g bin -u bin -m 644 dummy $(MANDIR) dummy
+LATEXNAME|latex
+LNNAME|/bin/ln
+MAKEDEPENDNAME|makedepend
+MAKENAME|make
+MANEXTNAME|l
+MANPATHNAME|/usr/local/man/manl/
+MVNAME|/bin/mv
+RMNAME|/bin/rm
+SEDNAME|/bin/sed
+SLEEPNAME|/bin/sleep
+TOUCHNAME|/bin/touch
+SYNCNAME|/usr/sbin/sync
+CHMODNAME|/bin/chmod
+VCGNAME|xvcg
+WCNAME|/bin/wc
+WINDOWSYSTEMNAME|#define X11

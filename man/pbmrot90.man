@@ -1,0 +1,38 @@
+.Id SCCS-info %W% %E% 
+.Id $Id: pbmrot90.man,v 1.4 1995/01/05 19:52:26 sander Exp $
+.TH PBMROT90 1l 1995/01/05 "Release 1.3" 
+.SH NAME
+pbmrot90 \- rotates a PBM-P4-file by 90 degree 
+.SH SYNOPSIS
+.B pbmrot90 
+infile outfile 
+.SH DESCRIPTION
+.I Pbmrot90 
+reads a PBM file in P4 format and produces a new PBM file in P4 format.
+The output is rotated by 90 degree. 
+This tool can be used to modify the image produced as
+export output of the 
+.I VCG tool 
+from a graph before printing it on paper.
+In this way, portrait format can be converted into landscape format.
+.SH WARNING
+This utility does not work with the PBM-P1-format !!! 
+It is not a general conversion utility but only a small demonstation
+how to deal with the output of the
+.I VCG tool. 
+There are excellent standard utilities for PBM-Files by Jef Poskanzer
+.I (pnmflip, pnmshift)
+but
+.I pbmrot90
+should be much faster on large files.
+.SH SEE ALSO
+vcg(l) pnmrotate(l) pnmflip(l) pbmshift(l) pbm2hp(l)
+.SH BUGS
+Currently, no bugs are known.
+.SH ACKNOWLEDGEMENT
+Jef Poskanzer is the initiator and main implementor of
+the PBM package that contains various image processing
+routines and printer drivers.
+.SH AUTHOR
+Georg Sander, University of Saarland.
+

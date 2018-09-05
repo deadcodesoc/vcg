@@ -1,0 +1,38 @@
+ANSINAME|#define ANSI_C
+WINDOWSYSTEMNAME|#define SUNVIEW
+ALIGNMENTNAME|8
+BLOCKSIZENAME|1048576
+FONTALIASNAME|-*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME|#define NOINPUTFOCUS
+BINPATHNAME|/usr/local/bin/
+CATNAME|/bin/cat
+RMNAME|/bin/rm
+SLEEPNAME|/bin/sleep
+SEDNAME|/bin/sed
+WCNAME|/usr/ucb/wc
+FGREPNAME|/bin/fgrep
+CLEARNAME|/usr/ucb/clear
+MANPATHNAME|/usr/local/man/manl/
+MANEXTNAME|l
+VCGNAME|vcg
+CFLAGSNAME|-c -O -finline-functions -pipe
+CLINKFLAGSNAME|-o
+ADDINCLUDEPATHNAME|-I/usr/local/include/
+ADDLIBPATHNAME|-L/usr/local/lib/
+ADDLIBSNAME|-lsuntool -lsunwindow -lpixrect -lm
+CCNAME|gcc
+CCLINKNAME|gcc
+INSTALLDIRNAME|/bin/install -d -m 755
+INSTALLBINNAME|/bin/install -s -m 755 dummy $(BINDIR)/dummy
+INSTALLMANNAME|/bin/install -m 644 dummy $(MANDIR)/dummy
+LATEXNAME|latex
+BIGLTEXNAME|big-latex
+FIGTOPSTOTEXNAME|fig2ps2tex
+FIGTODEVNAME|fig2dev
+FLEXNAME|not_available
+BISONNAME|not_available
+MAKENAME|make
+MAKEDEPENDNAME|makedepend
+MVNAME|/bin/mv
+LNNAME|/bin/ln
+TOUCHNAME|/bin/touch

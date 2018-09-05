@@ -1,0 +1,1337 @@
+.Id SCCS-info %W% %E% 
+.Id $Id: vcg.man,v 1.17 1995/02/03 11:09:46 sander Exp $
+.TH "VCG | XVCG" 1l 1995/01/05 "Release 1.3" 
+
+.SH NAME
+VCG tool \- visualization of compiler graphs 
+
+.SH SYNOPSIS
+.B vcg
+[options] [filename]
+.br
+.B xvcg
+[options] [filename]
+
+.SH SYNOPSIS FOR SEQUENCES OF GRAPH SPECIFICATIONS
+.B vcg
+\-multi [options] [filename] [options] [filename] ...
+.br
+.B xvcg
+\-multi [options] [filename] [options] [filename] ...
+
+.SH DESCRIPTION
+The
+.I VCG tool 
+reads a VCG specification and visualizes the graph.
+If not all positions of nodes are fixed, the tool
+lays the graph out using several heuristics as
+reducing the number of crossings, minimizing the size of 
+edges, centering of nodes.
+The specification language of the  
+.I VCG tool
+is nearly compatible to GRL, the language of the 
+.I Edge tool,
+but contains many extensions.
+The
+.I VCG tool
+allows folding of dynamically or statically specified
+regions of the graph.
+It uses colors and runs on 
+.I X11. 
+(An older version runs on
+.I Sunview.) 
+
+.SH GENERAL OPTIONS 
+.TP 15
+.B \-
+The input is
+.I stdin
+instead of a file.
+.TP
+.B \-h | \-?
+Print a help message about the usage of the tool.
+.TP
+.B \-v | \-version
+Print a version and copyright message.
+.TP 
+.B \-silent
+Be silent during the layout.  
+No messages or warnings are produced.
+.TP
+.B \-nocolors | \-blackwhite
+Do not use colors on a color screen.
+On a monochrom screen the graph is drawn in black & white even if it
+is specified with colors.
+On a color screen, this mode is simulated, if this option is selected.
+The option is useful, if the
+.I VCG tool
+conflicts with other programs that need colors.
+.TP
+.B \-e <num> | \-error <num>
+Stop after 
+.I <num>
+errors during parsing of the specification (default: 16).
+.TP
+.B \-a <num> | \-animation <num>
+Start the tool as animation handler.
+This implies that the tool is controlled by signals
+.I (USRSIG1, USRSIG2)
+from an external program.
+The signal
+.I USRSIG1
+causes the 
+.I VCG tool
+to open the display window and reload its input file.
+The signal
+.I USRSIG2
+causes the
+.I VCG tool
+to close the display window.
+The tool processes the input and indicates the completion
+of the processing to the controlling program.
+If 
+.I <num>
+is greater 0, this indication is done by sleeping
+.I <num> 
+seconds and touching the input file afterwards such that
+its time stamp is refreshed.
+If 
+.I <num>
+is less than 0, this indication is done by sleeping
+.I \- <num>
+seconds and sending signal
+.I USRSIG1
+to the caller process afterwards.
+.TP
+.B \-m | \-multi
+Read multiple files one after another to display a sequence
+of graphs.
+Instead of an exit of the tool, the next file is read.
+The option
+.B \-multi
+must be specified before the first input file.
+.TP
+.B \-bary
+Use bary centering to reduce the number of edge crossings (default).
+.TP 
+.B \-median
+Use median centering instead of bary centering to reduce the
+number of crossings.
+On graphs with large average degree of edges, bary centering 
+might be faster.
+.TP
+.B \-barymedian
+Use a hybrid method to reduce the number of edge crossings.
+Bary centering is used for all nodes with different bary values.
+For nodes with same bary values, the crossing reduction heuristics 
+normally has a random effect.
+With this hybrid method, the crossing reduction of nodes with
+same bary values is done by median centering.
+.TP
+.B \-medianbary
+Use a hybrid method to reduce the number of edge crossings.
+Median centering is used for all nodes with different median values.
+For nodes with same median values, the crossing reduction heuristics 
+normally has a random effect.
+With this hybrid method, the crossing reduction of nodes with
+same median values is done by bary centering.
+.TP
+.B \-notune | \-nofinetune
+Switch the fine tuning layout phase off.
+Fine tuning is a postprocessing phase after partitioning of nodes
+into layers.
+Fine tuning changes the layers of nodes to minimize the length of edges.
+If this phase is switched off, it yield a less
+compact distribution of nodes in the levels.
+.TP
+.B \-manhattan | \-orthogonal
+Switch the orthogonal manhattan layout on. 
+This forces edges of gradient 0 or 90 degree.
+The result of this layout might be more aesthetical, if additionally
+the priority layout phase with straight line tuning 
+is used.
+Thus, these phases are switched on, too, unless priority layout and
+straight line tuning is switched explicitly off.
+.TP
+.B \-nomanhattan | \-noorthogonal
+Switch the orthogonal manhattan layout explicitly off.
+.TP
+.B \-smanhattan 
+Use the orthogonal manhattan layout without separation  
+of horizontal line segments.  
+Horizontal line segments are shared between different edges.
+This looks nice for trees but might be confusing in general, because
+the location of an edge might be ambiguously.
+.TP
+.B \-nosmanhattan     
+Switch the orthogonal manhattan layout without separation explicitly off.
+.TP
+.B \-prio
+Switch the priority layout on.  This forces straight long edges
+with gradient 90 degree during the node placement phase.
+The straight line tuning phase can be used to improve
+the priority layout. 
+Thus, this phase is switched on, too, unless
+straight line tuning is switched explicitly off.
+.TP
+.B \-noprio
+Switch the priority layout explicitly off.
+.TP
+.B \-straight
+Switch the straight line tuning phase on. This phase forces
+straight long edges with gradient 90 degree. It can be used
+to improve the priority layout.
+.TP
+.B \-nostraight
+Switch the straight line tuning phase explicitly off.
+.TP
+.B \-nonearedge
+Do not allow near edges in the layout.
+.TP
+.B \-l | \-latelabels
+Create the labels after the partitioning of edges.
+This has only an effect if labels are shown in a nondirty way.
+If labels are created after the partitioning of edges, the
+layout will be a little bit wider and may have less crossings.
+But note that sometimes this layout may also be worser than the
+normal layout.
+.TP
+.B \-hidesingles | \-ignoresingles
+Ignore single nodes (nodes without visible edges)  that are
+not connected with the remaining graph.
+These nodes are sometimes not of interest, but would spread the layout
+if they were visible.
+.TP
+.B \-s | \-summarize
+Switch edge summary layout on.
+Multiple edges between the same source and target node are summarized
+if they have the same visible appearance.
+This reduces the number of visible edges.
+
+.SH OPTIONS FOR THE LAYOUT SPEED 
+The speed of the layout process can be influenced by selecting
+time limits and iteration bounds of the different layout phases.
+Optional layout phases can completely be skipped.
+But note that we need a minimal time for each graph, in order to
+initialize the internal data structures.
+Furthermore, a fast layout is probably also an ugly layout.
+.TP 15
+.B \-t <num> | \-timelimit <num>  
+Set the time limit to 
+.I <num> 
+seconds of real time.
+If the time limit is exceeded, the fastest possible layout mode is 
+switched on.
+This may yield a very ugly layout.
+Of course, a time limit does not mean that the layout really needs
+so much time:
+The layout may be faster, because the graph structure is very simple,
+or it may be slower, because even the fastest possible layout already
+exceeds the time limit.
+Further note, that the layout depends on the real time, i.e. on the load
+of the computer. Thus, given a time limit, two identical trys need not to give
+identical results. 
+.TP
+.B \-f | \-fast
+Switch the fast and dirty and ugly mode on.
+The layout phase will be very fast, but the layout will be ugly.
+This is helpful on very large graphs where aesthetic visibility
+is of minor importance.
+The option 
+.B \-fast  
+implies 
+.B \-bmax 2 \-cmax 2 \-pmax 2 \-rmax 2 \-smax 2.
+.TP
+.B "\-b <num> | \-bmax <num> | \-bending <num>"
+Set the maximal number of iterations used for 
+the reduction of edge bendings
+to
+.I <num>.
+Edge bendings are used to avoid that edges are drawn across nodes.
+Reducing the number of iterations results in a faster but ugly layout,
+i.e. to much bendings occur. 
+The default value is 100.
+.TP
+.B "\-c <num> | \-cmax <num> | \-crossing <num>"
+Set the maximal number of iterations used for
+the reduction of edge crossings
+to
+.I <num>.
+The edge crossing reduction method is called bary centering or
+median centering.
+These may be very time consuming on large graphs.
+Reducing the number of iterations results in a faster but ugly layout. 
+As default, the method is iterated as long as improvements are
+possible.
+.TP
+.B \-cmin <num> 
+Set the minimal number of iterations used for
+the reduction of edge crossings
+to
+.I <num>.
+The crossing reduction method tries to detect improvements of the
+layout. 
+If an iteration of that method does not yield an improvment,
+the method normally stops.
+But this situation might be a local minimum of the quality of the
+layout, i.e. further iterations might find a better layout.
+Thus, the minimal number of iterations can be specified.
+The default value is 0.
+.TP
+.B "\-p <num> | \-pmax <num> | \-pendulum <num>"
+Set the maximal number of iterations used for the balancing  by the
+pendulum method
+to
+.I <num>.
+The pendulum method calculates the x co-ordinates of nodes such that the
+layout is medium dense and balanced. 
+It tries to avoid extreme gradients of edges. 
+It works like a pendulum where the nodes are the balls, the edges
+are the strings and uppermost nodes are fixed
+on the ceiling. 
+Reducing the number of iterations results in a faster but ugly layout. 
+The default value is 100.
+.TP
+.B \-pmin <num> 
+Set the minimal number of iterations used for the balancing  by the
+pendulum method
+to
+.I <num>.
+If an iteration of that method does not yield an improvment,
+the method normally stops.
+But this situation might be a local minimum of the quality of the
+layout, i.e. further iterations might find a better layout.
+Thus, the minimal number of iterations can be specified.
+The default value is 0.
+.TP
+.B "\-r <num> | \-rmax <num> | \-rubberband <num>"
+Set the maximal number of iterations used for the balancing  by the
+rubberband method
+to
+.I <num>.
+The rubberband method calculates the x co-ordinates of nodes such that the
+nodes are centered relatively to their incoming and outgoing edges.
+It works like a network where the edges pull on the nodes
+like rubberbands.
+Reducing the number of iterations results in a faster but ugly layout. 
+The default value is 100.
+.TP
+.B \-rmin <num> 
+Set the minimal number of iterations used for the balancing  by the
+rubberband method
+to
+.I <num>.
+If an iteration of that method does not yield an improvment,
+the method normally stops.
+But this situation might be a local minimum of the quality of the
+layout, i.e. further iterations might find a better layout.
+Thus, the minimal number of iterations can be specified.
+The default value is 0.
+.TP
+.B \-smax <num>
+Set the maximal number of iterations used for the straight  line
+tuning phase 
+to
+.I <num>.
+This phase forces straight long edges with gradient 90 degree. 
+It can be used to improve the priority layout or the manhattan layout.
+.TP
+.B \-nocopt | \-nocopt2
+Skip the optimization phase 2 during the crossing reduction.
+This phase takes very long time on very large graphs.
+Before reducing the number of iterations of the crossing reduction phase 
+(see option
+.B  \-cmax <num>
+)
+you should first try to skip this optimization phase 2.
+.TP
+.B \-nocoptl | \-nocoptlocal
+Switch a local crossing optimization off.
+This phase additionally examines pairs of edge polygons and tries
+to unwind them. 
+It slows down if the degree of the nodes is large.
+
+.SH OPTIONS FOR THE DISTRIBUTION OF NODES 
+The quality of the layout is mainly influenced by the distribution
+of the nodes into the hierarchy levels.
+Nodes of the same level will appear in the same row.
+Since it depends on the application which hierarchy is the best,
+there are different algorithms for this phase. 
+.TP 15
+.B \-d normal
+Normal  distribution  of nodes  into the levels  (default).
+This algorithm is based on  the calculation of the strongly
+connected components.
+.TP
+.B \-d dfs
+Depth first search  distribution of nodes  into the levels.
+This is the fastest method.
+.TP
+.B \-d 0 | \-d minbackward
+Reduce the number of backward edges heuristically. 
+If the graph is acyclic, no backward edges will occur, i.e. all 
+edges point into the same direction.
+.TP
+.B \-d \+ | \-d maxdepth
+Maximize the depth of the layout heuristically.
+It should be used if the layout is too wide in x direction.
+This algorithm is very fast.
+.TP
+.B \-d \- | \-d mindepth
+Minimize the depth of the layout heuristically.
+It should be used if the layout is too wide in y direction.
+This algorithm is very fast.
+.TP
+.B \-d \+\+ | \-d maxdepthslow
+Maximize the depth of the layout heuristically. See above.
+This algorithm is very slow, but may give better results.
+.TP
+.B \-d \-\- | \-d mindepthslow
+Minimize the depth of the layout heuristically. See above.
+This algorithm is very slow, but may give better results.
+.TP
+.B \-d minindeg | \-d minindegree
+Prepare the nodes by sorting them according increasing indegree
+(number of incoming edges).
+The nodes with the minimal indegree come first.
+This may have various effects on the layout.
+.TP
+.B \-d maxindeg | \-d maxindegree
+Prepare the nodes by sorting them according decreasing indegree.
+The nodes with the maximal indegree come first.
+This may have various effects on the layout.
+.TP
+.B \-d minoutdeg | \-d minoutdegree
+Prepare the nodes by sorting them according increasing outdegree
+(number of outgoing edges).
+The nodes with the minimal outdegree come first.
+This may have various effects on the layout.
+.TP
+.B \-d maxoutdeg | \-d maxoutdegree
+Prepare the nodes by sorting them according decreasing outdegree.
+The nodes with the maximal outdegree come first.
+This may have various effects on the layout.
+.TP
+.B \-d mindeg | \-d mindegree
+Prepare the nodes by sorting them according increasing degree
+(number of incoming and outgoing edges).
+The nodes with the minimal degree come first.
+This may have various effects on the layout.
+.TP
+.B \-d maxdeg | \-D maxdeg
+Prepare the nodes by sorting them according decreasing degree.
+The nodes with the maximal degree come first.
+This may have various effects on the layout.
+.TP
+.B \-d tree 
+Use a specialized layout for trees. It does not work with non-trees.
+
+.SH OPTIONS FOR THE VIEW  
+The view of a graph is the method of the visual appearance  of the
+graph in the window after the layout.
+Changing the view does not require a relayout of the graph.
+Views are transformations that are done during the drawing.
+.TP 15
+.B \-view normal      
+Normal view onto the graph. No distortion.
+.TP
+.B \-view cfish       
+Cartesian fisheye view.  The graph is  distorted  such that
+the whole graph is visible.  Horizontal  and vertical lines
+don't change their direction.
+.TP
+.B \-view fcfish
+Cartesian fisheye view with fixed size focus.  The graph is
+distorted, but not necessarily the whole graph is visible.
+.TP
+.B \-view pfish
+Polar fisheye view.  The graph is  distorted  such that the
+whole graph is visible.  Even horizontal and vertical lines
+might be distorted.
+.TP
+.B \-view fpfish
+Polar fisheye view  with  fixed size  focus.  The  graph is
+distorted, but not necessarily the whole graph is visible.
+.TP
+.B \-spline
+Use splines instead of polygons to draw edges. This is mainly useful
+if you want to export the graph into a high quality PostScript picture.
+WARNING: Drawing splines is very slow.
+.TP
+.B \-nonodes
+Suppress drawing of nodes.
+.TP
+.B \-noedges
+Suppress drawing of edges.
+.TP
+.B \-xpos <num>
+Set the x-coordinate of the initial point of the graph that
+appears at the window origin or of the initial focus point
+to
+.I <num>.
+.TP
+.B \-ypos <num>
+Set the y-coordinate of the initial point of the graph that
+appears at the window origin or of the initial focus point
+to
+.I <num>.
+
+.SH PRINTER DRIVER INTERFACE 
+The printer driver interface allows to produce an output file
+of the visualized graph without the need of interaction.
+The VCG tool acts as a kind of converter program in this case:
+it converts a VCG file into a PostScript or bitmap file.
+It is recommended to use the option
+.B \-silent 
+in combination to one of the options 
+.B \-vcgoutput, 
+.B \-psoutput,
+.B \-pbmoutput, 
+or
+.B \-ppmoutput.
+Example:
+.br
+.sp 1
+xvcg \-silent \-color \-scale 75 \-psoutput test.ps test.vcg
+.br
+.sp 1
+converts the VCG file test.vcg into a PostScript file
+that contains a color picture of the graph scaled by 75 %.
+In this case the interactive display is suppressed.
+If the graph does not fit on the page, the output might be nonsense.
+
+.SH PRINTER DRIVER OPTIONS 
+.TP 15
+.B \-vcgoutput <filename> 
+Produce a VCG file named 
+.I <filename> 
+that contains the graph laid out,
+i.e. including information about the co-ordinates of the visible nodes.
+The most of the following format options have no effect for
+the VCG file format.
+.TP
+.B \-psoutput <filename> 
+Produce a PostScript file named 
+.I <filename> 
+that contains the graph.
+.TP
+.B \-pbmoutput <filename> 
+Produce a bitmap file named 
+.I <filename> 
+in PBM format
+that contains the graph in black and white.
+.TP
+.B \-ppmoutput <filename> 
+Produce a bitmap file named 
+.I <filename> 
+in PPM format
+that contains the graph in colors.
+.TP
+.B \-paper <papertype>
+Select the paper type. Default is a4.
+.I <papertype>
+is one of:
+.RS
+.sp 1
+.PD 0
+.TP 10
+.B a4
+din A4 (21 x 30 cm)
+.TP 
+.B A4
+din A4 (21 x 30 cm)
+.TP
+.B b5
+din B5 (18.5 x 27 cm)
+.TP
+.B B5
+din B5 (18.5 x 27 cm)
+.TP
+.B a5
+din A5 (15 x 21 cm)
+.TP
+.B A5
+din A5 (15 x 21 cm)
+.TP
+.B 11x17 
+tabloid (11 x 17 in)
+.TP
+.B tabloid 
+tabloid (11 x 17 in)
+.TP
+.B 8x11 
+letter (8.5 x 11 in)
+.TP
+.B letter 
+letter (8.5 x 11 in)
+.TP
+.B 8x14
+legal (8.5 x 14 in)
+.TP
+.B legal 
+legal (8.5 x 14 in)
+.RE
+.PD
+.TP 15
+.B \-noBoundingBox
+Suppress the calculation of a BoundingBox (PostScript format).
+.TP 
+.B \-color
+Select a color file output. 
+This option works only with the PostScript format.
+.TP
+.B \-grey
+Select a greyscaled file output.
+This option works only with the PostScript format.
+.TP
+.B \-blackwhite  
+Select a monochromatic file output.
+This is the default color.
+This option works only with the PostScript format.
+.TP
+.B \-portrait 
+Select the paper orientation `Portrait' (default).
+.TP
+.B \-landscape
+Select the paper orientation `Landscape'.
+.TP
+.B \-split <num> 
+Split the graph into 
+.I <num> 
+pages.
+This option works only with the PostScript format.
+The number of pages must be one of 1, 4, 9, 16, or 25.
+.TP
+.B \-xdpi  <num> 
+Set the horizontal resolution for the PPM and PBM format.
+This allows to adapt the bitmap formats to the resolutions
+of the printer.
+.TP
+.B \-ydpi  <num> 
+Set the vertical resolution for the PPM and PBM format.
+This allows to adapt the bitmap formats to the resolutions
+of the printer.
+.TP
+.B \-scale <num> 
+Scale the graph to 
+.I <num> 
+percent for the file output.
+The default scaling fits the graph with maximal
+aspect ratio to the paper size.
+.TP
+.B \-width <float> <units>
+Fit the graph such that its width is smaller than 
+.I <float> <units>. 
+This works only if no scaling is specified.
+.I <units> 
+are:
+.RS
+.sp 1
+.PD 0
+.TP 10
+.B in
+Inches
+.TP
+.B inch
+Inches
+.TP
+.B ft
+Foot
+.TP
+.B foot
+Foot
+.TP
+.B feet
+Foot
+.TP
+.B mm
+Millimeter
+.TP
+.B cm
+Centimeter
+.TP
+.B dm
+Decimeter
+.TP
+.B m
+Meter
+.RE
+.PD
+.TP 15
+.B \-height <float> <units>
+Fit the graph such that its height is smaller than 
+.I <float> <units>. 
+This works only if no scaling is specified.
+.TP
+.B \-lm <float> <units>
+Set the left margin of the output to 
+.I <float> <units>.
+This works only if no right margin is specified. 
+The default position is centered on the page. 
+In some cases the 
+.I BoundingBox
+of the PostScript output meight be wrong.
+If a 
+.I BoundingBox
+is needed  then we recommend the options
+.B \-lm 0 cm  \-bm 0 cm.
+.TP
+.B \-rm <float> <units>
+Set the right margin of the output to 
+.I <float> <units>.
+This works only if no left margin is specified. 
+The default position is centered on the page. 
+.TP
+.B \-tm <float> <units>
+Set the top margin of the output to 
+.I <float> <units>.
+This works only if no bottom margin is specified. 
+The default position is centered on the page. 
+.TP
+.B \-bm <float> <units>
+Set the bottom margin of the output to 
+.I <float> <units>.
+This works only if no top margin is specified. 
+The default position is centered on the page. 
+
+.SH X11 OPTIONS 
+.TP 15
+.B \-display <host:dpy>
+Set the remote X11 server to 
+.I host:dpy.
+This is analogous to
+.I xterm(1l).
+.TP 
+.B \-geometry <geom>
+Specify the hint of size and location of the X11 window.
+This is analogous to
+.I xterm(1l).
+.TP 
+.B \-bw <num>
+Set the border width of the X11 window to
+.I <num>
+pixels.
+This is analogous to
+.I xterm(1l).
+.TP
+.B \-font <xfont>
+Set the font used for messages and menu items in the
+X11 window.
+This is analogous to
+.I xterm(1l).
+.TP
+.B \-grabinputfocus
+Switch setting of InputFocus on or off (depending on the default).
+Cause the VCG tool to execute a XSetInputFocus, or to
+avoid to execute a XSetInputFocus on initialization.
+
+
+.SH GRAMMAR 
+The grammar of the specification language is the following:
+.TP 5
+.B graph
+::=  "graph:" '{' graph_entry_list '}'		
+.br
+;
+.TP
+.B graph_entry_list
+::=  graph_entry_list graph_entry			
+.br
+| graph_entry					
+.br
+;
+.TP
+.B graph_entry
+::=  graph_attribute
+.br
+| node_defaults
+.br
+| edge_defaults
+.br
+| foldnode_defaults
+.br
+| foldedge_defaults
+.br
+| graph
+.br
+| node
+.br
+| edge
+.br
+| nearedge
+.br
+| bentnearedge
+.br
+| backedge
+.br
+;
+.TP
+.B graph_attribute
+::=  "title" ':' string	
+.br
+| "label" ':' string	
+.br
+| "info1" ':' string	
+.br
+| "info2" ':' string	
+.br
+| "info3" ':' string	
+.br
+| "color" ':' enum_color 
+.br
+| "textcolor" ':'enum_color 
+.br
+| "bordercolor" ':'enum_color 
+.br
+| "width" ':' integer 
+.br
+| "height" ':' integer
+.br
+| "borderwidth" ':' integer
+.br
+| 'x' ':' integer
+.br
+| 'y' ':' integer
+.br
+| "loc:" '{' 'x' ':' integer 'y' ':' integer '}'
+.br
+| "folding" ':' integer
+.br
+| "scaling" ':' float	
+.br
+| "shrink" ':' integer
+.br
+| "stretch" ':' integer
+.br
+| "textmode" ':' enum_textmode		
+.br
+| "shape" ':' enum_shape
+.br
+| "level" ':' integer 
+.br
+| "vertical_order" ':' integer 
+.br
+| "horizontal_order" ':' integer 
+.br
+| "status" ':' enum_status			
+.br
+| "xmax" ':' integer	
+.br
+| "ymax" ':' integer	
+.br
+| "xbase" ':' integer	
+.br
+| "ybase" ':' integer	
+.br
+| "xspace" ':' integer
+.br
+| "xlspace" ':' integer
+.br
+| "yspace" ':' integer
+.br
+| "xraster" ':' integer
+.br
+| "xlraster" ':' integer
+.br
+| "yraster" ':' integer
+.br
+| "invisible" ':' integer
+.br
+| "hidden" ':' integer
+.br
+| "classname" integer ':' string	
+.br
+| "infoname" integer ':' string	
+.br
+| "colorentry" integer ':' integer integer integer 
+.br
+| "layoutalgorithm" ':' enum_layoutalgorithm	
+.br
+| "layout_downfactor" ':' integer 
+.br
+| "layout_upfactor" ':' integer 
+.br
+| "layout_nearfactor" ':' integer 
+.br
+| "splinefactor" ':' integer
+.br
+| "late_edge_labels" ':' enum_yes_no
+.br
+| "display_edge_labels" ':' enum_yes_no
+.br
+| "dirty_edge_labels" ':' enum_yes_no
+.br
+| "finetuning" ':' enum_yes_no 
+.br
+| "ignoresingles"  ':' enum_yes_no 
+.br
+| "straight_phase" ':'  enum_yes_no 
+.br
+| "priority_phase" ':'  enum_yes_no 
+.br
+| "manhattan_edges" ':'  enum_yes_no 
+.br
+| "smanhattan_edges" ':'  enum_yes_no 
+.br
+| "nearedges" ':' enum_yes_no 
+.br
+| "orientation" ':' enum_orientation		
+.br
+| "node_alignment" ':' enum_node_align
+.br
+| "port_sharing" ':' enum_yes_no
+.br
+| "arrowmode" ':' enum_arrow_mode
+.br
+| "spreadlevel" ':' integer  
+.br
+| "treefactor" ':' float  
+.br
+| "crossingphase2" ':' enum_yes_no 
+.br
+| "crossingoptimization" ':' enum_yes_no 
+.br
+| "crossingweight" ':' enum_cross_weight 
+.br
+| "view" ':'  enum_view 
+.br
+| "edges" ':' enum_yes_no 
+.br
+| "nodes" ':' enum_yes_no 
+.br
+| "splines" ':' enum_yes_no 
+.br
+| "bmax" ':' integer 
+.br
+| "cmax" ':' integer 
+.br
+| "cmin" ':' integer 
+.br
+| "pmax" ':' integer 
+.br
+| "pmin" ':' integer 
+.br
+| "rmax" ':' integer 
+.br
+| "rmin" ':' integer 
+.br
+| "smax" ':' integer 
+.br
+;
+.TP
+.B enum_color
+::=  "aquamarine"      
+.br
+| "black"      
+.br
+| "blue"      
+.br
+| "cyan"      
+.br
+| "darkblue"      
+.br
+| "darkcyan"      
+.br
+| "darkgreen"      
+.br
+| "darkgrey"      
+.br
+| "darkmagenta"    
+.br
+| "darkred"      
+.br
+| "darkyellow"      
+.br
+| "gold"      
+.br
+| "green"      
+.br
+| "khaki"      
+.br
+| "lightblue"      
+.br
+| "lightcyan"      
+.br
+| "lightgreen"      
+.br
+| "lightgrey"      
+.br
+| "lightmagenta"    
+.br
+| "lightred"      
+.br
+| "lightyellow"    
+.br
+| "lilac"      
+.br
+| "magenta"      
+.br
+| "orange"      
+.br
+| "orchid"      
+.br
+| "pink"      
+.br
+| "purple"      
+.br
+| "red"      
+.br
+| "turquoise"      
+.br
+| "white"      
+.br
+| "yellow"      
+.br
+| "yellowgreen"   
+.br
+| integer
+.br
+;
+.TP
+.B enum_orientation
+::=  "top_to_bottom"
+.br
+| "bottom_to_top"
+.br
+| "left_to_right"
+.br
+| "right_to_left"
+.br
+;
+.TP
+.B enum_layoutalgorithm
+::=  
+.br
+| "tree"
+.br
+| "maxdepth"
+.br
+| "mindepth"
+.br
+| "maxdepthslow"
+.br
+| "mindepthslow"
+.br
+| "maxdegree"
+.br
+| "mindegree"
+.br
+| "maxindegree"
+.br
+| "minindegree"
+.br
+| "maxoutdegree"
+.br
+| "minoutdegree"
+.br
+| "minbackward"
+.br
+| "dfs"
+.br
+;
+.TP
+.B enum_status
+::=  "black"
+.br
+| "grey"
+.br
+| "white"
+.br
+;
+.TP
+.B enum_yes_no
+::=  "yes"
+.br
+| "no"
+.br
+;
+.TP
+.B enum_cross_weight
+::=  "bary" 
+.br
+| "median"
+.br
+| "barymedian"
+.br
+| "medianbary"
+.br
+;
+.TP
+.B enum_view
+::=  "cfish"
+.br
+| "fcfish"
+.br
+| "pfish"
+.br
+| "fpfish"
+.br
+;
+.TP
+.B enum_arrow_mode
+::= "fixed"
+.br
+| "free"
+.br
+;
+.TP
+.B foldnode_defaults
+::=  "foldnode." node_attribute 	
+.br
+;
+.TP
+.B foldedge_defaults
+::=  "foldedge." edge_attribute 	
+.br
+;
+.TP
+.B node_defaults
+::=  "node." node_attribute 	
+.br
+;
+.TP
+.B edge_defaults
+::=  "edge." edge_attribute  
+.br
+;
+.TP
+.B node
+::=  "node:" '{' node_attribute_list '}'	
+.br
+;
+.TP
+.B node_attribute_list
+::=  node_attribute_list node_attribute		
+.br
+| node_attribute				
+.br
+;
+.TP
+.B edge
+::=  "edge:" '{' edge_attribute_list '}'        
+.br
+; 
+.TP
+.B nearedge
+::=  "nearedge:" '{' edge_attribute_list '}'
+.br
+; 
+.TP
+.B bentnearedge
+::=  "bentnearedge:" '{' edge_attribute_list '}'
+.br
+; 
+.TP
+.B backedge
+::=  "backedge:" '{' edge_attribute_list '}'
+.br
+; 
+.TP
+.B edge_attribute_list
+::=  edge_attribute_list edge_attribute     
+.br
+| edge_attribute                             
+.br
+; 
+.TP
+.B node_attribute
+::=  "title" ':' string	
+.br
+| "label" ':' string	
+.br
+| "info1" ':' string	
+.br
+| "info2" ':' string	
+.br
+| "info3" ':' string	
+.br
+| "color" ':' enum_color
+.br
+| "textcolor" ':'enum_color 
+.br
+| "bordercolor" ':'enum_color 
+.br
+| "width" ':' integer	
+.br
+| "height" ':' integer	
+.br
+| "borderwidth" ':' integer
+.br
+| "loc:" '{' 'x' ':' integer 'y' ':' integer '}'
+.br
+| "folding" ':' integer
+.br
+| "scaling" ':' float	
+.br
+| "shrink" ':' integer	
+.br
+| "stretch" ':' integer
+.br
+| "textmode" ':' enum_textmode		
+.br
+| "shape" ':' enum_shape
+.br
+| "level" ':' integer 
+.br
+| "vertical_order" ':' integer 
+.br
+| "horizontal_order" ':' integer 
+.br
+;
+.TP
+.B enum_textmode
+::=  "center"
+.br
+| "left_justify"
+.br
+| "right_justify"
+.br
+;
+.TP
+.B enum_shape
+::=  "box"
+.br
+| "rhomb"
+.br
+| "ellipse"
+.br
+| "triangle"
+.br
+;
+.TP
+.B enum_node_align
+::=  "bottom"
+.br
+| "top"
+.br
+| "center"
+.br
+;
+.TP
+.B edge_attribute
+::=  "sourcename" ':' string
+.br
+| "targetname" ':' string 
+.br
+| "label" ':' string	
+.br
+| "textcolor" ':'enum_color 
+.br
+| "color" ':' enum_color
+.br
+| "thickness" ':' integer
+.br
+| "class" ':' integer	
+.br
+| "priority" ':' integer
+.br
+| "arrowcolor" ':' enum_color
+.br
+| "backarrowcolor" ':' enum_color
+.br
+| "arrowsize" ':' integer
+.br
+| "backarrowsize" ':' integer
+.br
+| "arrowstyle" ':' enum_arrowstyle		
+.br
+| "backarrowstyle" ':' enum_arrowstyle		
+.br
+| "linestyle" ':' enum_linestyle		
+.br
+| "anchor" ':' integer
+.br
+| "horizontal_order" ':' integer 
+.br
+; 
+.TP
+.B enum_linestyle
+::=  "continuous"
+.br
+| "solid"      
+.br
+| "dotted"
+.br
+| "dashed"
+.br
+| "invisible" 
+.br
+;
+.TP
+.B enum_arrowstyle
+::=  none  
+.br
+| line
+.br
+| solid
+.br
+;
+
+.SH WARNINGS
+The
+.I VCG tool
+needs about 200 bytes per edge and node.
+Depending on the layout, it will produce a lot of additional
+dummy nodes and dummy edges,
+such that it may run out of memory.
+The layout algorithm needs exponentially time in the worst case.
+
+.SH ACKNOWLEDGEMENTS
+The 
+.I Edge tool
+was developed at the University of Karlsruhe.
+GRL was described by S. Manke and F.N. Paulisch.
+.br
+Our colleagues M. Alt and C. Ferdinand found the most bugs
+and gave many proposals for improvements.
+.br
+The Institute of Compiler Construction at the 
+University of Saarland, Germany,
+and
+the COMPARE Consortium 
+were the first and most important users of the 
+.I VCG tool
+and gave us the motivation, the time and many hints 
+during the development of the tool.
+
+.SH SEE ALSO
+Sunview(1) X11(1l) edge(l) 
+.br
+vcgdemomaker(l) pbmshift(l) pbmrot90(l) pbm2hp(l)
+.br
+.I VCG \- Visualization of Compiler Graphs, 
+Design Report and User Documentation,
+Ref. Compare, USAAR-1049-visual, January 1994,
+updated January 1995 
+
+.SH BUGS
+The X11 version has the `InputFocus' problem. 
+This problem is solved for 99 % of all cases, but
+may still occur. 
+.br
+If a graph is written to a file and reload
+from this file, the layout may be different and may be
+ugly.
+.br
+The attribute horizontal_order does only works for connected
+graphs, but not for unconnected graphs.
+.br
+For some parameters, negative values are inappropriate
+even if the tool does not crashes in such situations.
+However the result will be very ugly.
+For instance, the values of 
+.I xbase 
+and
+.I ybase
+should always be greater than zero.
+.br
+The spline routine is still too slow and has some bugs when
+exporting to a multi page PostScript file.
+.br
+Currently, no further bugs are known.
+
+.SH AUTHORS
+Georg Sander, University of Saarland, Germany.
+.br
+Iris Lemke, University of Saarland, Germany.
+

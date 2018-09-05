@@ -1,0 +1,8 @@
+SCCS-info %W% %E% 
+
+$Id: README,v 1.1 1994/03/02 12:44:21 sander Exp $
+
+This directory contains various examples,
+that are used by the demonstration tour.
+See ../demo/demo.csh.
+

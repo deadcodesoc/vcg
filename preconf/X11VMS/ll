@@ -1,0 +1,12 @@
+
+mv y.tab.h  syntax.h
+
+mv grammar.h tmp.h
+cat tmp.h | sed -e "s/y.tab.h/syntax.h/" > grammar.h
+
+cat lex.yy.c | sed -e "s/y.tab.h/syntax.h/" |\
+	sed -e "s/malloc.h/stdlib.h/" > lexical.c 
+cat y.tab.c | sed -e "s/y.tab.h/syntax.h/" |\
+	sed -e "s/malloc.h/stdlib.h/" > syntax.c 
+
+

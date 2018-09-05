@@ -1,0 +1,1297 @@
+SCCS-info %W% %E%
+
+$Id: README.SYS,v 1.5 1994/08/02 15:59:33 sander Exp sander $
+
+SYSTEMS WHERE VCG WAS CHECKED TO RUN
+====================================
+
+Note: I don't have anymore an IBM AIX system. The AIX validation refers 
+to the check of the older version VCG 1.2.  I also don't have the
+ULTRIX machine. This test was done by a user of VCG.
+
+
+
+uname -srm              CC                      CFLAGS   WindowSystem
+--------------------------------------------------------------------------
+SunOS 4.1.3 sun4c       gcc (version 2.4.5)     -c -O      X11R4
+SunOS 4.1.3 sun4c       gcc (version 2.4.5)     -c -O      X11R5
+SunOS 4.1.3 sun4c       gcc (version 2.6.3)     (5)        X11R6
+SunOS 4.1.3 sun4c       g++ (version 2.6.3)     (5)        X11R6
+SunOS 4.1.3 sun4c       cc (SunOS 4.1 K&R C)    -c -O      X11R5   
+SunOS 5.3   sun4m       gcc (version 2.6.3)     (5)        Soraris Openwin
+IRIX 5.2 IP22           cc (the MIPS ucode CC)  (1a)       X11R5
+IRIX 4.0.5H IP22        cc (the MIPS ucode CC)  (1b)       X11R5 
+AIX 2 000047594100      cc (XL R6000 CC)        (2)        AIX Windows
+Linux 0.99.13 i486      gcc (version 2.5.2)     -c -O      X11R5
+HP-UX A.08.07 9000/730  c89 (POSIX ANSI C)      (3)        X11R5
+HP-UX A.08.07 9000/730  cc  (K&R C)             (3)        X11R5
+HP-UX A.08.07 9000/730  gcc (version 2.6.3)     -c -O      X11R5
+ULTRIX ?????????        gcc                     (4)        X11R5
+
+
+
+(1a) -c -O -D__STDC__ -signed                 on IRIX
+(1b) -c -O -D__STDC__                         on IRIX
+(2) -c -O -DAIXCC -DAIX                       on AIX
+(3) -c -O -DHPUX -D_INCLUDE_POSIX_SOURCE      on HP-UX
+(4) -c -O -DULTRIX                            on ULTRIX 
+(5) -c -O -finline-functions -pipe            on SunOS
+
+
+The following setups are tested on different machines. First, we list
+the setups as it is written in Makefile, src/globals.h and demo/demo.csh.
+These lists can be used, if you set up these files manually.
+After that, a list of setups is added as it is produced by the config script
+which can be used if you like to setup the files automatically by using
+config.
+
+Note that some access pathes (e.g. BINPATH, MANPATH, everything around X11)
+may be different on your system.
+
+On the Solaris machnine (SunOS 5.3) we had only gcc available, since the 
+language package was not installed. Thus, no tests with the Sun C compiler.
+
+
+========== Setup for SunOS (Sparcstation, X11R5, gcc ) =================
+
+PROBLEMS WITH SunOS:
+--------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) Linking with gcc -static causes strange effects: e.g. remote 
+      xvcg -display ... does not work. (This is not anymore true for 
+      gcc 2.6.3).
+   4) On Solaris (SunOS 5.3), we had to setenv
+
+         LD_LIBRARY_PATH=/usr/openwin/lib:/usr/lib:/lib
+
+      Otherwise, the dynamic libraries of X11 are not found, which results
+      in messages like this:
+          ld.so.1: xvcg: fatal: libXext.so.0: can't open file: errno=2
+          Killed
+   5) On Solaris (SunOS 5.3), we used /usr/ucb/install instead of 
+      /bin/install, i.e.
+
+        INSTALLDIR = /usr/ucb/install -d -m 755
+        INSTALL    = /usr/ucb/install -s -m 755 dummy /home/sander/bin/dummy
+        INSTALLMAN = /usr/ucb/install -m 644 dummy /home/sander/man/manl/dummy
+
+
+
+
+SETUPS FOR SUNOS:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /RW/esprit/users/sander/bin/
+MANDIR     = /RW/esprit/users/sander/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -finline-functions -pipe
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/RW/esprit/X11R5/include/
+LIBPATH    = -L/RW/esprit/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /usr/local/bin/gcc
+CCLINK     = /usr/local/bin/gcc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/install -d -m 755
+INSTALL    = /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+INSTALLMAN = /bin/install -m 644 dummy /RW/esprit/users/sander/man/manl/dummy
+BIGLATEX   = /TeX/bin/big-latex
+TRANSFIGPS = /RW/users/sander/PUBLIC/TEX/fig2dev
+LEX        = /usr/local/bin/flex
+YACC       = /usr/local/bin/bison -ydt
+MAKE       = /bin/make
+DEPEND     = /RW/users/sander/bin/makedepend
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-*-courier-*-r-normal--16-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Monochromatic Screen):
+
+set mvcgn   = "/RW/esprit/users/sander/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/usr/ucb/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/ucb/clear"
+
+
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /usr/local/bin/gcc
+CATNAME == /bin/cat
+WCNAME == /usr/ucb/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/ucb/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /usr/local/bin/gcc
+VCGNAME == xvcg
+BIGLTEXNAME == /TeX/bin/big-latex 
+FIGTODEVNAME == /RW/users/sander/PUBLIC/TEX/fig2dev 
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-r-normal--16-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+MAKEDEPENDNAME == /RW/users/sander/bin/makedepend
+BISONNAME == /usr/local/bin/bison -ydt
+FLEXNAME == /usr/local/bin/flex 
+ANSINAME == #define ANSI_C
+BINPATHNAME == /RW/esprit/users/sander/bin/
+MANPATHNAME == /RW/esprit/users/sander/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -finline-functions -pipe
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/RW/esprit/X11R5/include/
+ADDLIBPATHNAME == -L/RW/esprit/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/install -d -m 755
+INSTALLBINNAME == /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+INSTALLMANNAME == /bin/install -m 644 dummy /RW/esprit/users/sander/man/manl/dummy
+
+
+========== Setup for SunOS (Sparcstation, X11R5, g++ ) =================
+
+PROBLEMS WITH SunOS:
+--------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) Linking with g++ -static causes strange effects: e.g. remote 
+      xvcg -display ... does not work. (This is not anymore true for 
+      g++ 2.6.3).
+   4) g++ reports some implicit declarations of some library functions.
+      Obviously, the library header files are not complete. But these
+      warnings are not fatal and can be ignored.
+
+
+SETUPS FOR SUNOS:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /RW/esprit/users/sander/bin/
+MANDIR     = /RW/esprit/users/sander/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -finline-functions -pipe
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/RW/esprit/X11R5/include/
+LIBPATH    = -L/RW/esprit/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /usr/local/bin/g++
+CCLINK     = /usr/local/bin/g++
+CPP        = $(CC) -E
+INSTALLDIR = /bin/install -d -m 755
+INSTALL    = /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+INSTALLMAN = /bin/install -m 644 dummy /RW/esprit/users/sander/man/manl/dummy
+BIGLATEX   = /TeX/bin/big-latex
+TRANSFIGPS = /RW/users/sander/PUBLIC/TEX/fig2dev
+LEX        = /usr/local/bin/flex
+YACC       = /usr/local/bin/bison -ydt
+MAKE       = /bin/make
+DEPEND     = /RW/users/sander/bin/makedepend
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-*-courier-*-r-normal--16-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Monochromatic Screen):
+
+set mvcgn   = "/RW/esprit/users/sander/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/usr/ucb/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/ucb/clear"
+
+
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /usr/local/bin/g++
+CATNAME == /bin/cat
+WCNAME == /usr/ucb/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/ucb/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /usr/local/bin/g++
+VCGNAME == xvcg
+BIGLTEXNAME == /TeX/bin/big-latex 
+FIGTODEVNAME == /RW/users/sander/PUBLIC/TEX/fig2dev 
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-r-normal--16-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+MAKEDEPENDNAME == /RW/users/sander/bin/makedepend
+BISONNAME == /usr/local/bin/bison -ydt
+FLEXNAME == /usr/local/bin/flex 
+ANSINAME == #define ANSI_C
+BINPATHNAME == /RW/esprit/users/sander/bin/
+MANPATHNAME == /RW/esprit/users/sander/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -finline-functions -pipe
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/RW/esprit/X11R5/include/
+ADDLIBPATHNAME == -L/RW/esprit/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/install -d -m 755
+INSTALLBINNAME == /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+INSTALLMANNAME == /bin/install -m 644 dummy /RW/esprit/users/sander/man/manl/dummy
+
+
+========== Setup for SunOS (Sparcstation, X11R5, cc ) =================
+
+PROBLEMS WITH SunOS:
+--------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) The K&R CC reports some unreached statements after switches.
+      Uncritical Warnings, can be ignored.
+
+
+SETUPS FOR SUNOS:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /RW/esprit/users/sander/bin/
+MANDIR     = /RW/esprit/users/sander/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O 
+DFLAGS     =
+CLINKFLAGS = -Bstatic -o
+INCLUDES   = -I/RW/esprit/X11R5/include/
+LIBPATH    = -L/RW/esprit/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /bin/cc
+CCLINK     = /bin/cc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/install -d -m 755
+INSTALL    = /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+INSTALLMAN = /bin/install -m 644 dummy /RW/esprit/users/sander/man/manl/dummy
+BIGLATEX   = /TeX/bin/big-latex
+TRANSFIGPS = /RW/users/sander/PUBLIC/TEX/fig2dev
+LEX        = /usr/local/bin/flex
+YACC       = /usr/local/bin/bison -ydt
+MAKE       = /bin/make
+DEPEND     = /RW/users/sander/bin/makedepend
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#undef  ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-*-courier-*-r-normal--16-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Monochromatic Screen):
+
+set mvcgn   = "/RW/esprit/users/sander/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/usr/ucb/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/ucb/clear"
+
+
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /bin/cc
+CATNAME == /bin/cat
+WCNAME == /usr/ucb/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/ucb/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /bin/cc
+VCGNAME == xvcg
+BIGLTEXNAME == /TeX/bin/big-latex 
+FIGTODEVNAME == /RW/users/sander/PUBLIC/TEX/fig2dev 
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-r-normal--16-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+MAKEDEPENDNAME == /RW/users/sander/bin/makedepend
+BISONNAME == /usr/local/bin/bison -ydt
+FLEXNAME == /usr/local/bin/flex 
+ANSINAME == #undef  ANSI_C
+BINPATHNAME == /RW/esprit/users/sander/bin/
+MANPATHNAME == /RW/esprit/users/sander/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O 
+CLINKFLAGSNAME == -Bstatic -o
+ADDINCLUDEPATHNAME == -I/RW/esprit/X11R5/include/
+ADDLIBPATHNAME == -L/RW/esprit/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/install -d -m 755
+INSTALLBINNAME == /bin/install -s -m 755 dummy /RW/esprit/users/sander/bin/dummy
+
+
+================= Setup for IRIX (Silicon Graphics) =====================
+
+PROBLEMS WITH IRIX:
+-------------------
+1) It might be the case that parsegen is not available.
+   Further, a tool called not_available might be called.
+   Both tools are not required, thus messages about the nonexisting
+   of both tools can be ignored.
+
+2) In some module, variables are declared but never used. This depends
+   on the configuration. In other configurations, the same variables
+   might be used.
+
+3) Globally, make sure that your default shell is sh.
+   Type "setenv SHELL /bin/sh", if necessary.
+   This is necessary, because make uses the shell which is
+   found in the variable SHELL.
+
+   SHELL      = /bin/sh
+
+4) On some MIPS ucode CC, characters are unsigned as default. Here,
+   the C option -signed must be used.
+
+5) The MIPS ucode CC reports some unreached statements after switches.
+   Uncritical Warnings.
+
+6) The MIPS ucode CC is unable to optimze certain functions. Messages
+   like the following are uncritical:
+
+     uopt: Warning: myisochar: this procedure not optimized because it
+           exceeds size threshold; 
+
+
+
+
+SETUPS FOR IRIX:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/people/sander/bin/
+MANDIR     = /usr/people/sander/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -D__STDC__ -signed
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/include/
+LIBPATH    = -L/usr/local/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /usr/bin/cc
+CCLINK     = /usr/bin/cc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/echo
+INSTALL    = /etc/install -s -m 755 -f /usr/people/sander/bin dummy
+INSTALLMAN = /etc/install -m 644 -f /usr/people/sander/man/manl dummy
+MAKE       = /bin/make
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-sgi-terminal-bold-r-normal--17-120-100-100-c-100-iso8859-1"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+
+In demo/demo/csh (We used a Color Screen):
+
+set mvcgn   = "/usr/people/sander/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/bin/wc"
+set mygrep  = "/usr/bin/fgrep"
+set myclear = "/usr/bsd/clear"
+
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /usr/bin/cc
+CATNAME == /bin/cat
+WCNAME == /bin/wc
+FGREPNAME == /usr/bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/bsd/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /usr/bin/cc
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -sgi-terminal-bold-r-normal--17-120-100-100-c-100-iso8859-1
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #define ANSI_C
+BINPATHNAME == /usr/people/sander/bin/
+MANPATHNAME == /usr/people/sander/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -D__STDC__ -signed
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/include/
+ADDLIBPATHNAME == -L/usr/local/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/echo 
+INSTALLBINNAME == /etc/install -s -m 755 -f /usr/people/sander/bin dummy
+INSTALLMANNAME == /etc/install -m 644 -f /usr/people/sander/man/manl dummy
+
+
+
+================= Setup for AIX (IBM R6000, cc) =====================
+
+PROBLEMS WITH AIX:
+------------------
+1) LaTeX was not available thus make fails to make the documentation.
+
+2) The XL C compiler does not understand the keyword "const". The code
+   is already adapted, if -DAIXCC is used, but this is really ugly.
+
+3) There are two install commands. We assume to get /bin/install.
+   The config file is not updated for /usr/bsd/install and may fail,
+   if /usr/bsd/install is taken.
+
+
+SETUPS FOR AIX:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/local/bin/
+MANDIR     = /usr/local/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -DAIXCC -DAIX
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/include/
+LIBPATH    = -L/usr/local/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /bin/cc
+CCLINK     = /bin/cc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/echo
+INSTALL    = /bin/install -s -S -M 755 -f /usr/local/bin dummy
+INSTALLMAN = /bin/install -s -M 644 -f /usr/local/man/manl dummy
+MAKE       = /bin/make
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Color Screen):
+
+set mvcgn   = "/usr/local/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/bin/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/bin/clear"
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /bin/cc
+CATNAME == /bin/cat
+WCNAME == /bin/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /bin/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /bin/cc
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #define ANSI_C
+BINPATHNAME == /usr/local/bin/
+MANPATHNAME == /usr/local/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -DAIXCC -DAIX
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/include/
+ADDLIBPATHNAME == -L/usr/local/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/echo 
+INSTALLBINNAME == /bin/install -s -S -M 755 -f /usr/local/bin dummy
+INSTALLMANNAME == /bin/install -s -M 644 -f /usr/local/man/manl dummy
+
+
+
+===================== Setup for Linux (PC, intel 486, gcc ) ===============
+
+The Linux check was done by Christian Ferdinand (ferdi@cs.uni-sb.de).
+I have no information about the release/version of his Linux.
+
+PROBLEMS WITH Linux:
+--------------------
+   0) For your information: uname -srmv reports
+	Linux 0.99.13 i486 #5 Mon Sep 20 13:12:48 CDT 1993
+   1) Some targets of make result in a infinite loop. These are
+
+	 make clean
+	 make targetclean
+	 make veryclean
+	 make install
+
+      To my surprise, make install works properly, except the fact that
+      it installs infinitely often.
+      The reason is probably the incompatible behaviour of gnu-make 3.68.
+
+   2) MAXINT and MININT are defined in math. This may yield to preprocessor 
+      warnings: "MAXINT redefined in math.h", etc.
+      Dito with MINLONG and MAXLONG.
+   3) The include files in Linux/gcc seem to be different than expected
+      for ANSI C.  Thus, the gcc option -Wall reports a lot of nonsense.
+      Do not use this option.
+   4) /bin/echo does not exist. Thus, demo.csh must be changed by hand:
+      All occurrences of /bin/echo replaced by /usr/bin/echo.
+   5) Linking with gcc -static causes strange effects: e.g. remote 
+      xvcg -display ... does not work. 
+   6) The echo command does not display leading blancs of a line.
+      Thus, the demo dequence "make test" looks rather ugly.
+   7) I got a floating point exception for "xvcg expl/forms.vcg". The edges
+      cannot be drawn.
+      Since it is an i486, it is not the pentium bug ! But I currently
+      don't know the reason. All other examples and tests work well.
+      
+
+
+SETUPS FOR Linux:
+-----------------
+
+In Makefile (top level):
+
+BINDIR     = /home/sander/bin/
+MANDIR     = /home/sander/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -finline-functions -pipe
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/include/
+LIBPATH    = -L/usr/local/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = gcc
+CCLINK     = gcc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/install -d -m 755
+INSTALL    = /bin/install -s -m 755 dummy $(BINDIR)/dummy
+INSTALLMAN = /bin/install -m 644 dummy $(MANDIR)/dummy
+MAKE       = /usr/bin/make    (Gnu-make)
+SED        = /usr/bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "-*-courier-*-r-normal--16-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Color Screen):
+
+alias OUTP  /usr/bin/echo
+set mvcgn   = "/home/sander/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/usr/bin/sleep"
+set mysed   = "/usr/bin/sed"
+set mywc    = "/usr/bin/wc"
+set mygrep  = "/usr/bin/fgrep"
+set myclear = "/usr/bin/clear"
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == gcc
+CATNAME == /bin/cat
+WCNAME == /usr/bin/wc
+FGREPNAME == /usr/bin/fgrep
+MAKENAME == /usr/bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/bin/clear
+SEDNAME == /usr/bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /usr/bin/chmod
+SLEEPNAME == /usr/bin/sleep
+CCLINKNAME == gcc
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #define ANSI_C
+BINPATHNAME == /home/sander/bin/
+MANPATHNAME == /home/sander/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -finline-functions -pipe
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/include/
+ADDLIBPATHNAME == -L/usr/local/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME = /bin/install -d -m 755
+INSTALLBINNAME = /bin/install -s -m 755 dummy $(BINDIR)/dummy
+INSTALLMANNAME = /bin/install -m 644 dummy $(MANDIR)/dummy
+
+
+================= Setup for HP-UX (IBM 9000/730, cc) ======================
+
+The HP-UX check was done with support by E. Schoemer and Prof. G. Hotz
+of the Universitaet des Saarlandes. I don't have a HP-UX maschine, but
+they have one. Many thanks to them.
+
+
+PROBLEMS WITH HP-UX:
+-------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) With X11R4, missing include files are reported. I don't know why.
+      X11R5 works.
+   4) The compiler might warn about _INCLUDE_POSIX_SOURCE redefined.
+      The compiler complains about a undefined escape sequence.
+      These are not fatal. 
+   5) Some source files are very large. The compiler dops the optimization
+      in these cases.
+
+
+SETUPS FOR HP-UX:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/local/bin/
+MANDIR     = /usr/local/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -DHPUX -D_INCLUDE_POSIX_SOURCE
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/X11R5/include/
+LIBPATH    = -L/usr/local/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /bin/cc
+CCLINK     = /bin/cc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/echo
+INSTALL    = /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMAN = /etc/install -m 644 -f $(MANDIR) dummy              
+MAKE       = /bin/make
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+Note: flex, bison, parsegen, latex, big-latex, fig2dev etc. were not available
+      on the HP-UX. 
+
+
+
+In src/globals.h:
+
+#undef  ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT  "-*-courier-*-*-*--14-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Color Screen):
+
+set mvcgn   = "/usr/local/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/bin/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/bin/clear"
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /bin/cc
+CATNAME == /bin/cat
+WCNAME == /bin/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/bin/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /bin/cc
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #undef ANSI_C
+BINPATHNAME == /usr/local/bin/
+MANPATHNAME == /usr/local/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -DHPUX -D_INCLUDE_POSIX_SOURCE
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/X11R5/include/
+ADDLIBPATHNAME == -L/usr/local/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/echo 
+INSTALLBINNAME == /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMANNAME == /etc/install -m 644 -f $(MANDIR) dummy              
+
+
+================= Setup for HP-UX (IBM 9000/730, c89) =====================
+
+The HP-UX check was done with support by E. Schoemer and Prof. G. Hotz
+of the Universitaet des Saarlandes. I don't have a HP-UX maschine, but
+they have one. Many thanks to them.
+
+
+PROBLEMS WITH HP-UX:
+-------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) With X11R4, missing include files are reported. I don't know why.
+      X11R5 works.
+   4) Some source files are very large. The compiler dops the optimization
+      in these cases.
+   5) The compiler did not found the declarations of timeval and timezone.
+      I added these in the file timelim.c. But now, it might happen that
+      these declarations are superfluous and compiler on other HP-UX
+      systems might complain about it.
+   6) atof is buggy. All specifications that use floats woun't work.
+      But we can live without floats.
+
+
+SETUPS FOR HP-UX:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/local/bin/
+MANDIR     = /usr/local/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -DHPUX -D_INCLUDE_POSIX_SOURCE
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/X11R5/include/
+LIBPATH    = -L/usr/local/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /bin/c89
+CCLINK     = /bin/c89
+CPP        = $(CC) -E
+INSTALLDIR = /bin/echo
+INSTALL    = /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMAN = /etc/install -m 644 -f $(MANDIR) dummy              
+MAKE       = /bin/make
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT  "-*-courier-*-*-*--14-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Color Screen):
+
+set mvcgn   = "/usr/local/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/bin/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/bin/clear"
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /bin/c89
+CATNAME == /bin/cat
+WCNAME == /bin/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/bin/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /bin/c89
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #define ANSI_C
+BINPATHNAME == /usr/local/bin/
+MANPATHNAME == /usr/local/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O -DHPUX -D_INCLUDE_POSIX_SOURCE
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/X11R5/include/
+ADDLIBPATHNAME == -L/usr/local/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/echo 
+INSTALLBINNAME == /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMANNAME == /etc/install -m 644 -f $(MANDIR) dummy              
+
+
+================= Setup for HP-UX (IBM 9000/730, gcc) =====================
+
+The HP-UX check was done with support by E. Schoemer and Prof. G. Hotz
+of the Universitaet des Saarlandes. I don't have a HP-UX maschine, but
+they have one. Many thanks to them.
+
+
+PROBLEMS WITH HP-UX:
+-------------------
+   1) It might be the case that parsegen is not available.
+      Further, a tool called not_available might be called.
+      Both tools are not required, thus messages about the nonexisting
+      of both tools can be ignored.
+   2) In some module, variables are declared but never used. This depends
+      on the configuration. In other configurations, the same variables
+      might be used.
+   3) With X11R4, missing include files are reported. I don't know why.
+      X11R5 works.
+
+
+SETUPS FOR HP-UX:
+----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/local/bin/
+MANDIR     = /usr/local/man/manl/
+MANEXT     = l
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O 
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = -I/usr/local/X11R5/include/
+LIBPATH    = -L/usr/local/X11R5/lib/
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /bin/gcc
+CCLINK     = /bin/gcc
+CPP        = $(CC) -E
+INSTALLDIR = /bin/echo
+INSTALL    = /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMAN = /etc/install -m 644 -f $(MANDIR) dummy              
+MAKE       = /bin/make
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT  "-*-courier-*-*-*--14-*-*-*-*-*-*-*"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh (We used a Color Screen):
+
+set mvcgn   = "/usr/local/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/bin/wc"
+set mygrep  = "/bin/fgrep"
+set myclear = "/usr/bin/clear"
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+CCNAME == /bin/gcc
+CATNAME == /bin/cat
+WCNAME == /bin/wc
+FGREPNAME == /bin/fgrep
+MAKENAME == /bin/make
+MVNAME == /bin/mv
+LNNAME == /bin/ln
+CLEARNAME == /usr/bin/clear
+SEDNAME == /bin/sed
+SYNCNAME == /bin/sync
+TOUCHNAME == /bin/touch
+RMNAME == /bin/rm
+CHMODNAME == /bin/chmod
+SLEEPNAME == /bin/sleep
+CCLINKNAME == /bin/gcc
+VCGNAME == xvcg
+WINDOWSYSTEMNAME == #define X11
+FONTALIASNAME == -*-courier-*-*-*--14-*-*-*-*-*-*-*
+INPUTFOCUSNAME == #define NOINPUTFOCUS
+ALIGNMENTNAME == 8
+BLOCKSIZENAME == 1048576
+ANSINAME == #define ANSI_C
+BINPATHNAME == /usr/local/bin/
+MANPATHNAME == /usr/local/man/manl/
+MANEXTNAME == l
+CFLAGSNAME == -c -O 
+CLINKFLAGSNAME == -o
+ADDINCLUDEPATHNAME == -I/usr/local/X11R5/include/
+ADDLIBPATHNAME == -L/usr/local/X11R5/lib/
+ADDLIBSNAME == -lXext -lX11 -lm
+INSTALLDIRNAME == /bin/echo 
+INSTALLBINNAME == /etc/install -s -m 755 -f $(BINDIR) dummy        
+INSTALLMANNAME == /etc/install -m 644 -f $(MANDIR) dummy              
+
+
+========== Setup for ULTRIX (DecStation, X11R5, gcc ) =================
+
+The first installation on a DecStation (ULTRIX) was done by A. Ertl
+at the TU Wien.  I don't have a DecStation. Many thanks to him.
+
+PROBLEMS WITH ULTRIX:
+--------------------
+
+   1) The script config runs only with sh5 instead of sh.
+   2) During "make xvcg" (or "make vcg") the files grammar.y,
+      grammar.l and grammar.h are not found. This seems to
+      be a path problem during make. As temporary solution,
+      there is a shell script "ultrixpreconf", which must 
+      be started in the directory src before "make xvcg".
+
+
+SETUPS FOR ULTRIX:
+-----------------
+
+In Makefile (top level):
+
+BINDIR     = /usr/local/bin/              
+MANDIR     = /usr/local/man/man1/              
+MANEXT     = 1
+VCGTOOL    = xvcg
+VCGCALL    = $(BINDIR)/$(VCGTOOL)
+CFLAGS     = -c -O -DULTRIX               
+DFLAGS     =
+CLINKFLAGS = -o
+INCLUDES   = 
+LIBPATH    = 
+LIBRARIES  = -lXext -lX11 -lm
+CC         = /usr/local/bin/gcc
+CCLINK     = /usr/local/bin/gcc
+CPP        = $(CC) -E
+INSTALLDIR = /usr/bin/install -d -m 755
+INSTALL    = /usr/bin/install -s -m 755 dummy /usr/local/bin/dummy
+INSTALLMAN = /usr/bin/install -m 644 dummy /usr/local/man/man1/dummy 
+BIGLATEX   = big-latex
+TRANSFIGPS = fig2dev
+LEX        = flex
+YACC       = bison -ydt
+MAKE       = /bin/make
+DEPEND     = makedepend
+SED        = /bin/sed
+MV         = /bin/mv
+LN         = /bin/ln
+RM         = /bin/rm
+CD         = cd
+TOUCH      = /usr/bin/touch
+
+
+
+In src/globals.h:
+
+#define ANSI_C
+#undef  NO_STDINCLUDES
+#define USR_SIGNAL
+#undef  OWN_QUICKSORT
+#define X11
+#define ALIGN  8
+#define MEMBLOCKSIZE 1048576
+#define VCG_DEFAULT_FONT "*-fixed-bold-r-*--13-*iso8859-1"
+#define NOINPUTFOCUS
+#undef  DEBUG
+#define CHECK_ASSERTIONS
+#undef  ASSERT_AVAIL
+#undef  CHECK_TIMING
+
+
+In demo/demo/csh:
+
+set mvcgn   = "/usr/local/bin/xvcg"
+set mycat   = "/bin/cat"
+set myrm    = "/bin/rm"
+set mysleep = "/usr/bin/sleep"
+set mysed   = "/bin/sed"
+set mywc    = "/usr/ucb/wc"
+set mygrep  = "/usr/bin/fgrep"
+set myclear = "/usr/ucb/clear"
+
+
+
+
+LIST OF SUBSTITUTES as produced by config
+-----------------------------------------
+(Sorry, but I don't have this information for a DecStation, ULTRIX.
+ Please, simply try it.)
+
+

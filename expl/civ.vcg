@@ -1,0 +1,207 @@
+/* SCCS-info %W% %E% */
+/* $Id: civ.vcg,v 1.4 1995/02/08 11:09:19 sander Exp $ */
+
+graph: { 
+title: "Civilisation Advances"
+layoutalgorithm: minbackward
+nearedges: no
+crossing_weight: median
+x: 30
+y: 30
+height: 700
+width: 700
+shrink: 2
+stretch: 1
+color: lightgreen
+
+node.color: pink
+node: { title: "01" label: "Irrigation" }
+node: { title: "02" label: "Roads" }
+node: { title: "03" label: "Mining" }
+node: { title: "04" label: "Pottery" }
+node: { title: "05" label: "Alphabet" }
+node: { title: "06" label: "Masonry" }
+node: { title: "07" label: "Ceremonial Burial" }
+node: { title: "08" label: "Bronze Working" }
+node: { title: "09" label: "The Wheel" }
+node: { title: "10" label: "Horseback Riding" }
+node: { title: "11" label: "Map Making" }
+node: { title: "12" label: "Mathematics" }
+node: { title: "13" label: "Writing" }
+node: { title: "14" label: "Mysticism" }
+node: { title: "15" label: "Code of Laws" }
+node: { title: "16" label: "Currency" }
+node: { title: "17" label: "Iron Working" }
+node: { title: "18" label: "Astronomy" }
+node: { title: "19" label: "Literacy" }
+node: { title: "20" label: "Construction" }
+node: { title: "21" label: "Monarchy" }
+node: { title: "22" label: "Trade" }
+node: { title: "23" label: "Navigation" }
+node: { title: "24" label: "Philosophy" }
+node: { title: "25" label: "The Republic" }
+node: { title: "26" label: "Engeneering" }
+node: { title: "27" label: "Brige Building" }
+node: { title: "28" label: "Feudalism" }
+node: { title: "29" label: "Physics" }
+node: { title: "30" label: "Religion" }
+node: { title: "31" label: "University" }
+node: { title: "32" label: "Banking" }
+node: { title: "33" label: "Invention" }
+node: { title: "34" label: "Medecine" }
+node: { title: "35" label: "Democracy" }
+node: { title: "36" label: "Chivalry" }
+node: { title: "37" label: "Magnetism" }
+node: { title: "38" label: "Theory of Gravity" }
+node: { title: "39" label: "Steam Engine" }
+node: { title: "40" label: "Chemistry" }
+node: { title: "41" label: "Gunpowder" }
+node: { title: "42" label: "Atomic Thory" }
+node: { title: "43" label: "Rail Road" }
+node: { title: "44" label: "Explosives" }
+node: { title: "45" label: "Metalurgy" }
+node: { title: "46" label: "Industrialisation" }
+node: { title: "47" label: "Conscription" }
+node: { title: "48" label: "Electricity" }
+node: { title: "49" label: "The Corporation" }
+node: { title: "50" label: "Steel" }
+node: { title: "51" label: "Comunism" }
+node: { title: "52" label: "Electronics" }
+node: { title: "53" label: "Refining" }
+node: { title: "54" label: "Computers" }
+node: { title: "55" label: "Combustion" }
+node: { title: "56" label: "Flight" }
+node: { title: "57" label: "Automobil" }
+node: { title: "58" label: "Advanced Flight" }
+node: { title: "59" label: "Mass Production" }
+node: { title: "60" label: "Rocetry" }
+node: { title: "61" label: "Nuclear Fision" }
+node: { title: "62" label: "Space Flight" }
+node: { title: "63" label: "Genetic Engeneering" }
+node: { title: "64" label: "Recycling" }
+node: { title: "65" label: "Labor Union" }
+node: { title: "66" label: "Superconductor" }
+node: { title: "67" label: "Nuclear Power" }
+node: { title: "68" label: "Fusion Power" }
+node: { title: "69" label: "Plastics" }
+node: { title: "70" label: "Robotics" }
+
+edge: { color: lightblue sourcename: "05" targetname:"11" }
+edge: { color: lightblue sourcename: "05" targetname:"12" }
+edge: { color: lightblue sourcename: "05" targetname:"13" }
+edge: { color: lightblue sourcename: "05" targetname:"15" }
+edge: { color: lightblue sourcename: "06" targetname:"12" }
+edge: { color: lightblue sourcename: "06" targetname:"20" }
+edge: { color: lightblue sourcename: "06" targetname:"28" }
+edge: { color: lightblue sourcename: "07" targetname:"14" }
+edge: { color: lightblue sourcename: "07" targetname:"21" }
+edge: { color: lightblue sourcename: "08" targetname:"16" }
+edge: { color: lightblue sourcename: "08" targetname:"17" }
+edge: { color: lightblue sourcename: "09" targetname:"26" }
+edge: { color: lightblue sourcename: "10" targetname:"36" }
+edge: { color: lightblue sourcename: "11" targetname:"23" }
+edge: { color: lightblue sourcename: "12" targetname:"31" }
+edge: { color: lightblue sourcename: "12" targetname:"18" }
+edge: { color: lightblue sourcename: "13" targetname:"19" }
+edge: { color: lightblue sourcename: "14" targetname:"18" }
+edge: { color: lightblue sourcename: "14" targetname:"24" }
+edge: { color: lightblue sourcename: "15" targetname:"19" }
+edge: { color: lightblue sourcename: "15" targetname:"21" }
+edge: { color: lightblue sourcename: "15" targetname:"22" }
+edge: { color: lightblue sourcename: "16" targetname:"20" }
+edge: { color: lightblue sourcename: "16" targetname:"22" }
+edge: { color: lightblue sourcename: "17" targetname:"27" }
+edge: { color: lightblue sourcename: "17" targetname:"41" }
+edge: { color: lightblue sourcename: "18" targetname:"23" }
+edge: { color: lightblue sourcename: "18" targetname:"38" }
+edge: { color: lightblue sourcename: "19" targetname:"24" }
+edge: { color: lightblue sourcename: "19" targetname:"25" }
+edge: { color: lightblue sourcename: "19" targetname:"33" }
+edge: { color: lightblue sourcename: "20" targetname:"26" }
+edge: { color: lightblue sourcename: "20" targetname:"27" }
+edge: { color: lightblue sourcename: "21" targetname:"28" }
+edge: { color: lightblue sourcename: "22" targetname:"32" }
+edge: { color: lightblue sourcename: "22" targetname:"34" }
+
+edge: { color: lightblue sourcename: "23" targetname:"29" }
+edge: { color: lightblue sourcename: "24" targetname:"30" }
+edge: { color: lightblue sourcename: "24" targetname:"31" }
+edge: { color: lightblue sourcename: "24" targetname:"51" }
+edge: { color: lightblue sourcename: "24" targetname:"34" }
+edge: { color: lightblue sourcename: "24" targetname:"35" }
+edge: { color: lightblue sourcename: "25" targetname:"32" }
+edge: { color: lightblue sourcename: "25" targetname:"47" }
+edge: { color: lightblue sourcename: "26" targetname:"33" }
+edge: { color: lightblue sourcename: "26" targetname:"52" }
+edge: { color: lightblue sourcename: "27" targetname:"43" }
+edge: { color: lightblue sourcename: "28" targetname:"36" }
+
+edge: { color: lightblue sourcename: "29" targetname:"37" }
+edge: { color: lightblue sourcename: "29" targetname:"42" }
+edge: { color: lightblue sourcename: "29" targetname:"39" }
+edge: { color: lightblue sourcename: "29" targetname:"56" }
+edge: { color: lightblue sourcename: "31" targetname:"38" }
+edge: { color: lightblue sourcename: "31" targetname:"45" }
+edge: { color: lightblue sourcename: "31" targetname:"40" }
+edge: { color: lightblue sourcename: "32" targetname:"46" }
+edge: { color: lightblue sourcename: "33" targetname:"39" }
+edge: { color: lightblue sourcename: "33" targetname:"41" }
+edge: { color: lightblue sourcename: "34" targetname:"40" }
+edge: { color: lightblue sourcename: "34" targetname:"63" }
+edge: { color: lightblue sourcename: "35" targetname:"64" }
+
+edge: { color: lightblue sourcename: "37" targetname:"48" }
+edge: { color: lightblue sourcename: "38" targetname:"42" }
+edge: { color: lightblue sourcename: "39" targetname:"43" }
+edge: { color: lightblue sourcename: "40" targetname:"53" }
+edge: { color: lightblue sourcename: "40" targetname:"44" }
+edge: { color: lightblue sourcename: "41" targetname:"44" }
+edge: { color: lightblue sourcename: "41" targetname:"45" }
+
+edge: { color: lightblue sourcename: "42" targetname:"61" }
+edge: { color: lightblue sourcename: "43" targetname:"46" }
+edge: { color: lightblue sourcename: "44" targetname:"55" }
+edge: { color: lightblue sourcename: "44" targetname:"47" }
+edge: { color: lightblue sourcename: "45" targetname:"50" }
+edge: { color: lightblue sourcename: "45" targetname:"48" }
+
+edge: { color: lightblue sourcename: "46" targetname:"49" }
+edge: { color: lightblue sourcename: "46" targetname:"50" }
+edge: { color: lightblue sourcename: "46" targetname:"51" }
+edge: { color: lightblue sourcename: "48" targetname:"58" }
+edge: { color: lightblue sourcename: "48" targetname:"52" }
+
+edge: { color: lightblue sourcename: "49" targetname:"53" }
+edge: { color: lightblue sourcename: "49" targetname:"63" }
+edge: { color: lightblue sourcename: "49" targetname:"59" }
+edge: { color: lightblue sourcename: "50" targetname:"57" }
+edge: { color: lightblue sourcename: "51" targetname:"65" }
+edge: { color: lightblue sourcename: "52" targetname:"54" }
+edge: { color: lightblue sourcename: "52" targetname:"60" }
+edge: { color: lightblue sourcename: "53" targetname:"69" }
+
+edge: { color: lightblue sourcename: "53" targetname:"55" }
+edge: { color: lightblue sourcename: "54" targetname:"62" }
+
+edge: { color: lightblue sourcename: "55" targetname:"56" }
+edge: { color: lightblue sourcename: "55" targetname:"57" }
+
+edge: { color: lightblue sourcename: "56" targetname:"58" }
+edge: { color: lightblue sourcename: "57" targetname:"59" }
+
+edge: { color: lightblue sourcename: "58" targetname:"60" }
+edge: { color: lightblue sourcename: "59" targetname:"61" }
+edge: { color: lightblue sourcename: "59" targetname:"66" }
+edge: { color: lightblue sourcename: "59" targetname:"64" }
+edge: { color: lightblue sourcename: "59" targetname:"65" }
+
+edge: { color: lightblue sourcename: "60" targetname:"62" }
+edge: { color: lightblue sourcename: "61" targetname:"67" }
+edge: { color: lightblue sourcename: "62" targetname:"69" }
+
+edge: { color: lightblue sourcename: "66" targetname:"68" }
+edge: { color: lightblue sourcename: "67" targetname:"68" }
+edge: { color: lightblue sourcename: "69" targetname:"70" }
+
+
+}

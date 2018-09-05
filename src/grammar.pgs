@@ -1,0 +1,1439 @@
+/* SCCS-info %W% %E% */
+
+/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*              VCG : Visualization of Compiler Graphs                */
+/*              --------------------------------------                */
+/*                                                                    */
+/*   file:         grammar.pgs                                        */
+/*   version:      1.00.00                                            */
+/*   creation:     1.4.1993                                           */
+/*   author:       I. Lemke  (...-Version 0.99.99)                    */
+/*                 G. Sander (Version 1.00.00-...)                    */  
+/*                 Universitaet des Saarlandes, 66041 Saarbruecken    */
+/*                 ESPRIT Project #5399 Compare                       */
+/*   description:  Specification language (parsegen input)            */
+/*   status:       in work                                            */
+/*                                                                    */
+/*--------------------------------------------------------------------*/
+
+
+%%FILENAME grammar
+%%PREFIX   
+ 
+%%INCLUDES
+
+#ifndef lint
+static char *id_string="$Id: grammar.pgs,v 3.17 1995/02/08 18:35:02 sander Exp $";
+#endif
+
+/*
+ *   Copyright (C) 1993-2005 Saarland University
+ *
+ *  This program and documentation is free software; you can redistribute 
+ *  it under the terms of the  GNU General Public License as published by
+ *  the  Free Software Foundation;  either version 2  of the License,  or
+ *  (at your option) any later version.
+ *
+ *  This  program  is  distributed  in  the hope that it will be useful,
+ *  but  WITHOUT ANY WARRANTY;  without  even  the  implied  warranty of
+ *  MERCHANTABILITY  or  FITNESS  FOR  A  PARTICULAR  PURPOSE.  See  the
+ *  GNU General Public License for more details.
+ *
+ *  You  should  have  received a copy of the GNU General Public License
+ *  along  with  this  program;  if  not,  write  to  the  Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *  The software is available per anonymous ftp at ftp.cs.uni-sb.de.
+ *  Contact  sander@cs.uni-sb.de  for additional information.
+ */
+
+
+/* $Log: grammar.pgs,v $
+# Revision 3.17  1995/02/08  18:35:02  sander
+# Small bug for K&R C corrected.
+#
+# Revision 3.16  1995/02/08  11:11:14  sander
+# Distribution version 1.3.
+#
+# Revision 3.15  1994/12/23  18:12:45  sander
+# Manhatten layout added.
+#
+# Revision 3.14  1994/11/23  14:50:47  sander
+# Hash table to 22079 expanded. Better string hash function implemented.
+#
+# Revision 3.13  1994/08/08  16:01:47  sander
+# Attributes xraster, xlraster, yraster added.
+#
+# Revision 3.12  1994/08/05  12:13:25  sander
+# Treelayout added. Attributes "treefactor" and "spreadlevel" added.
+# Scaling as abbreviation of "stretch/shrink" added.
+#
+# Revision 3.11  1994/08/04  08:58:20  sander
+# Attributes crossing_weight and crossing_optimization added.
+#
+# Revision 3.10  1994/08/03  13:58:44  sander
+# Horizontal order mechanism changed.
+# Attribute horizontal_order for edges added.
+#
+# Revision 3.9  1994/06/07  14:09:59  sander
+# Splines implemented.
+# HP-UX, Linux, AIX, Sun-Os, IRIX compatibility tested.
+# The tool is now ready to be distributed.
+#
+# Revision 3.8  1994/05/17  16:35:59  sander
+# attribute node_align added to allow nodes to be centered in the levels.
+#
+# Revision 3.7  1994/05/16  08:56:03  sander
+# shape attribute (boxes, rhombs, ellipses, triangles) added.
+#
+# Revision 3.6  1994/05/05  08:20:30  sander
+# Algorithm late labels added: If labels are inserted
+# after partitioning, this may yield a better layout.
+#
+# Revision 3.5  1994/04/27  16:05:19  sander
+# attributes of graph nodes adapted to the of normal nodes.
+#
+# Revision 3.4  1994/03/04  19:11:24  sander
+# Specification of levels per node added.
+# X11 geometry behaviour (option -geometry) changed such
+# that the window is now opened automatically.
+#
+# Revision 3.3  1994/03/03  15:35:39  sander
+# Edge line style `invisible' added.
+#
+# Revision 3.2  1994/03/02  11:48:54  sander
+# Layoutalgoritms mindepthslow, maxdepthslow, minindegree, ... mandegree
+# added.
+# Anchors and nearedges are not anymore allowed to be intermixed.
+# Escapes in strings are now allowed.
+#
+# Revision 3.1  1994/03/01  10:59:55  sander
+# Copyright and Gnu Licence message added.
+# Problem with "nearedges: no" and "selfloops" solved.
+#
+# Revision 2.4  1994/02/13  17:25:54  sander
+# attribute 'finetuning' added.
+#
+# Revision 2.3  1994/01/21  19:33:46  sander
+# VCG Version tested on Silicon Graphics IRIX, IBM R6000 AIX and Sun 3/60.
+# Option handling improved. Option -grabinputfocus installed.
+# X11 Font selection scheme implemented. The user can now select a font
+# during installation.
+# Sun K&R C (a nonansi compiler) tested. Some portabitility problems solved.
+#
+# Revision 2.1  1993/12/08  21:19:21  sander
+# Reasonable fast and stable version
+#
+ */
+
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
+#include "globals.h"
+#include "main.h"
+#include "options.h"
+
+#ifndef YY_CHAR
+#define YY_CHAR char
+extern YY_CHAR *yytext;
+#endif
+
+/* the following is added for flex 2.4.6 */
+
+#ifndef YY_MALLOC_DECL
+#define YY_MALLOC_DECL
+#include <malloc.h>
+#endif
+ 
+#undef YYVALGLOBAL
+ 
+extern yysyntaxtree Syntax_Tree;
+
+#define exit(a) gs_exit(a)
+extern void gs_exit            _PP((int x));
+ 
+void   line_directive _PP((char *text));
+void   escape_transl  _PP((char *text));
+char  *my_itoa        _PP((int x));
+long   long_atoi      _PP((char *c));
+void   syntaxerror    _PP((int line,int pos,char *mesge));
+void   warning        _PP((int line,int pos,char *mesge));
+ 
+#ifndef yysyntaxerror
+#define yysyntaxerror(l,p,m) syntaxerror(l,p,m)
+#endif
+ 
+#ifndef yyerror
+#define yyerror(x) { \
+        SPRINTF(message,"unexpected %s \"%s\" (%s)", \
+                 ((yychar<0)?"(?)":yytokname[YYTRANSLATE(yychar)]),     \
+                 (strlen(yytext)<48?yytext:"(?)"),x); \
+        syntaxerror(line_nr,pos_nr,message);\
+    }
+#endif
+ 
+/* Memory Management */
+
+#ifdef MEMBLOCKSIZE
+#define PARSEBLOCKSIZE (MEMBLOCKSIZE/sizeof(struct stree_node)+1)
+#endif
+
+/* Hash Table */
+
+#define hash_size 22079
+ 
+
+%%CLASSES
+
+LETTER		[a-zA-Z]
+DIGIT		[0-9]
+INT		(\-)?{DIGIT}+
+REAL		{INT}\.{INT}([E](\+|\-)?{INT})?
+CHAR            '([^\\\']|\\.)+'
+STRQ		[^\\\"]|\\.
+STRING		\"({STRQ}*)\"
+COMM		\/\*[^\*]*\*+([^\*\/][^\*]*\*+)*\/
+COMME		\/\/[^\n]*
+WSPACE          [ \t\f]*
+LINEDIR1        {WSPACE}#{WSPACE}"line"?{WSPACE}{INT}{WSPACE}{STRING}.*\n
+LINEDIR2        {WSPACE}#{WSPACE}"line"?{WSPACE}{INT}[^\"]*\n
+PRAGMADIR       {WSPACE}#{WSPACE}"pragma".*\n
+
+
+%%TOKENS
+
+"above"			{ RETURN(LEXWORD_ABOVE);               }
+"anchor_points"		{ RETURN(LEXWORD_ANCHORPOINTS);        }
+"anchorpoints"		{ RETURN(LEXWORD_ANCHORPOINTS);        }
+"anchor"		{ RETURN(LEXWORD_ANCHOR);              }
+"aquamarine"		{ RETURN(LEXWORD_AQUAMARINE);          }
+"around"		{ RETURN(LEXWORD_AROUND);              }
+"arrow_mode"		{ RETURN(LEXWORD_ARROWMODE);           }
+"arrowmode"		{ RETURN(LEXWORD_ARROWMODE);           }
+"arrow_height"		{ RETURN(LEXWORD_ARROWHEIGHT);         }
+"arrowheight"		{ RETURN(LEXWORD_ARROWHEIGHT);         }
+"arrow_width"		{ RETURN(LEXWORD_ARROWWIDTH);          }
+"arrowwidth"		{ RETURN(LEXWORD_ARROWWIDTH);          }
+"arrow_color"		{ RETURN(LEXWORD_ARROWCOLOR);          }
+"arrowcolor"		{ RETURN(LEXWORD_ARROWCOLOR);          }
+"arrow_style"		{ RETURN(LEXWORD_ARROWSTYLE);          }
+"arrowstyle"		{ RETURN(LEXWORD_ARROWSTYLE);          }
+"arrow_size"		{ RETURN(LEXWORD_ARROWSIZE);           }
+"arrowsize"		{ RETURN(LEXWORD_ARROWSIZE);           }
+"back_arrow_color"	{ RETURN(LEXWORD_BARROWCOLOR);         }
+"backarrow_color"	{ RETURN(LEXWORD_BARROWCOLOR);         }
+"backarrowcolor"	{ RETURN(LEXWORD_BARROWCOLOR);         }
+"back_arrow_style"	{ RETURN(LEXWORD_BARROWSTYLE);         }
+"backarrow_style"	{ RETURN(LEXWORD_BARROWSTYLE);         }
+"backarrowstyle"	{ RETURN(LEXWORD_BARROWSTYLE);         }
+"back_arrow_size"	{ RETURN(LEXWORD_BARROWSIZE);          }
+"backarrow_size"	{ RETURN(LEXWORD_BARROWSIZE);          }
+"backarrowsize"		{ RETURN(LEXWORD_BARROWSIZE);          }
+"back_edge:"		{ RETURN(LEXWORD_BACKEDGE);            }
+"backedge:"		{ RETURN(LEXWORD_BACKEDGE);            }
+"bary_center"		{ RETURN(LEXWORD_BARYCENTER);          }
+"barycenter"		{ RETURN(LEXWORD_BARYCENTER);          }
+"bary"			{ RETURN(LEXWORD_BARY);                }
+"barymedian"   	 	{ RETURN(LEXWORD_BARYMEDIAN);          } 
+"behind"		{ RETURN(LEXWORD_BEHIND);              }
+"below"			{ RETURN(LEXWORD_BELOW);               }
+"black"			{ RETURN(LEXWORD_BLACK);               }
+"blue"			{ RETURN(LEXWORD_BLUE);                }
+"bmax"			{ RETURN(LEXWORD_BMAX);                }
+"border_color"		{ RETURN(LEXWORD_BORDERCOLOR);         }
+"bordercolor"		{ RETURN(LEXWORD_BORDERCOLOR);         }
+"border_width"		{ RETURN(LEXWORD_BORDERWIDTH);         }
+"borderwidth"		{ RETURN(LEXWORD_BORDERWIDTH);         }
+"bottom_margin"		{ RETURN(LEXWORD_BOTTOM_MARGIN);       }
+"bottommargin"		{ RETURN(LEXWORD_BOTTOM_MARGIN);       }
+"bottomtotop"		{ RETURN(LEXWORD_BOTTOM_TO_TOP);       }
+"bottom_to_top"		{ RETURN(LEXWORD_BOTTOM_TO_TOP);       }
+"bottom"		{ RETURN(LEXWORD_BOTTOM);              }
+"box"			{ RETURN(LEXWORD_BOX);                 }
+"bent_near_edge:"	{ RETURN(LEXWORD_BENTNEAREDGE);        }
+"bent_nearedge:"	{ RETURN(LEXWORD_BENTNEAREDGE);        }
+"bentnearedge:"		{ RETURN(LEXWORD_BENTNEAREDGE);        }
+"center"		{ RETURN(LEXWORD_CENTER);              }
+"cfish"			{ RETURN(LEXWORD_CFISH);               }
+"class_name"		{ RETURN(LEXWORD_CLASSNAME);           }
+"classname"		{ RETURN(LEXWORD_CLASSNAME);           }
+"class"			{ RETURN(LEXWORD_CLASS);               }
+"cluster"		{ RETURN(LEXWORD_CLUSTER);             }
+"cmin"			{ RETURN(LEXWORD_CMIN);                }
+"cmax"			{ RETURN(LEXWORD_CMAX);                }
+"color_entry"		{ RETURN(LEXWORD_COLORENTRY);          }
+"colorentry"		{ RETURN(LEXWORD_COLORENTRY);          }
+"color"			{ RETURN(LEXWORD_COLOR);               }
+"constraints"		{ RETURN(LEXWORD_CONSTRAINTS);         }
+"constraint:"		{ RETURN(LEXWORD_CONSTRAINT);          }
+"continuous"		{ RETURN(LEXWORD_CONTINUOUS);          }
+"crossing_weight"       { RETURN(LEXWORD_CROSSING_WEIGHT);     }
+"crossingweight"        { RETURN(LEXWORD_CROSSING_WEIGHT);     }
+"crossing_optimization" { RETURN(LEXWORD_CROSSING_OPT);        }
+"crossingoptimization"  { RETURN(LEXWORD_CROSSING_OPT);        }
+"crossing_phase2" 	{ RETURN(LEXWORD_CROSSING_P2);         }
+"crossingphase2"  	{ RETURN(LEXWORD_CROSSING_P2);         }
+"cyan"			{ RETURN(LEXWORD_CYAN);                }
+"darkblue"		{ RETURN(LEXWORD_DARKBLUE);            }
+"darkcyan"		{ RETURN(LEXWORD_DARKCYAN);            }
+"darkgreen"		{ RETURN(LEXWORD_DARKGREEN);           }
+"darkgray"		{ RETURN(LEXWORD_DARKGREY);            }
+"darkgrey"		{ RETURN(LEXWORD_DARKGREY);            }
+"darkmagenta"		{ RETURN(LEXWORD_DARKMAGENTA);         }
+"darkred"		{ RETURN(LEXWORD_DARKRED);             }
+"darkyellow"		{ RETURN(LEXWORD_DARKYELLOW);          }
+"dashed"		{ RETURN(LEXWORD_DASHED);              } 
+"depth_first_search"	{ RETURN(LEXWORD_DFS);   	       } 
+"depthfirstsearch"	{ RETURN(LEXWORD_DFS);   	       } 
+"dfs"			{ RETURN(LEXWORD_DFS);   	       } 
+"dimension"		{ RETURN(LEXWORD_DIMENSION);           }
+"dirtyedgelabels"	{ RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
+"dirty_edge_labels"	{ RETURN(LEXWORD_DIRTY_EDGE_LABELS);   }
+"displayedgelabels"	{ RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
+"display_edge_labels"	{ RETURN(LEXWORD_DISPLAY_EDGE_LABELS); }
+"dotted"		{ RETURN(LEXWORD_DOTTED);              }
+"edge."			{ RETURN(LEXWORD_EDGE1);               }
+"edge:"			{ RETURN(LEXWORD_EDGE2);               }
+"edges"			{ RETURN(LEXWORD_EDGES);               }
+"ellipse"		{ RETURN(LEXWORD_ELLIPSE);             }
+"equalcolumn"		{ RETURN(LEXWORD_EQUAL_COLUMN);        }
+"equal_column"		{ RETURN(LEXWORD_EQUAL_COLUMN);        }
+"equalposition"		{ RETURN(LEXWORD_EQUAL_POSITION);      }
+"equal_position"	{ RETURN(LEXWORD_EQUAL_POSITION);      }
+"equalrow"		{ RETURN(LEXWORD_EQUAL_ROW);           }
+"equal_row"		{ RETURN(LEXWORD_EQUAL_ROW);           }
+"equal"			{ RETURN(LEXWORD_EQUAL);               }
+"every"			{ RETURN(LEXWORD_EVERY);               }
+"fcfish"		{ RETURN(LEXWORD_FCFISH);              }
+"fpfish"		{ RETURN(LEXWORD_FPFISH);              }
+"fixed"			{ RETURN(LEXWORD_FIXED);               }
+"free"			{ RETURN(LEXWORD_FREE);                }
+"fine_tuning"		{ RETURN(LEXWORD_FINETUNING);          }
+"finetuning"		{ RETURN(LEXWORD_FINETUNING);          }
+"fold_edge."		{ RETURN(LEXWORD_FOLDEDGE);            }
+"foldedge."		{ RETURN(LEXWORD_FOLDEDGE);            }
+"fold_node."		{ RETURN(LEXWORD_FOLDNODE);            }
+"foldnode."		{ RETURN(LEXWORD_FOLDNODE);            }
+"folding"		{ RETURN(LEXWORD_FOLDING);             }
+"font_name"		{ RETURN(LEXWORD_FONTNAME);            }
+"fontname"		{ RETURN(LEXWORD_FONTNAME);            }
+"gold"			{ RETURN(LEXWORD_GOLD);                }
+"graph:"		{ RETURN(LEXWORD_GRAPH);               }
+"greater"		{ RETURN(LEXWORD_GREATER);             }
+"green"			{ RETURN(LEXWORD_GREEN);               }
+"gray"			{ RETURN(LEXWORD_GREY);                }
+"grey"			{ RETURN(LEXWORD_GREY);                }
+"height"		{ RETURN(LEXWORD_HEIGHT);              }
+"hidesingles"		{ RETURN(LEXWORD_HIDESINGLES);         }
+"hide_singles"		{ RETURN(LEXWORD_HIDESINGLES);         }
+"highmargin"		{ RETURN(LEXWORD_HIGH_MARGIN);         }
+"high_margin"		{ RETURN(LEXWORD_HIGH_MARGIN);         }
+"high"			{ RETURN(LEXWORD_HIGH);		       }
+"hidden"		{ RETURN(LEXWORD_HIDDEN);              }
+"horizontalorder"	{ RETURN(LEXWORD_HORDER);              }
+"horizontal_order"	{ RETURN(LEXWORD_HORDER);              }
+"icon_file"		{ RETURN(LEXWORD_ICONFILE);            }
+"iconfile"		{ RETURN(LEXWORD_ICONFILE);            }
+"icon_height"		{ RETURN(LEXWORD_ICONHEIGHT);          }
+"iconheight"		{ RETURN(LEXWORD_ICONHEIGHT);          }
+"icon_style"		{ RETURN(LEXWORD_ICONSTYLE);           }
+"iconstyle"		{ RETURN(LEXWORD_ICONSTYLE);           }
+"icon_width"		{ RETURN(LEXWORD_ICONWIDTH);           }
+"iconwidth"		{ RETURN(LEXWORD_ICONWIDTH);           }
+"ignore_singles"	{ RETURN(LEXWORD_HIDESINGLES);         }
+"ignoresingles"		{ RETURN(LEXWORD_HIDESINGLES);         }
+"include"		{ RETURN(LEXWORD_INCLUDE);             }
+"infoname"		{ RETURN(LEXWORD_INFONAME);            }
+"info1"			{ RETURN(LEXWORD_INFO1);               }
+"info2"			{ RETURN(LEXWORD_INFO2);               }
+"info3"			{ RETURN(LEXWORD_INFO3);               }
+"input_function"	{ RETURN(LEXWORD_INPUTFUNCTION);       }
+"inputfunction"		{ RETURN(LEXWORD_INPUTFUNCTION);       }
+"interval"		{ RETURN(LEXWORD_INTERVAL);            }
+"invisible"		{ RETURN(LEXWORD_INVISIBLE);           }
+"in_front"		{ RETURN(LEXWORD_IN_FRONT);            }
+"isi"			{ RETURN(LEXWORD_ISI);                 }
+"khaki"			{ RETURN(LEXWORD_KHAKI);               }
+"label_color"		{ RETURN(LEXWORD_TEXTCOLOR);           }
+"labelcolor"		{ RETURN(LEXWORD_TEXTCOLOR);           }
+"label"			{ RETURN(LEXWORD_LABEL);               }
+"lateedgelabels"     	{ RETURN(LEXWORD_LATE_LABELS);         }
+"late_edge_labels"     	{ RETURN(LEXWORD_LATE_LABELS);         }
+"layout_algorithm"	{ RETURN(LEXWORD_LAYOUTALGORITHM);     }
+"layoutalgorithm"	{ RETURN(LEXWORD_LAYOUTALGORITHM);     }
+"layout_frequency"	{ RETURN(LEXWORD_LAYOUTFREQUENCY);     }
+"layoutfrequency"	{ RETURN(LEXWORD_LAYOUTFREQUENCY);     }
+"layout_parameter"	{ RETURN(LEXWORD_LAYOUTPARAMETER);     }
+"layoutparameter"	{ RETURN(LEXWORD_LAYOUTPARAMETER);     }
+"layoutdownfactor"	{ RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
+"layout_downfactor"	{ RETURN(LEXWORD_LAYOUTDOWNFACTOR);    }
+"layoutupfactor"	{ RETURN(LEXWORD_LAYOUTUPFACTOR);      }
+"layout_upfactor"	{ RETURN(LEXWORD_LAYOUTUPFACTOR);      }
+"layoutnearfactor"	{ RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
+"layout_nearfactor"	{ RETURN(LEXWORD_LAYOUTNEARFACTOR);    }
+"layoutsplinefactor"	{ RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"layout_splinefactor"	{ RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"leftjustify"		{ RETURN(LEXWORD_LEFT_JUSTIFY);        } 
+"left_justify"		{ RETURN(LEXWORD_LEFT_JUSTIFY);        } 
+"leftmargin"		{ RETURN(LEXWORD_LEFT_MARGIN);         } 
+"left_margin"		{ RETURN(LEXWORD_LEFT_MARGIN);         } 
+"leftneighbor"		{ RETURN(LEXWORD_LEFT_NEIGHBOR);       }
+"left_neighbor"		{ RETURN(LEXWORD_LEFT_NEIGHBOR);       }
+"lefttoright"		{ RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
+"left_to_right"		{ RETURN(LEXWORD_LEFT_TO_RIGHT);       } 
+"left"			{ RETURN(LEXWORD_LEFT);                }
+"level"			{ RETURN(LEXWORD_LEVEL);               }
+"verticalorder"		{ RETURN(LEXWORD_VORDER);              }
+"vertical_order"	{ RETURN(LEXWORD_VORDER);              }
+"lightblue"		{ RETURN(LEXWORD_LIGHTBLUE);           }
+"lightcyan"		{ RETURN(LEXWORD_LIGHTCYAN);           }
+"lightgreen"		{ RETURN(LEXWORD_LIGHTGREEN);          }
+"lightgray"		{ RETURN(LEXWORD_LIGHTGREY);           }
+"lightgrey"		{ RETURN(LEXWORD_LIGHTGREY);           }
+"lightmagenta"		{ RETURN(LEXWORD_LIGHTMAGENTA);        }
+"lightred"		{ RETURN(LEXWORD_LIGHTRED);            }
+"lightyellow"		{ RETURN(LEXWORD_LIGHTYELLOW);         }
+"lilac"			{ RETURN(LEXWORD_LILAC);               }
+"limit"			{ RETURN(LEXWORD_LIMIT);               } 
+"line"			{ RETURN(LEXWORD_LINE);                } 
+"line_style"		{ RETURN(LEXWORD_LINESTYLE);           } 
+"linestyle"		{ RETURN(LEXWORD_LINESTYLE);           } 
+"loc:"			{ RETURN(LEXWORD_LOC);                 }
+"lowerneighbor"		{ RETURN(LEXWORD_LOWER_NEIGHBOR);      }
+"lower_neighbor"	{ RETURN(LEXWORD_LOWER_NEIGHBOR);      }
+"lowmargin"		{ RETURN(LEXWORD_LOW_MARGIN);          } 
+"low_margin"		{ RETURN(LEXWORD_LOW_MARGIN);          } 
+"low"			{ RETURN(LEXWORD_LOW);                 } 
+"magenta"		{ RETURN(LEXWORD_MAGENTA);             }
+"manhattenedges"	{ RETURN(LEXWORD_MANHATTEN);           } 
+"manhattanedges"	{ RETURN(LEXWORD_MANHATTEN);           } 
+"manhatten_edges"	{ RETURN(LEXWORD_MANHATTEN);           } 
+"manhattan_edges"	{ RETURN(LEXWORD_MANHATTEN);           } 
+"manual"		{ RETURN(LEXWORD_MANUAL);              } 
+"maxdepthslow"		{ RETURN(LEXWORD_MAXDEPTHSLOW);        } 
+"maxdepth"		{ RETURN(LEXWORD_MAXDEPTH);            } 
+"maxdegree"		{ RETURN(LEXWORD_MAXDEGREE);           } 
+"maxindegree"		{ RETURN(LEXWORD_MAXINDEGREE);         } 
+"maxoutdegree"		{ RETURN(LEXWORD_MAXOUTDEGREE);        } 
+"median"      	 	{ RETURN(LEXWORD_MEDIAN);              } 
+"medianbary"   	 	{ RETURN(LEXWORD_MEDIANBARY);          } 
+"mindepthslow"		{ RETURN(LEXWORD_MINDEPTHSLOW);        } 
+"mindepth"		{ RETURN(LEXWORD_MINDEPTH);            } 
+"mindegree"		{ RETURN(LEXWORD_MINDEGREE);           } 
+"minindegree"		{ RETURN(LEXWORD_MININDEGREE);         } 
+"minoutdegree"		{ RETURN(LEXWORD_MINOUTDEGREE);        } 
+"minbackward"		{ RETURN(LEXWORD_MINBACK);             } 
+"name"			{ RETURN(LEXWORD_NAME);                } 
+"near_edge:"		{ RETURN(LEXWORD_NEAREDGE);            }
+"nearedge:"		{ RETURN(LEXWORD_NEAREDGE);            }
+"neighbors"		{ RETURN(LEXWORD_NEIGHBORS);           } 
+"near_edges"		{ RETURN(LEXWORD_NEAREDGES);           }
+"nearedges"		{ RETURN(LEXWORD_NEAREDGES);           }
+"nonearedges"		{ RETURN(LEXWORD_NONEAREDGES);         }
+"no_near_edges"		{ RETURN(LEXWORD_NONEAREDGES);         }
+"no_nearedges"		{ RETURN(LEXWORD_NONEAREDGES);         }
+"node."			{ RETURN(LEXWORD_NODE1);               }
+"node:"			{ RETURN(LEXWORD_NODE2);               }
+"nodes"			{ RETURN(LEXWORD_NODES);               }
+"nodealignment"     	{ RETURN(LEXWORD_NODE_ALIGN);          }
+"node_alignment"     	{ RETURN(LEXWORD_NODE_ALIGN);          }
+"none"			{ RETURN(LEXWORD_NONE);                }
+"no"			{ RETURN(LEXWORD_NO);                  }
+"orange"		{ RETURN(LEXWORD_ORANGE);              }
+"orchid"		{ RETURN(LEXWORD_ORCHID);              }
+"orientation"		{ RETURN(LEXWORD_ORIENTATION);         } 
+"output_function"	{ RETURN(LEXWORD_OUTPUTFUNCTION);      }
+"outputfunction"	{ RETURN(LEXWORD_OUTPUTFUNCTION);      }
+"pfish"			{ RETURN(LEXWORD_PFISH);               }
+"pink"			{ RETURN(LEXWORD_PINK);                }
+"planar"		{ RETURN(LEXWORD_PLANAR);              }
+"pmin"			{ RETURN(LEXWORD_PMIN);                }
+"pmax"			{ RETURN(LEXWORD_PMAX);                }
+"portsharing"		{ RETURN(LEXWORD_PORTSHARING);         } 
+"port_sharing"		{ RETURN(LEXWORD_PORTSHARING);         } 
+"priorityphase"		{ RETURN(LEXWORD_PRIORITYPHASE);       }
+"priority_phase"	{ RETURN(LEXWORD_PRIORITYPHASE);       }
+"priority"		{ RETURN(LEXWORD_PRIORITY);            }
+"purple"		{ RETURN(LEXWORD_PURPLE);              } 
+"range"			{ RETURN(LEXWORD_RANGE);               } 
+"red"			{ RETURN(LEXWORD_RED);                 }
+"rhomb"			{ RETURN(LEXWORD_RHOMB);               }
+"rightjustify"		{ RETURN(LEXWORD_RIGHT_JUSTIFY);       }
+"right_justify"		{ RETURN(LEXWORD_RIGHT_JUSTIFY);       }
+"rightmargin"		{ RETURN(LEXWORD_RIGHT_MARGIN);        }
+"right_margin"		{ RETURN(LEXWORD_RIGHT_MARGIN);        }
+"rightneighbor"		{ RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
+"right_neighbor"	{ RETURN(LEXWORD_RIGHT_NEIGHBOR);      }
+"righttoleft"		{ RETURN(LEXWORD_RIGHT_TO_LEFT);       }
+"right_to_left"		{ RETURN(LEXWORD_RIGHT_TO_LEFT);       }
+"right"			{ RETURN(LEXWORD_RIGHT);               }
+"rmin"			{ RETURN(LEXWORD_RMIN);                }
+"rmax"			{ RETURN(LEXWORD_RMAX);                }
+"scaling"		{ RETURN(LEXWORD_SCALING);             }
+"shape"			{ RETURN(LEXWORD_SHAPE);               }
+"shrink"		{ RETURN(LEXWORD_SHRINK);              }
+"smax"			{ RETURN(LEXWORD_SMAX);                }
+"smanhattenedges"	{ RETURN(LEXWORD_SMANHATTEN);          } 
+"smanhattanedges"	{ RETURN(LEXWORD_SMANHATTEN);          } 
+"smanhatten_edges"	{ RETURN(LEXWORD_SMANHATTEN);          } 
+"smanhattan_edges"	{ RETURN(LEXWORD_SMANHATTEN);          } 
+"size"			{ RETURN(LEXWORD_SIZE);                }
+"smaller"		{ RETURN(LEXWORD_SMALLER);             }
+"solid"			{ RETURN(LEXWORD_SOLID);               }
+"source_name"		{ RETURN(LEXWORD_SOURCENAME);          }
+"sourcename"		{ RETURN(LEXWORD_SOURCENAME);          }
+"splines"		{ RETURN(LEXWORD_SPLINES);             }
+"spline_factor"		{ RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"splinefactor"		{ RETURN(LEXWORD_LAYOUTSPLINEFACTOR);  }
+"spread_level"		{ RETURN(LEXWORD_SPREADLEVEL);         }
+"spreadlevel"		{ RETURN(LEXWORD_SPREADLEVEL);         }
+"status"		{ RETURN(LEXWORD_STATUS);              }
+"stretch"		{ RETURN(LEXWORD_STRETCH);             }
+"straightphase"		{ RETURN(LEXWORD_STRAIGHTPHASE);       }
+"straight_phase"	{ RETURN(LEXWORD_STRAIGHTPHASE);       }
+"target_name"		{ RETURN(LEXWORD_TARGETNAME);          }
+"targetname"		{ RETURN(LEXWORD_TARGETNAME);          }
+"text_color"		{ RETURN(LEXWORD_TEXTCOLOR);           }
+"textcolor"		{ RETURN(LEXWORD_TEXTCOLOR);           }
+"text_mode"		{ RETURN(LEXWORD_TEXTMODE);            }
+"textmode"		{ RETURN(LEXWORD_TEXTMODE);            }
+"thickness"		{ RETURN(LEXWORD_THICKNESS);           }
+"title"			{ RETURN(LEXWORD_TITLE);               } 
+"top_sort"              { RETURN(LEXWORD_TOPSORT);             }
+"topsort"               { RETURN(LEXWORD_TOPSORT);             }
+"topmargin"		{ RETURN(LEXWORD_TOP_MARGIN);          }
+"top_margin"		{ RETURN(LEXWORD_TOP_MARGIN);          }
+"toptobottom"		{ RETURN(LEXWORD_TOP_TO_BOTTOM);       }
+"top_to_bottom"		{ RETURN(LEXWORD_TOP_TO_BOTTOM);       }
+"top"			{ RETURN(LEXWORD_TOP);                 } 
+"tree"			{ RETURN(LEXWORD_TREE);                }
+"tree_factor"		{ RETURN(LEXWORD_TREEFACTOR);          }
+"treefactor"		{ RETURN(LEXWORD_TREEFACTOR);          }
+"triangle"		{ RETURN(LEXWORD_TRIANGLE);            }
+"turquoise"		{ RETURN(LEXWORD_TURQUOISE);           }
+"type_name"		{ RETURN(LEXWORD_TYPENAME);            }
+"typename"		{ RETURN(LEXWORD_TYPENAME);            }
+"upperneighbor"		{ RETURN(LEXWORD_UPPER_NEIGHBOR);      }
+"upper_neighbor"	{ RETURN(LEXWORD_UPPER_NEIGHBOR);      }
+"view"			{ RETURN(LEXWORD_VIEW);                }
+"white"			{ RETURN(LEXWORD_WHITE);               }
+"width"			{ RETURN(LEXWORD_WIDTH);               }
+"xbase"			{ RETURN(LEXWORD_XBASE);               }
+"xmax"			{ RETURN(LEXWORD_XMAX);                }
+"xraster"		{ RETURN(LEXWORD_XRASTER);             }
+"xlraster"		{ RETURN(LEXWORD_XLRASTER);            }
+"xscrollbar"		{ RETURN(LEXWORD_XSCROLLBAR);          }
+"xspace"		{ RETURN(LEXWORD_XSPACE);              }
+"xlspace"		{ RETURN(LEXWORD_XLSPACE);             }
+"ybase"			{ RETURN(LEXWORD_YBASE);               }
+"yellowgreen"		{ RETURN(LEXWORD_YELLOWGREEN);         }
+"yellow"		{ RETURN(LEXWORD_YELLOW);              }
+"yes"			{ RETURN(LEXWORD_YES);                 }
+"ymax"			{ RETURN(LEXWORD_YMAX);                }
+"yraster"		{ RETURN(LEXWORD_YRASTER);             }
+"yscrollbar"		{ RETURN(LEXWORD_YSCROLLBAR);          }
+"yspace"		{ RETURN(LEXWORD_YSPACE);              }
+
+{LINEDIR1}              { line_directive(yytext);       }
+{LINEDIR2}              { line_directive(yytext);       }
+{PRAGMADIR}             { /* ignore pragma directive */ }
+
+[\f ]+			{ pos_nr+=strlen(yytext); }
+[\t]			{ pos_nr++;               }
+[\n]			{ line_nr++; pos_nr=1;    }
+
+{INT}			{ yylval.lnum = long_atoi(yytext); 
+			  RETURN(LEX_INT); 
+			}
+{REAL}			{ yylval.lrealnum = atof(yytext); 
+			  RETURN(LEX_FLOAT); 
+			}
+{CHAR}     	     	{ yylval.byte = yytext[1];
+               		  RETURN(LEX_CHAR);
+                	}
+{STRING}                { yytext[strlen(yytext)-1] = '\0';
+			  escape_transl(&(yytext[1]));
+	                  yylval.lnum = HashInsert(&(yytext[1]));
+			  SKIPYYTEXT;
+                          RETURN(LEX_STRING);
+                        }
+{COMM}			{ SKIPYYTEXT; }
+{COMME}			{ SKIPYYTEXT; }
+
+"{"			{ RETURN('{'); }
+"}"			{ RETURN('}'); }
+":"			{ RETURN(':'); }
+"x"			{ RETURN('x'); }
+"y"			{ RETURN('y'); }
+"z"			{ RETURN('z'); }
+"*"			{ RETURN('*'); }
+"["			{ RETURN('['); }
+"]"			{ RETURN(']'); }
+"-"			{ RETURN('-'); }
+
+
+
+%%FUNCTIONS
+
+
+/*--------------------------------------------------------------*/
+/*   Line directives                                            */
+/*--------------------------------------------------------------*/
+ 
+/*  Handle directive left by the C preprocessor, i.e.
+ *
+ *    # line 123 "foo.h"
+ *    # line 125
+ *    # 126 "foo.h" 2
+ *
+ *  et cetera.
+ */
+ 
+
+#ifdef ANSI_C 
+void line_directive(char *text)
+#else
+void line_directive(text)
+char *text;
+#endif
+{
+        char *c,*d;
+
+        c = d = text;
+        while ((*c) && (*c!='"')) c++;
+        while ((*d) && ((*d<'0') || (*d>'9'))) d++;
+ 
+        if (d<c) { line_nr = atoi(d); pos_nr = 0; }
+ 
+        if (*c) {
+                c++;
+                d = c;
+                while ((*d) && (*d!='"')) d++;
+                *d=0;
+                strcpy(filename, c);
+        }
+}
+
+
+/*--------------------------------------------------------------*/
+/*   Translate escape sequences in strings                      */
+/*--------------------------------------------------------------*/
+ 
+/*  Translate escape sequences in strings. The result remains
+ *  in text, because the result is shorter !
+ *
+ *   \\ -> \        \" -> "     \n -> CR    
+ *
+ *  et cetera.
+ */
+ 
+#ifdef ANSI_C 
+void escape_transl(char *text)
+#else
+void escape_transl(text)
+char *text;
+#endif
+{
+        char *c,*d;
+	int i;
+
+        c = d = text;
+	while (*c) {
+		if (*c == '\\') {
+			c++;
+			switch (*c) {
+#ifdef ANSI_C
+			case 'a' : *d++ = '\a'; break;
+#endif
+			case 'b' : *d++ = '\b'; break;
+			case 'f' : *d++ = '\f'; break;
+			case 'n' : *d++ = '\n'; break;
+			case 'r' : *d++ = '\r'; break;
+			case 't' : *d++ = '\t'; break;
+			case 'v' : *d++ = '\v'; break;
+			case 'x' :
+				   c++;
+				   i = 0;
+				   while (  ((*c>='0')&&(*c<='9')) 
+					  ||((*c>='A')&&(*c<='F'))
+					  ||((*c>='a')&&(*c<='f')) ) {
+					if ((*c>='0')&&(*c<='9')) 
+						i = i*16 + (*c)-'0'; 
+					else if ((*c>='A')&&(*c<='F')) 
+						i = i*16 + (*c)-'A'+10; 
+					else if ((*c>='a')&&(*c<='f')) 
+						i = i*16 + (*c)-'a'+10; 
+					c++;
+				   }
+				   c--;
+				   *d++ = i;
+				   break;
+			case '0' :
+			case '1' :
+			case '2' :
+			case '3' :
+			case '4' :
+			case '5' :
+			case '6' :
+			case '7' :
+				  i = (*c) - '0';
+				  c++;
+				  if ((*c>='0') && (*c<='7')) {
+					i = i*8 +(*c)-'0';
+				  	c++;
+				  	if ((*c>='0') && (*c<='7')) {
+						i = i*8 +(*c)-'0';
+						c++;
+					}
+				  }
+				  c--;
+				  *d++ = i;
+				  break;
+			default : *d++ = *c; break;
+			}
+		}
+		else *d++ = *c;
+		c++;
+	}
+	*d = 0;
+}
+
+
+/*--------------------------------------------------------------*/
+/*   Type conversions                                           */
+/*--------------------------------------------------------------*/
+
+/*
+ *  Translate integer into string.
+ */
+
+static char myprivmessage[16000];  /* Please DON'T reuse this */
+
+#ifdef ANSI_C 
+char  *my_itoa(int x)
+#else
+char  *my_itoa(x)
+int x;
+#endif
+{
+	SPRINTF(myprivmessage,"%d",x);
+	return(myprivmessage);
+}
+
+/*
+ *  Translate integer into string.
+ *  This is a little bit overcomplex, but in this way, it is more compatible.
+ */
+
+#ifdef ANSI_C 
+long 	long_atoi(char *c)
+#else
+long	long_atoi(c)
+char *c;
+#endif
+{
+	long res, sign;
+
+	res = 0;
+	if (!c) return(0L);
+	if (*c=='-')  { sign = -1L; c++; }
+	else sign = 1L;
+	while (*c) {
+		switch (*c) {
+		case '0': res = res * 10L;      break;
+		case '1': res = res * 10L + 1L; break;
+		case '2': res = res * 10L + 2L; break;
+		case '3': res = res * 10L + 3L; break;
+		case '4': res = res * 10L + 4L; break;
+		case '5': res = res * 10L + 5L; break;
+		case '6': res = res * 10L + 6L; break;
+		case '7': res = res * 10L + 7L; break;
+		case '8': res = res * 10L + 8L; break;
+		case '9': res = res * 10L + 9L; break;
+		default: return(sign * res);
+		}
+		c++;
+	}
+	return(sign * res);
+}
+
+ 
+/*====================================================================*/
+/*   Errors and Warnings                                              */
+/*====================================================================*/
+
+/*
+ *   syntaxerror prints an error message with position of the
+ *   error place in the specification, and increments the counter of
+ *   errors.
+ */
+
+static void fatal_error _PP((char *));
+
+#ifdef ANSI_C 
+void syntaxerror(int line, int pos, char *mesge)
+#else
+void syntaxerror(line,pos,mesge)
+int line;
+int pos;
+char *mesge;
+#endif
+{
+        strcpy(myprivmessage,mesge);
+        if (islower(*myprivmessage))
+                *myprivmessage = toupper(*myprivmessage);
+        FPRINTF(stderr,"Syntax error (%s: l:%d p:%d): %s !\n",
+                filename,line,pos,myprivmessage);
+        nr_errors++;
+        if (nr_errors>nr_max_errors)
+                fatal_error("Too many syntax errors");
+}
+
+
+/*
+ *   warning prints a warning with position of the problematic place
+ *   in the specification, but does not increment the counter of
+ *   errors.
+ */
+
+#ifdef ANSI_C 
+void warning(int line, int pos, char *mesge)
+#else
+void warning(line,pos,mesge)
+int line;
+int pos;
+char *mesge;
+#endif
+{
+        strcpy(myprivmessage,mesge);
+        if (islower(*myprivmessage))
+                *myprivmessage = toupper(*myprivmessage);
+        FPRINTF(stderr,"Warning (%s: l:%d p:%d): %s !\n",
+                filename,line,pos,myprivmessage);
+}
+
+
+/*--------------------------------------------------------------*/
+
+
+
+%%PREPASS
+
+%start graph 
+
+%%CONSTPREFIX T_
+
+%%RULES
+
+graph		: LEXWORD_GRAPH '{' graph_entry_list '}'		
+					{ $$ = REVERT($3); Syntax_Tree = $$; }
+		;
+
+
+graph_entry_list: graph_entry_list graph_entry			
+					{ $$ = graph_entry($2,$1);   }
+		| graph_entry					
+					{ $$ = graph_entry($1,NULL); }
+		;
+
+
+graph_entry	: graph_attribute	{ $$ = graph_attribute($1); }
+		| node_defaults		{ $$ = node_defaults($1);   }
+		| edge_defaults		{ $$ = edge_defaults($1);   }
+		| foldnode_defaults	{ $$ = foldnode_defaults($1);}
+		| foldedge_defaults	{ $$ = foldedge_defaults($1);}
+		| graph			{ $$ = graph($1);           }
+		| node			{ $$ = node($1);            }
+		| edge			{ $$ = edge($1);            }
+		| nearedge		{ $$ = near_edge($1);       }
+		| bentnearedge		{ $$ = bent_near_edge($1);  }
+		| backedge		{ $$ = back_edge($1);       }
+		| constraint		{ $$ = constraint($1);      }
+		;
+
+
+graph_attribute	: LEXWORD_TITLE ':' str_const	
+					{ $$ = title($3);              }
+		| LEXWORD_LABEL ':' str_const	
+					{ $$ = label($3);              }
+		| LEXWORD_INFO1 ':' str_const	
+					{ $$ = info1($3);              }
+		| LEXWORD_INFO2 ':' str_const	
+					{ $$ = info2($3);              }
+		| LEXWORD_INFO3 ':' str_const	
+					{ $$ = info3($3);              }
+		| LEXWORD_COLOR ':' enum_color 
+					{ $$ = color($3);              }
+		| LEXWORD_TEXTCOLOR ':'enum_color 
+					{ $$ = textcolor($3);          } 
+                | LEXWORD_BORDERCOLOR ':'enum_color 
+					{ $$ = colorborder($3);        }
+                | LEXWORD_WIDTH ':' int_const 
+					{ $$ = width($3);              }
+                | LEXWORD_HEIGHT ':' int_const
+					{ $$ = height($3);             }
+                | LEXWORD_BORDERWIDTH ':' int_const
+					{ $$ = borderwidth($3);        }
+		| 'x' ':' int_const	{ $$ = xdef($3);               }
+		| 'y' ':' int_const	{ $$ = ydef($3);               }
+		| LEXWORD_LOC '{' 'x' ':' int_const 'y' ':' int_const '}'
+					{ $$ = loc($5,$8);       }        
+		| LEXWORD_FOLDING ':' int_const
+					{ $$ = folding($3);            }
+		| LEXWORD_SCALING ':' float_const	
+					{ $$ = scaling($3);            }
+		| LEXWORD_SHRINK ':' int_const
+					{ $$ = shrink($3);             }
+		| LEXWORD_STRETCH ':' int_const
+					{ $$ = stretch($3);            }
+		| LEXWORD_TEXTMODE ':' enum_textmode		
+					{ $$ = textmode($3);           } 
+		| LEXWORD_SHAPE ':' enum_shape
+					{ $$ = shape($3);    	       }        
+                | LEXWORD_LEVEL ':' int_const 
+					{ $$ = level($3);              }
+                | LEXWORD_VORDER ':' int_const 
+					{ $$ = level($3);              }
+                | LEXWORD_HORDER ':' int_const 
+					{ $$ = horizontal_order($3);   }
+                | LEXWORD_STATUS ':' enum_status			
+					{ $$ = status($3);             }
+
+                | LEXWORD_XMAX ':' int_const	
+					{ $$ = xmax($3);               }
+                | LEXWORD_YMAX ':' int_const	
+					{ $$ = ymax($3);               }
+                | LEXWORD_XBASE ':' int_const	
+					{ $$ = xbase($3);              }
+                | LEXWORD_YBASE ':' int_const	
+					{ $$ = ybase($3);              }
+                | LEXWORD_XSPACE ':' int_const
+					{ $$ = xspace($3);             }
+                | LEXWORD_XLSPACE ':' int_const
+					{ $$ = xlspace($3);            }
+                | LEXWORD_YSPACE ':' int_const
+					{ $$ = yspace($3);             }
+                | LEXWORD_XRASTER ':' int_const
+					{ $$ = xraster($3);            }
+                | LEXWORD_XLRASTER ':' int_const
+					{ $$ = xlraster($3);           }
+                | LEXWORD_YRASTER ':' int_const
+					{ $$ = yraster($3);            }
+		| LEXWORD_INVISIBLE ':' int_const
+					{ $$ = hidden($3); 	       }
+		| LEXWORD_HIDDEN ':' int_const
+					{ $$ = hidden($3); 	       }
+		| LEXWORD_CLASSNAME int_const ':' str_const	
+					{ $$ = classname($2,$4);       }
+		| LEXWORD_INFONAME int_const ':' str_const	
+					{ $$ = infoname($2,$4);        }
+                | LEXWORD_COLORENTRY int_const ':' int_const int_const int_const 
+					{ $$ = colentry($2,$4,$5,$6);   }
+
+                | LEXWORD_LAYOUTALGORITHM ':' enum_layoutalgorithm	
+					{ $$ = layoutalgorithm($3);    }
+		| LEXWORD_LAYOUTFREQUENCY ':' enum_layoutfrequency	
+					{ $$ = layoutfrequency($3);    }
+                | LEXWORD_LAYOUTDOWNFACTOR ':' int_const 
+					{ $$ = downfactor($3);         }
+                | LEXWORD_LAYOUTUPFACTOR ':' int_const 
+					{ $$ = upfactor($3);           }
+                | LEXWORD_LAYOUTNEARFACTOR ':' int_const 
+					{ $$ = nearfactor($3);         }
+                | LEXWORD_LAYOUTSPLINEFACTOR ':' int_const
+					{ $$ = splinefactor($3);       }
+
+                | LEXWORD_LATE_LABELS ':' enum_yes_no
+					{ $$ = late_edge_label($3);    }
+                | LEXWORD_DISPLAY_EDGE_LABELS ':' enum_yes_no
+					{ $$ = display_edge_label($3); }
+                | LEXWORD_DIRTY_EDGE_LABELS ':' enum_yes_no
+					{ $$ = dirty_edge_label($3);   }
+		| LEXWORD_FINETUNING ':' enum_yes_no 
+				 	{ $$ = finetuning($3);	       }
+                | LEXWORD_HIDESINGLES  ':' enum_yes_no 
+					{ $$ = hidesingles($3);        }
+		| LEXWORD_STRAIGHTPHASE ':'  enum_yes_no 
+				 	{ $$ = straightphase($3);	       }
+		| LEXWORD_PRIORITYPHASE ':'  enum_yes_no 
+				 	{ $$ = priophase($3);	       }
+		| LEXWORD_MANHATTEN ':'  enum_yes_no 
+				 	{ $$ = manhatten($3);	       }
+		| LEXWORD_SMANHATTEN ':'  enum_yes_no 
+				 	{ $$ = smanhatten($3);	       }
+		| LEXWORD_NONEAREDGES	{ $$ = nonearedges();	       }
+		| LEXWORD_NEAREDGES ':' LEXWORD_NO
+					{ $$ = nonearedges();	       }
+		| LEXWORD_NEAREDGES ':' LEXWORD_YES 
+					{ $$ = dummy();	     	       }
+                | LEXWORD_ORIENTATION ':' enum_orientation		
+					{ $$ = orientation($3);        }
+                | LEXWORD_NODE_ALIGN ':' enum_node_align
+					{ $$ = node_alignment($3);     }
+                | LEXWORD_PORTSHARING ':' enum_yes_no
+					{ $$ = port_sharing($3);       }
+                | LEXWORD_ARROWMODE  ':' enum_arrow_mode
+					{ $$ = arrow_mode($3);         }
+
+                | LEXWORD_SPREADLEVEL ':' int_const  
+					{ $$ = spreadlevel($3);        }
+                | LEXWORD_TREEFACTOR ':' float_const  
+					{ $$ = treefactor($3);         }
+
+                | LEXWORD_CROSSING_P2 ':' enum_yes_no 
+					{ $$ = crossing_phase2($3);    }
+                | LEXWORD_CROSSING_OPT ':' enum_yes_no 
+					{ $$ = crossing_opt($3);       }
+                | LEXWORD_CROSSING_WEIGHT ':' enum_cross_weight 
+					{ $$ = crossing_weight($3);    }
+
+                | LEXWORD_VIEW ':'  enum_view 
+					{ $$ = view_method($3);       	}
+                | LEXWORD_EDGES ':' enum_yes_no 
+					{ $$ = view_edges($3);       	}
+                | LEXWORD_NODES ':' enum_yes_no 
+					{ $$ = view_nodes($3);       	}
+		| LEXWORD_SPLINES ':'    enum_yes_no 
+				 	{ $$ = view_splines($3);  	}
+
+                | LEXWORD_BMAX ':' int_const 
+					{ $$ = bend_max($3);   		}
+                | LEXWORD_CMAX ':' int_const 
+					{ $$ = cross_max($3);  		}
+                | LEXWORD_CMIN ':' int_const 
+					{ $$ = cross_min($3);  		}
+                | LEXWORD_PMAX ':' int_const 
+					{ $$ = pendel_max($3); 		}
+                | LEXWORD_PMIN ':' int_const 
+					{ $$ = pendel_min($3);  	}
+                | LEXWORD_RMAX ':' int_const 
+					{ $$ = rubber_max($3); 		}
+                | LEXWORD_RMIN ':' int_const 
+					{ $$ = rubber_min($3);  	}
+                | LEXWORD_SMAX ':' int_const 
+					{ $$ = straight_max($3); 	}
+
+                | LEXWORD_TYPENAME ':' str_const	
+					{ $$ = typename($3);           }
+                | LEXWORD_INCLUDE ':' str_const
+			 		{ $$ = include($3);            }
+		| LEXWORD_LAYOUTPARAMETER ':' array_value	
+					{ $$ = layoutparameter($3);    }
+		| LEXWORD_TOPSORT ':' enum_topsort	
+					{ $$ = topsort($3);            }
+                | LEXWORD_INPUTFUNCTION ':' str_const
+					{ $$ = inputfunction($3);      }
+                | LEXWORD_OUTPUTFUNCTION ':' str_const 
+					{ $$ = outputfunction($3);     }
+                | LEXWORD_XSCROLLBAR ':' int_const	
+					{ $$ = xscrollbar($3);         }
+                | LEXWORD_YSCROLLBAR ':' int_const
+					{ $$ = yscrollbar($3);         }
+		;
+
+
+enum_color	: LEXWORD_AQUAMARINE	{ $$ = aquamarine();   }      
+		| LEXWORD_BLACK		{ $$ = black();        }      
+		| LEXWORD_BLUE		{ $$ = blue();         }      
+		| LEXWORD_CYAN		{ $$ = cyan();         }      
+		| LEXWORD_DARKBLUE	{ $$ = darkblue();     }      
+		| LEXWORD_DARKCYAN	{ $$ = darkcyan();     }      
+		| LEXWORD_DARKGREEN	{ $$ = darkgreen();    }      
+		| LEXWORD_DARKGREY	{ $$ = darkgrey();     }      
+		| LEXWORD_DARKMAGENTA	{ $$ = darkmagenta();  }    
+		| LEXWORD_DARKRED	{ $$ = darkred();      }      
+		| LEXWORD_DARKYELLOW	{ $$ = darkyellow();   }      
+		| LEXWORD_GOLD		{ $$ = gold();         }      
+		| LEXWORD_GREEN		{ $$ = green();        }      
+		| LEXWORD_KHAKI		{ $$ = khaki();        }      
+		| LEXWORD_LIGHTBLUE	{ $$ = lightblue();    }      
+		| LEXWORD_LIGHTCYAN	{ $$ = lightcyan();    }      
+		| LEXWORD_LIGHTGREEN	{ $$ = lightgreen();   }      
+		| LEXWORD_LIGHTGREY	{ $$ = lightgrey();    }      
+		| LEXWORD_LIGHTMAGENTA	{ $$ = lightmagenta(); }    
+		| LEXWORD_LIGHTRED	{ $$ = lightred();     }      
+		| LEXWORD_LIGHTYELLOW	{ $$ = lightyellow();  }    
+		| LEXWORD_LILAC		{ $$ = lilac();        }      
+		| LEXWORD_MAGENTA	{ $$ = magenta();      }      
+		| LEXWORD_ORANGE	{ $$ = orange();       }      
+		| LEXWORD_ORCHID	{ $$ = orchid();       }      
+		| LEXWORD_PINK		{ $$ = pink();         }      
+		| LEXWORD_PURPLE	{ $$ = purple();       }      
+		| LEXWORD_RED		{ $$ = red();          }      
+		| LEXWORD_TURQUOISE	{ $$ = turquoise();    }      
+		| LEXWORD_WHITE		{ $$ = white();        }      
+		| LEXWORD_YELLOW	{ $$ = yellow();       }      
+		| LEXWORD_YELLOWGREEN	{ $$ = yellowgreen();  }   
+                | int_const 		{ $$ = colindex($1);   }
+		;
+
+
+enum_topsort	: LEXWORD_HIGH		{ $$ = high(); 	       } 
+		| LEXWORD_LOW 		{ $$ = low();          }
+		;
+
+
+enum_orientation: LEXWORD_TOP_TO_BOTTOM	{ $$ = top_to_bottom(); }
+		| LEXWORD_BOTTOM_TO_TOP	{ $$ = bottom_to_top(); }
+		| LEXWORD_LEFT_TO_RIGHT	{ $$ = left_to_right(); }
+		| LEXWORD_RIGHT_TO_LEFT	{ $$ = right_to_left(); }
+		;
+
+
+enum_layoutalgorithm: 
+		  LEXWORD_BARYCENTER 	{ $$ = barycenter();    }
+		| LEXWORD_ISI 		{ $$ = isi();           }
+		| LEXWORD_PLANAR 	{ $$ = planar();        }
+		| LEXWORD_CONSTRAINTS 	{ $$ = constaints();    }
+
+		| LEXWORD_TREE 		{ $$ = tree();          }
+		| LEXWORD_MAXDEPTH	{ $$ = maxdepth();      }
+		| LEXWORD_MINDEPTH	{ $$ = mindepth();      }
+		| LEXWORD_MAXDEPTHSLOW	{ $$ = maxdepthslow();  }
+		| LEXWORD_MINDEPTHSLOW	{ $$ = mindepthslow();  }
+		| LEXWORD_MAXDEGREE   	{ $$ = maxdegree();     }
+		| LEXWORD_MINDEGREE   	{ $$ = mindegree();     }
+		| LEXWORD_MAXINDEGREE  	{ $$ = maxindegree();   }
+		| LEXWORD_MININDEGREE  	{ $$ = minindegree();   }
+		| LEXWORD_MAXOUTDEGREE 	{ $$ = maxoutdegree();  }
+		| LEXWORD_MINOUTDEGREE 	{ $$ = minoutdegree();  }
+		| LEXWORD_MINBACK 	{ $$ = minbackwards();  }
+		| LEXWORD_DFS     	{ $$ = depthfirst();    }
+		;
+
+
+enum_layoutfrequency: 
+		  LEXWORD_EVERY 	{ $$ = every(); 	}
+		| LEXWORD_MANUAL 	{ $$ = manual(); 	}
+		;
+
+
+enum_status 	: LEXWORD_BLACK 	{ $$ = black(); 	}
+		| LEXWORD_GREY 		{ $$ = grey(); 		}
+		| LEXWORD_WHITE 	{ $$ = white(); 	}
+		;
+
+
+enum_yes_no	: LEXWORD_YES 		{ $$ = yes(); 		}
+		| LEXWORD_NO 		{ $$ = no(); 		}
+		;
+
+enum_cross_weight : LEXWORD_BARY	{ $$ = bary(); 	       } 
+		  | LEXWORD_MEDIAN	{ $$ = median();       }
+		  | LEXWORD_BARYMEDIAN	{ $$ = barymedian();   }
+		  | LEXWORD_MEDIANBARY	{ $$ = medianbary();   }
+		  ;
+
+enum_view	: LEXWORD_CFISH         { $$ = cfish(); 	}
+		| LEXWORD_FCFISH	{ $$ = fcfish();	}
+		| LEXWORD_PFISH		{ $$ = pfish(); 	}
+		| LEXWORD_FPFISH	{ $$ = fpfish();	}
+		;
+
+enum_arrow_mode	: LEXWORD_FIXED		{ $$ = fixed();         }
+		| LEXWORD_FREE 		{ $$ = free();          }
+		;
+
+foldnode_defaults: LEXWORD_FOLDNODE node_attribute 	
+					{ $$ = $2;              }
+		;
+
+foldedge_defaults: LEXWORD_FOLDEDGE edge_attribute 	
+					{ $$ = $2;              }
+		;
+
+node_defaults	: LEXWORD_NODE1 node_attribute 	
+					{ $$ = $2;              }
+		;
+
+edge_defaults   : LEXWORD_EDGE1 edge_attribute  
+					{ $$ = $2;              }
+                ;
+
+
+node		: LEXWORD_NODE2 '{' node_attribute_list '}'	
+					{ $$ = REVERT($3); }
+		;
+
+	
+node_attribute_list: node_attribute_list node_attribute		
+					{ $$ = node_attribute($2,$1);   }
+		   | node_attribute				
+					{ $$ = node_attribute($1,NULL); }
+		   ;
+
+
+edge            : LEXWORD_EDGE2 '{' edge_attribute_list '}'        
+					{ $$ = REVERT($3); }  
+                ; 
+
+nearedge	: LEXWORD_NEAREDGE '{' edge_attribute_list '}'
+					{ $$ = REVERT($3); }  
+                ; 
+
+bentnearedge	: LEXWORD_BENTNEAREDGE '{' edge_attribute_list '}'
+					{ $$ = REVERT($3); }  
+                ; 
+
+backedge	: LEXWORD_BACKEDGE '{' edge_attribute_list '}'
+					{ $$ = REVERT($3); }  
+                ; 
+
+         
+edge_attribute_list: edge_attribute_list edge_attribute     
+		    			{ $$ = edge_attribute($2,$1);   }
+                   | edge_attribute                             
+					{ $$ = edge_attribute($1,NULL); }
+                   ; 
+
+
+constraint 	: LEXWORD_CONSTRAINT '{' constraint_attribute_list '}'	
+					{ $$ = REVERT($3); }  
+                ; 
+        
+ 
+constraint_attribute_list: 
+		  constraint_attribute_list constraint_attribute  	
+					{ $$ = constraint_attribute($2,$1);   }
+                | constraint_attribute     		     	
+					{ $$ = constraint_attribute($1,NULL); }
+                   ; 
+
+
+node_attribute	: LEXWORD_TITLE ':' str_const	
+					{ $$ = title($3);        }        
+		| LEXWORD_LABEL ':' str_const	
+					{ $$ = label($3);        }        
+		| LEXWORD_INFO1 ':' str_const	
+					{ $$ = info1($3);        }        
+		| LEXWORD_INFO2 ':' str_const	
+					{ $$ = info2($3);        }        
+		| LEXWORD_INFO3 ':' str_const	
+					{ $$ = info3($3);        }        
+                | LEXWORD_FONTNAME ':' str_const
+					{ $$ = fontname($3);     }        
+                | LEXWORD_COLOR ':' enum_color
+					{ $$ = color($3);        }        
+		| LEXWORD_TEXTCOLOR ':'enum_color 
+					{ $$ = textcolor($3);    }        
+                | LEXWORD_BORDERCOLOR ':'enum_color 
+					{ $$ = bordercolor($3);  }        
+                | LEXWORD_ICONFILE ':' str_const	
+					{ $$ = iconfile($3);     }        
+                | LEXWORD_ANCHORPOINTS ':' str_const
+					{ $$ = anchorpoints($3); }        
+                | LEXWORD_TYPENAME ':' str_const	
+					{ $$ = typename($3);     }        
+		| LEXWORD_WIDTH ':' int_const	
+					{ $$ = width($3);        }        
+		| LEXWORD_HEIGHT ':' int_const	
+					{ $$ = height($3);       }        
+                | LEXWORD_BORDERWIDTH ':' int_const
+					{ $$ = borderwidth($3);  }        
+		| LEXWORD_LOC '{' 'x' ':' int_const 'y' ':' int_const '}'
+					{ $$ = loc($5,$8);       }        
+		| LEXWORD_FOLDING ':' int_const
+					{ $$ = folding($3);      }        
+		| LEXWORD_SCALING ':' float_const	
+					{ $$ = scaling($3);            }
+		| LEXWORD_SHRINK ':' int_const	
+					{ $$ = shrink($3);       }        
+		| LEXWORD_STRETCH ':' int_const
+					{ $$ = stretch($3);      }        
+                | LEXWORD_ICONWIDTH ':' int_const	
+					{ $$ = iconwidth($3);    }        
+                | LEXWORD_ICONHEIGHT ':' int_const
+					{ $$ = iconheight($3);   }        
+		| LEXWORD_TEXTMODE ':' enum_textmode		
+					{ $$ = textmode($3);     }         
+		| LEXWORD_ICONSTYLE ':' enum_iconstyle		
+					{ $$ = iconstyle($3);    }        
+		| LEXWORD_SHAPE ':' enum_shape
+					{ $$ = shape($3);    	 }        
+                | LEXWORD_LEVEL ':' int_const 
+					{ $$ = level($3);        }
+                | LEXWORD_VORDER ':' int_const 
+					{ $$ = level($3);            }
+                | LEXWORD_HORDER ':' int_const 
+					{ $$ = horizontal_order($3); }
+		;
+
+enum_textmode	: LEXWORD_CENTER 	{ $$ = center();        }
+		| LEXWORD_LEFT_JUSTIFY 	{ $$ = left_justify();  }
+		| LEXWORD_RIGHT_JUSTIFY	{ $$ = right_justify(); }
+		;
+
+enum_shape	: LEXWORD_BOX		{ $$ = box(); 		}
+		| LEXWORD_RHOMB		{ $$ = rhomb();		}
+		| LEXWORD_ELLIPSE	{ $$ = ellipse();	}
+		| LEXWORD_TRIANGLE	{ $$ = triangle();	}
+		;
+
+enum_node_align	: LEXWORD_BOTTOM	{ $$ = bottom(); }
+		| LEXWORD_TOP 		{ $$ = top();    }
+		| LEXWORD_CENTER 	{ $$ = center(); }
+		;
+
+enum_iconstyle	: LEXWORD_BOTTOM	{ $$ = bottom(); }
+		| LEXWORD_TOP 		{ $$ = top();    }
+		| LEXWORD_AROUND 	{ $$ = around(); }
+		;
+
+
+edge_attribute  : LEXWORD_SOURCENAME ':' str_const
+					{ $$ = sourcename($3);    }        
+		| LEXWORD_TARGETNAME ':' str_const 
+					{ $$ = targetname($3);    }       
+                | LEXWORD_LABEL ':' str_const	
+					{ $$ = label($3);         }       
+		| LEXWORD_TEXTCOLOR ':'enum_color 
+					{ $$ = textcolor($3);          } 
+                | LEXWORD_FONTNAME ':' str_const
+					{ $$ = fontname($3);      }       
+                | LEXWORD_COLOR ':' enum_color
+					{ $$ = color($3);         }       
+                | LEXWORD_TYPENAME ':' str_const
+					{ $$ = typename($3);      }       
+		| LEXWORD_THICKNESS ':' int_const
+					{ $$ = thickness($3);     }       
+		| LEXWORD_CLASS ':' int_const	
+					{ $$ = class($3);         }       
+		| LEXWORD_PRIORITY ':' int_const
+					{ $$ = priority($3);      }       
+		| LEXWORD_ARROWWIDTH ':' int_const
+					{ $$ = arrowwidth($3);    }       
+                | LEXWORD_ARROWHEIGHT ':' int_const
+					{ $$ = arrowheight($3);   }       
+                | LEXWORD_ARROWCOLOR ':' enum_color
+					{ $$ = arrowcolor($3);    }       
+                | LEXWORD_BARROWCOLOR ':' enum_color
+					{ $$ = barrowcolor($3);    }       
+		| LEXWORD_ARROWSIZE ':' int_const
+					{ $$ = arrowsize($3);     }       
+		| LEXWORD_BARROWSIZE ':' int_const
+					{ $$ = barrowsize($3);     }       
+		| LEXWORD_ARROWSTYLE ':' enum_arrowstyle		
+					{ $$ = arrowstyle($3);    }       
+		| LEXWORD_BARROWSTYLE ':' enum_arrowstyle		
+					{ $$ = barrowstyle($3);    }       
+		| LEXWORD_LINESTYLE ':' enum_linestyle		
+					{ $$ = linestyle($3);     }       
+		| LEXWORD_ANCHOR ':' int_const
+					{ $$ = anchor($3);        }
+                | LEXWORD_HORDER ':' int_const 
+					{ $$ = horizontal_order($3); }
+		; 
+
+
+enum_linestyle	: LEXWORD_CONTINUOUS 	{ $$ = continuous(); }
+		| LEXWORD_SOLID 	{ $$ = continuous(); }      
+		| LEXWORD_DOTTED 	{ $$ = dotted();     }
+		| LEXWORD_DASHED 	{ $$ = dashed();     }
+		| LEXWORD_INVISIBLE     { $$ = invisible();  } 
+		;
+
+
+enum_arrowstyle	: LEXWORD_NONE 		{ $$ = none();      }      
+		| LEXWORD_LINE 		{ $$ = line();      }      
+		| LEXWORD_SOLID 	{ $$ = solid();     }      
+		;
+
+constraint_attribute  : LEXWORD_TITLE ':' str_const 
+					{ $$ = title($3);     }       
+		| LEXWORD_PRIORITY ':' int_const
+					{ $$ = priority($3);  }       
+		| LEXWORD_SIZE ':' int_const	
+					{ $$ = size($3);      }       
+		| LEXWORD_NODES ':' '{' string_array '}'	
+					{ $$ = nodes($4);     }       
+		| LEXWORD_INTERVAL ':' array_value	
+					{ $$ = interval($3);  }       
+		| LEXWORD_NAME ':' enum_name			
+					{ $$ = name($3);      }       
+		| LEXWORD_DIMENSION ':' enum_dimension		
+					{ $$ = dimension($3); }       
+		; 
+
+string_array	: string_array str_const
+					{ $$ = string_array($1,$2);    }       
+		| str_const		{ $$ = string_array(NULL,$1);  }       
+		;
+
+enum_name	: LEXWORD_EQUAL 	{ $$ = equal();            }      
+		| LEXWORD_SMALLER 	{ $$ = smaller();          }      
+		| LEXWORD_GREATER 	{ $$ = greater();          }      
+		| LEXWORD_NEIGHBORS 	{ $$ = neighbors();        }      
+		| LEXWORD_LOW_MARGIN 	{ $$ = low_margin();       }      
+		| LEXWORD_HIGH_MARGIN 	{ $$ = high_margin();      }      
+		| LEXWORD_RANGE 	{ $$ = xrange();           }      
+		| LEXWORD_CLUSTER 	{ $$ = cluster();          }      
+		| LEXWORD_LIMIT 	{ $$ = limit();            }      
+		| LEXWORD_ABOVE 	{ $$ = above();            }      
+		| LEXWORD_BELOW	 	{ $$ = below();            }      
+		| LEXWORD_LEFT 		{ $$ = left();             }      
+		| LEXWORD_RIGHT 	{ $$ = right();            }      
+		| LEXWORD_IN_FRONT 	{ $$ = in_font();          }      
+		| LEXWORD_BEHIND 	{ $$ = behind();           }      
+		| LEXWORD_EQUAL_POSITION{ $$ = equal_position();   }      
+		| LEXWORD_EQUAL_ROW 	{ $$ = equal_row();        }      
+		| LEXWORD_EQUAL_COLUMN 	{ $$ = equal_column();     }      
+		| LEXWORD_TOP_MARGIN 	{ $$ = top_margin();       }      
+		| LEXWORD_BOTTOM_MARGIN { $$ = bottom_margin();    }      
+		| LEXWORD_LEFT_MARGIN 	{ $$ = left_margin();      }      
+		| LEXWORD_RIGHT_MARGIN 	{ $$ = right_margin();     }      
+		| LEXWORD_UPPER_NEIGHBOR{ $$ = upper_neighbor();   }      
+		| LEXWORD_LOWER_NEIGHBOR{ $$ = lower_neighbor();   }      
+		| LEXWORD_LEFT_NEIGHBOR { $$ = left_neighbor();    }      
+		| LEXWORD_RIGHT_NEIGHBOR{ $$ = right_neighbor();   }      
+		;
+
+enum_dimension	: 'x' 			{ $$ = x(); }
+		| 'y' 			{ $$ = y(); }
+		| 'z' 			{ $$ = z(); }
+		;
+
+attribute_value	: LEX_INT       	{ $$ = integer($1); }  
+		| LEX_FLOAT         	{ $$ = float($1);   }
+		| LEX_CHAR          	{ $$ = char($1);    } 
+		| LEX_STRING   		{ $$ = string($1);  } 
+		| array_value		{ $$ = $1; }
+		;
+
+array_value	: '{' index_value_list '}'
+					{ $$ = REVERT($2); }
+		;
+
+index_value_list: index_value_list index_value
+					{ $$ = index_value($2,$1);   }
+		| index_value		{ $$ = index_value($1,NULL); }
+		;
+
+index_value	: attribute_value 	{ $$ = $1;           }
+		| index ':' attribute_value			
+					{ $$ = index($1,$3); }
+		| range ':' attribute_value			
+					{ $$ = range($1,$3); }
+		| '*' ':' attribute_value			
+					{ $$ = stern($3);    }
+		;
+
+range		: '[' int_const '-' int_const ']'	
+					{ $$ = range($2,$4); }
+		;
+
+index		: LEX_INT		{ $$ = index_val($1);    }
+		;
+
+int_const	: LEX_INT		{ $$ = integer($1);  }
+		;
+
+float_const	: LEX_FLOAT		{ $$ = float($1);    }
+		;
+
+str_const	: LEX_STRING		{ $$ = string($1);   }
+		;
+
+

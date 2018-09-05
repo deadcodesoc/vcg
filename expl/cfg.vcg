@@ -1,0 +1,169 @@
+/* SCCS-info %W% %E% */
+/* $Id: cfg.vcg,v 1.3 1995/02/09 19:49:49 sander Exp $ */
+
+graph: { title: "CFG_GRAPH" 
+x: 60
+y: 60
+width: 700 
+height: 700 
+layout_nearfactor: 0
+manhatten_edges: yes  
+// layoutalgorithm: minbackward
+yspace: 50
+xspace: 34
+xlspace: 25
+stretch: 40
+shrink: 100
+display_edge_labels: yes
+finetuning: no
+
+node.borderwidth: 3 
+node.color: lightcyan
+node.textcolor: darkred 
+node.bordercolor: red 
+edge.color: darkgreen
+node: { title:"42"
+        label: "Exit" shape: ellipse color: yellow}
+node: { title:"41"
+        label: " WRITE (x)"}
+node: { title:"40"
+        label: " x := x+1"}
+node: { title:"39"
+        label: "x=6" shape: rhomb color: lightgreen}
+node: { title:"38"
+        label: " x := x+1"}
+node: { title:"37"
+        label: " x := 25"}
+node: { title:"36"
+        label: " x := ((((x+1)*(x+1))-(x*x))-x)-1"}
+node: { title:"35"
+        label: "x=5" shape: rhomb color: lightgreen}
+node: { title:"34"
+        label: " x := x+1"}
+node: { title:"33"
+        label: " x := 4"}
+node: { title:"32"
+        label: " x := 3"}
+node: { title:"31"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"30"
+        label: " x := x+1"}
+node: { title:"29"
+        label: " x := 4"}
+node: { title:"28"
+        label: " x := 3"}
+node: { title:"27"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"26"
+        label: " x := 4"}
+node: { title:"25"
+        label: " x := 3"}
+node: { title:"24"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"23"
+        label: " x := 3"}
+node: { title:"22"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"21"
+        label: " x := x+1"}
+node: { title:"20"
+        label: " x := 2"}
+node: { title:"19"
+        label: " x := 3"}
+node: { title:"18"
+        label: " x := 3"}
+node: { title:"17"
+        label: " x := 4"}
+node: { title:"16"
+        label: " x := 3"}
+node: { title:"15"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"14"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"13"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"12"
+        label: " x := 2*x"}
+node: { title:"11"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"10"
+        label: " x := x+1"}
+node: { title:"9"
+        label: " x := 2"}
+node: { title:"8"
+        label: " x := 3"}
+node: { title:"7"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"6"
+        label: " x := 2*x"}
+node: { title:"5"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"4"
+        label: " x := 3"}
+node: { title:"3"
+        label: "x=55" shape: rhomb color: lightgreen}
+node: { title:"2"
+        label: " x := 1"}
+node: { title:"1"
+        label: " READ (x)"}
+node: { title:"0"
+        label: "Start" shape: ellipse borderwidth: 5 color: yellow}
+
+edge: { sourcename:"41" targetname:"42" label: "end_edge" }
+edge: { sourcename:"40" targetname:"41" }
+edge: { sourcename:"38" targetname:"39" }
+edge: { sourcename:"37" targetname:"38" }
+edge: { sourcename:"36" targetname:"38" }
+edge: { sourcename:"34" targetname:"35" }
+edge: { sourcename:"33" targetname:"34" }
+edge: { sourcename:"32" targetname:"34" }
+edge: { sourcename:"30" targetname:"31" }
+edge: { sourcename:"29" targetname:"30" }
+edge: { sourcename:"28" targetname:"30" }
+edge: { sourcename:"25" targetname:"30" }
+edge: { sourcename:"21" targetname:"22" }
+edge: { sourcename:"23" targetname:"24" }
+edge: { sourcename:"26" targetname:"27" }
+edge: { sourcename:"10" targetname:"11" }
+backedge: { sourcename:"20" targetname:"11" label: "back_edge" }
+edge: { sourcename:"12" targetname:"13" }
+backedge: { sourcename:"19" targetname:"13" label: "back_edge" }
+edge: { sourcename:"18" targetname:"19" }
+edge: { sourcename:"17" targetname:"18" }
+edge: { sourcename:"16" targetname:"18" }
+edge: { sourcename:"2" targetname:"3" }
+edge: { sourcename:"4" targetname:"5" }
+backedge: { sourcename:"9" targetname:"5" label: "back_edge" }
+edge: { sourcename:"8" targetname:"9" }
+edge: { sourcename:"6" targetname:"7" }
+edge: { sourcename:"1" targetname:"2" }
+edge: { sourcename:"0" targetname:"1" label: "start_edge" }
+
+bentnearedge: { sourcename:"39" targetname:"41" label: "false" }
+bentnearedge: { sourcename:"39" targetname:"40" label: "true" }
+bentnearedge: { sourcename:"35" targetname:"37" label: "false" }
+bentnearedge: { sourcename:"35" targetname:"36" label: "true" }
+bentnearedge: { sourcename:"31" targetname:"33" label: "false" }
+bentnearedge: { sourcename:"31" targetname:"32" label: "true" }
+bentnearedge: { sourcename:"22" targetname:"30" label: "false" }
+bentnearedge: { sourcename:"22" targetname:"23" label: "true" }
+bentnearedge: { sourcename:"27" targetname:"29" label: "false" }
+bentnearedge: { sourcename:"27" targetname:"28" label: "true" }
+bentnearedge: { sourcename:"24" targetname:"26" label: "false" }
+bentnearedge: { sourcename:"24" targetname:"25" label: "true" }
+bentnearedge: { sourcename:"14" targetname:"15" label: "true" }
+bentnearedge: { sourcename:"14" targetname:"19" label: "false"}
+bentnearedge: { sourcename:"15" targetname:"17" label: "false" }
+bentnearedge: { sourcename:"15" targetname:"16" label: "true" }
+bentnearedge: { sourcename:"11" targetname:"12" label: "true" }
+bentnearedge: { sourcename:"11" targetname:"21" label: "false" }
+bentnearedge: { sourcename:"3" targetname:"10" label: "false" }
+bentnearedge: { sourcename:"3" targetname:"4" label: "true" }
+bentnearedge: { sourcename:"5" targetname:"10" label: "false" }
+bentnearedge: { sourcename:"5" targetname:"6" label: "true" }
+bentnearedge: { sourcename:"7" targetname:"9" label: "false" }
+bentnearedge: { sourcename:"7" targetname:"8" label: "true" }
+bentnearedge: { sourcename:"13" targetname:"14" label: "true" }
+bentnearedge: { sourcename:"13" targetname:"20" label: "false" }
+
+}
